@@ -1,107 +1,107 @@
 ---
-title: "ICT Assessment Pattern — ประเมิน In-Circuit Test ตั้งแต่ขั้น NPI"
+title: "ICT Assessment Pattern — Evaluate In-Circuit Test from NPI Stage"
 date: 2026-05-27 12:00:00 +0700
 categories: [NPI, Test]
 tags: [ict, dft, test-engineering, npi, pcba, nre]
 ---
 
-> **TL;DR** — 5 ขั้นตอน: รับไฟล์ → นับ TP/Via → ประเมิน DFT 9 ข้อ → คำนวณ NRE → สร้าง SOP report พร้อม propose ให้ลูกค้า
+> **TL;DR** — 5 steps: receive files → count TP/via → evaluate 9 DFT criteria → estimate NRE → generate SOP report with proposal for the customer.
 
 ---
 
-## ทำไม ICT ต้องประเมินตั้งแต่ NPI Stage?
+## Why Assess ICT at NPI Stage?
 
-ICT fixture สร้างครั้งเดียวใช้ตลอด production ถ้าออกแบบผิดหรือ layout ไม่รองรับ DFT:
-- Fixture ทำใหม่ = NRE เพิ่ม ฿50,000–500,000
-- ต้อง ECR แก้ layout = delay 2–4 สัปดาห์
-- Coverage ต่ำ = escape defect ถึงลูกค้า
+An ICT fixture is built once and used throughout production. If the layout doesn't support DFT:
+- Fixture redesign = additional NRE of ฿50,000–500,000
+- Layout ECR = 2–4 week delay
+- Low coverage = defects escaping to the customer
 
-**Golden rule: ประเมิน ICT ตอนที่ยังแก้ layout ได้ฟรี**
+**Golden rule: Assess ICT while layout changes are still free.**
 
 ---
 
 ## 5-Step ICT Assessment Process
 
-### Step 1 — รับและ Review ไฟล์
+### Step 1 — Receive and Review Files
 
-ไฟล์ที่ต้องได้จากลูกค้า/design team:
+Required files from customer or design team:
 
-| ไฟล์ | Format | ใช้ทำอะไร |
-|------|--------|-----------|
-| Gerber / ODB++ | .gbr / .tgz | นับ TP, via, pad |
-| BOM | Excel / CSV | map component → testability |
-| Schematic | PDF / Altium | เข้าใจ net topology |
-| Assembly drawing | PDF | ดู component side, keep-out |
+| File | Format | Purpose |
+|------|--------|---------|
+| Gerber / ODB++ | .gbr / .tgz | Count TP, via, pad |
+| BOM | Excel / CSV | Map components to testability |
+| Schematic | PDF / Altium | Understand net topology |
+| Assembly drawing | PDF | Check component side, keep-outs |
 
 ---
 
-### Step 2 — นับ Test Point (TP) และ Via
+### Step 2 — Count Test Points and Vias
 
-**นับจาก Gerber layer:**
+**Count from Gerber layers:**
 
 ```
-TP ด้าน Top = นับจาก Top Copper (ที่มี pad drill)
-TP ด้าน Bottom = นับจาก Bottom Copper
-Via accessible = Via ที่ไม่ถูก component บัง (top view)
+Top TPs    = Top Copper pads with drills
+Bottom TPs = Bottom Copper pads
+Accessible vias = Vias not obstructed by components (top view)
 ```
 
 **Coverage estimate:**
 ```
-Node count = จำนวน net ที่ต้องวัด
-TP count = จำนวน physical test point
+Node count  = number of nets requiring measurement
+TP count    = number of physical test points
 Coverage (%) = (TP count / Node count) × 100
 ```
 
-Target: **≥ 85% node coverage** สำหรับ production board
+Target: **≥ 85% node coverage** for production boards.
 
 ---
 
-### Step 3 — DFT Checklist 9 ข้อ
+### Step 3 — DFT Checklist (9 Criteria)
 
-| # | DFT Criteria | Pass Condition |
-|---|-------------|----------------|
-| 1 | Test point size | ≥ 1.0mm diameter (Ø) |
-| 2 | Test point pitch | ≥ 2.54mm center-to-center |
-| 3 | TP ห่างจาก component | ≥ 1.5mm clearance |
-| 4 | TP ห่างจากขอบ board | ≥ 3.0mm |
-| 5 | TP บน bottom side | ≥ 60% ของ TP ทั้งหมด (single-side fixture) |
-| 6 | Via ที่ใช้เป็น TP | ห้าม tented via |
-| 7 | Power / Ground access | ต้องมี TP บน main rails ทุกตัว |
-| 8 | Crystal / Oscillator | ต้องมี disable point หรือ bypass |
-| 9 | Programming header | ต้องมี JTAG/SWD/ISP pad accessible |
+| # | DFT Criterion | Pass Condition |
+|---|--------------|----------------|
+| 1 | Test point diameter | ≥ 1.0 mm |
+| 2 | Test point pitch | ≥ 2.54 mm center-to-center |
+| 3 | TP clearance from components | ≥ 1.5 mm |
+| 4 | TP clearance from board edge | ≥ 3.0 mm |
+| 5 | Bottom-side TP ratio | ≥ 60% of all TPs (single-side fixture) |
+| 6 | Vias used as TPs | No tented vias |
+| 7 | Power / Ground access | TP on every main supply rail |
+| 8 | Crystal / Oscillator | Disable point or bypass available |
+| 9 | Programming header | JTAG/SWD/ISP pad accessible |
 
 **Scoring:**
-- 9/9 Pass → ICT เต็มรูปแบบได้
-- 6–8 Pass → ICT ได้แต่ coverage จำกัด
-- < 6 Pass → แนะนำ FVT หรือ AOI แทน + ECR
+- 9/9 Pass → Full ICT capable
+- 6–8 Pass → ICT possible with limited coverage
+- < 6 Pass → Recommend FVT or AOI instead + raise ECR
 
 ---
 
-### Step 4 — คำนวณ NRE
+### Step 4 — NRE Estimation
 
 ```
 Fixture NRE = Base cost + (TP count × rate) + Engineering hours
 
-ตัวอย่าง:
-Base cost      = ฿25,000
-TP count = 120 × ฿200/point = ฿24,000
-Engineering    = 16h × ฿800/h = ฿12,800
-───────────────────────────────────────
-Total NRE      = ฿61,800
+Example:
+Base cost          = ฿25,000
+120 TPs × ฿200    = ฿24,000
+Engineering 16h    = ฿12,800
+──────────────────────────────
+Total NRE          = ฿61,800
 ```
 
-**Lead time:** 4–6 สัปดาห์หลัง approve Gerber final
+**Lead time:** 4–6 weeks after final Gerber approval.
 
 ---
 
-### Step 5 — สร้าง Assessment Report
+### Step 5 — Assessment Report
 
-Report ประกอบด้วย:
-1. **Board overview** — ขนาด, layer count, component count
-2. **TP Summary table** — top/bottom count, coverage %
-3. **DFT Score** — 9 ข้อ pass/fail พร้อม recommendation
+The report should include:
+1. **Board overview** — dimensions, layer count, component count
+2. **TP Summary** — top/bottom count, coverage %
+3. **DFT Score** — 9 criteria pass/fail with recommendations
 4. **NRE Estimate** — itemized
-5. **Recommendation** — ICT / FVT / AOI / Combined strategy
+5. **Recommendation** — ICT / FVT / AOI / combined strategy
 
 ---
 
@@ -109,23 +109,23 @@ Report ประกอบด้วย:
 
 | Parameter | Value |
 |-----------|-------|
-| Board size | 120 × 80mm, 4-layer |
+| Board size | 120 × 80 mm, 4-layer |
 | Component count | 187 |
 | TP count (bottom) | 94 |
-| Via accessible | 38 |
+| Accessible vias | 38 |
 | Node count | 118 |
-| Coverage | 112/118 = **94.9%** ✅ |
-| DFT Score | 8/9 (Crystal disable point missing) |
-| Recommendation | ICT ได้เลย + เพิ่ม crystal bypass resistor DNI |
+| Coverage | 112 / 118 = **94.9%** ✅ |
+| DFT Score | 8/9 (crystal disable point missing) |
+| Recommendation | ICT viable + add crystal bypass resistor DNI |
 | NRE Estimate | ฿68,500 |
 
 ---
 
 ## Anti-patterns
 
-| ❌ อย่าทำ | ✅ ทำแทน |
-|-----------|---------|
-| ประเมินจาก BOM อย่างเดียว | ดู Gerber จริงเสมอ |
-| นับแค่ TP labeled "TP" | รวม via ที่ accessible ด้วย |
-| Quote NRE แบบ lump sum ไม่แจก | Itemize ให้ลูกค้าเห็น |
-| ไม่เช็ค tented via | Via ทุก tented = ใช้เป็น TP ไม่ได้ |
+| ❌ Avoid | ✅ Instead |
+|---------|-----------|
+| Assess from BOM only | Always review actual Gerber |
+| Count only pads labeled "TP" | Include accessible vias |
+| Quote NRE as a lump sum | Itemize so customer can evaluate |
+| Ignore tented vias | Every tented via = unusable as TP |

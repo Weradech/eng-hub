@@ -1,108 +1,108 @@
 ---
-title: "Buck LED Driver Field Failure RCA — วิธีวิเคราะห์ความล้มเหลวในสนาม"
+title: "Buck LED Driver Field Failure RCA — A Systematic Approach"
 date: 2026-05-27 10:00:00 +0700
 categories: [Circuit, RCA]
 tags: [led, circuit, rca, buck, power-electronics, field-failure]
 ---
 
-> **TL;DR** — ก่อนเสนอ hypothesis ต้อง gather 4 symptoms ก่อนเสมอ จาก Case จริง GSC5_HL: freewheel diode 1SS355 ทนกระแสไม่พอ → เปลี่ยนเป็น B240A แก้ได้
+> **TL;DR** — Always gather 4 symptoms before proposing a hypothesis. Real case: GSC5_HL freewheel diode 1SS355 undersized for peak current → replaced with B240A, resolved.
 
 ---
 
-## ทำไม Field Failure RCA ถึงยาก?
+## Why Field Failure RCA Is Hard
 
-Field failure ต่างจาก lab failure ตรงที่:
-- ไม่มี scope waveform ให้ดู
-- ชิ้นงานมักถูก stress หลายอย่างพร้อมกัน (temp + vibration + voltage transient)
-- ลูกค้าอธิบาย symptom ด้วยคำพูดทั่วไป ("ไฟไม่ติด" "กะพริบ" "ร้อน")
+Field failures differ from lab failures because:
+- No scope waveforms to examine
+- Parts have been exposed to multiple stressors simultaneously (temperature + vibration + voltage transients)
+- Customers describe symptoms in general terms ("won't turn on", "flickering", "gets hot")
 
-กฎเหล็ก: **อย่าเสนอ root cause ก่อนมี 4 symptoms**
+**Golden rule: Never propose a root cause from fewer than 4 symptoms.**
 
 ---
 
 ## 4 Symptoms Checklist
 
-ก่อน RCA ทุกครั้ง ต้องตอบให้ได้ก่อน:
+Answer these before starting any RCA:
 
-| # | คำถาม | ตัวอย่างคำตอบ |
-|---|-------|---------------|
-| 1 | Failure mode คืออะไร? | LED ดับถาวร / กะพริบ / สว่างลดลง |
-| 2 | เกิดตอนไหน? (Runtime hours) | หลังใช้งาน 200h / cold start / thermal cycle |
-| 3 | Environmental condition? | อุณหภูมิ, ความชื้น, vibration |
-| 4 | Pattern — random หรือ systematic? | Unit ที่ X batch เดียวกันทุกตัว / สุ่ม |
+| # | Question | Example Answer |
+|---|----------|---------------|
+| 1 | What is the failure mode? | LED permanently off / flickering / reduced brightness |
+| 2 | When did it occur? (runtime hours) | After 200h / cold start / thermal cycle |
+| 3 | Environmental conditions? | Temperature, humidity, vibration |
+| 4 | Pattern — random or systematic? | All units from batch X / random |
 
 ---
 
-## Anatomy of a Buck LED Driver
+## Buck LED Driver Anatomy
 
 ```
 VIN ──[L]──┬── VOUT ── LED String
            │
-          [D]  ← Freewheel Diode (จุดที่ fail บ่อย)
+          [D]  ← Freewheel Diode (most common failure point)
            │
           GND
 ```
 
-**Component ที่ fail บ่อยที่สุด (จากประสบการณ์):**
+**Most frequently failed components (from field experience):**
 
-1. **Freewheel Diode** — ทนกระแส peak ไม่พอ
-2. **Inductor** — core saturation ที่ current สูง
-3. **Sense Resistor** — drift ทำให้ current ผิด
-4. **IC Control** — latch-up จาก transient
+1. **Freewheel Diode** — insufficient peak current rating
+2. **Inductor** — core saturation at high current
+3. **Sense Resistor** — drift causing incorrect current regulation
+4. **Control IC** — latch-up from transients
 
 ---
 
 ## Case Study — GSC5_HL Freewheel Diode
 
-### Symptoms ที่ได้รับ
+### Gathered Symptoms
 
 | Symptom | Detail |
 |---------|--------|
-| Failure mode | LED ดับถาวรใน unit บางตัว |
-| Runtime | หลังใช้งาน 50–200h |
+| Failure mode | LED permanently off on select units |
+| Runtime | 50–200h |
 | Environment | Automotive interior, Tamb 85°C max |
-| Pattern | Systematic — batch เดียวกัน ~15% failure rate |
+| Pattern | Systematic — ~15% failure rate within same batch |
 
-### Hypothesis Generation
+### Hypothesis
 
-จาก symptom = systematic + thermal → สงสัย **thermal stress บน component ที่ spec ต่ำ**
+Systematic + thermal → suspect **thermal stress on an undersized component**
 
-**เช็คลำดับ:**
-1. Verify datasheet ของ diode จริง (ไม่ใช่จากความจำ)
-2. คำนวณ worst-case current
-3. เทียบกับ rating
+**Verification sequence:**
+1. Look up actual datasheet (do not rely on memory)
+2. Calculate worst-case current
+3. Compare against rated values
 
 ### Root Cause
 
 **1SS355 (original):**
-- IF(avg) = 100mA
-- IFSM (surge) = 1A
+- IF(avg) = 100 mA
+- IFSM (surge) = 1 A
 
 **Actual circuit demand:**
-- Peak inductor current = 850mA (จาก L = 47µH, freq = 200kHz)
-- Junction temp estimate = 125°C+ ที่ Tamb 85°C
+- Peak inductor current = 850 mA (L = 47 µH, f = 200 kHz)
+- Estimated junction temp > 125°C at Tamb = 85°C
 
-→ **1SS355 ทน surge ไม่พอ** ใน hot condition
+→ **1SS355 cannot sustain surge current under hot conditions**
 
 ### Fix — B240A
 
 | Spec | 1SS355 | B240A |
 |------|--------|-------|
 | Type | Small signal | Schottky power |
-| IF(avg) | 100mA | 2A |
-| IFSM | 1A | 60A |
-| VF | 0.9V | 0.4V |
+| IF(avg) | 100 mA | 2 A |
+| IFSM | 1 A | 60 A |
+| VF | 0.9 V | 0.4 V |
 | Package | SOD-323 | SMA |
 
-→ VF ต่ำกว่าด้วย = efficiency ดีขึ้น + ความร้อนลด
+Lower VF also means improved efficiency and reduced heat dissipation.
 
-### Verify ก่อน Implement
+### Pre-Implementation Verification
 
 ```
-1. ดู datasheet B240A ที่ TJ=125°C → IF ยังพอไหม?
-2. คำนวณ power dissipation: Pd = VF × IF(avg)
-3. เทียบกับ thermal resistance: θJA
-4. ยืนยันว่า footprint compatible (SMA vs SOD-323 = ต้องแก้ layout)
+1. Check B240A datasheet at TJ = 125°C — is IF still sufficient?
+2. Calculate power dissipation: Pd = VF × IF(avg)
+3. Verify thermal resistance: θJA
+4. Confirm footprint compatibility (SMA vs SOD-323 → layout change required)
 ```
 
 ---
@@ -110,34 +110,32 @@ VIN ──[L]──┬── VOUT ── LED String
 ## RCA Methodology Summary
 
 ```
-รับ complaint
+Receive complaint
     ↓
-Gather 4 symptoms (อย่าข้ามขั้นนี้)
+Gather 4 symptoms (never skip)
     ↓
-ระบุ suspect component (top 3)
+Identify top 3 suspect components
     ↓
-Verify datasheet จริง (ไม่ใช่จากความจำ)
+Verify datasheet values (not from memory)
     ↓
-คำนวณ worst-case → เทียบ rating
+Calculate worst-case → compare against rating
     ↓
-Propose fix + verify math self-consistent
+Propose fix + verify math is self-consistent
     ↓
-Single component fix ก่อน (อย่า change หลาย component พร้อมกัน)
+Change ONE component at a time
     ↓
 EVT → Verify → Close
 ```
 
 ---
 
-## Anti-patterns ที่พบบ่อย
+## Common Anti-patterns
 
-| Anti-pattern | ปัญหา |
-|-------------|-------|
-| เสนอ root cause จาก 1 symptom | miss true cause, แก้ผิดจุด |
-| ใช้ datasheet typical แทน worst-case | pass ที่ lab fail ใน field |
-| Change หลาย component พร้อมกัน | ไม่รู้ว่าอะไรแก้ได้จริง |
-| ไม่ verify footprint compatibility | layout revision เพิ่ม cost |
+| ❌ Avoid | ✅ Instead |
+|---------|-----------|
+| Propose root cause from 1 symptom | Always gather 4 |
+| Use typical datasheet values | Use worst-case |
+| Change multiple components at once | One change at a time |
+| Ignore footprint compatibility | Check before specifying fix |
 
----
-
-> Pattern นี้ใช้ได้กับ DC-DC converter ทุกประเภท ไม่ใช่แค่ LED driver ค่ะ
+> This methodology applies to any DC-DC converter topology, not just LED drivers.

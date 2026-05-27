@@ -1,56 +1,56 @@
 ---
-title: "BOM Lifecycle — จาก RFQ Stage ถึง Active Production ใน Odoo"
+title: "BOM Lifecycle — From RFQ Stage to Active Production in Odoo"
 date: 2026-05-27 15:00:00 +0700
 categories: [NPI, BOM]
 tags: [bom, odoo, mrp, npi, rfq, erp]
 ---
 
-> **TL;DR** — BOM มีหลาย stage ที่แตกต่างกันมาก RFQ BOM ≠ Production BOM การใส่ BOM ผิด stage เข้า ERP คือต้นเหตุของ MRP เสีย
+> **TL;DR** — RFQ BOM ≠ Production BOM. Each stage has a different owner and format. Uploading the wrong BOM stage into ERP is a leading cause of MRP errors.
 
 ---
 
-## BOM แต่ละ Stage ทำอะไร?
+## BOM Stages and Their Roles
 
 ```
 RFQ BOM → Engineering BOM → Manufacturing BOM → Odoo Active BOM
-   (costing)    (design intent)   (process-aware)    (MRP source)
+(costing)  (design intent)   (process-aware)     (MRP source)
 ```
 
-ทุก stage มีเจ้าของและ format ต่างกัน ห้ามใช้แทนกัน
+Each stage has a distinct owner and should never be used as a substitute for another.
 
 ---
 
 ## Stage 1 — RFQ BOM (Quotation Stage)
 
-**เจ้าของ:** NPI / Sales Engineering  
-**เก็บที่:** Excel file ใน project folder (ยังไม่ขึ้น ERP)
+**Owner:** NPI / Sales Engineering  
+**Stored in:** Excel file in project folder (not in ERP yet)
 
-**ลักษณะ:**
-- มี pricing column (unit price, total cost)
-- อาจมี alternative part
-- component spec อาจยังไม่ finalized
-- ไม่มี reference designator ครบ
+**Characteristics:**
+- Includes pricing columns (unit price, total cost)
+- May contain alternative parts
+- Component specs may not be finalized
+- Reference designators may be incomplete
 
-**ใช้สำหรับ:**
-- คำนวณ material cost สำหรับ quotation
-- ส่งให้ Procurement สอบถามราคา
+**Used for:**
+- Material cost calculation for quotation
+- Sending to Procurement for price inquiries
 
-**ห้ามนำไปใช้:** เป็น source สำหรับ production order
+**Never use for:** Sourcing a production order
 
 ---
 
 ## Stage 2 — Engineering BOM (eBOM)
 
-**เจ้าของ:** Design Engineer / R&D  
-**เก็บที่:** Altium / KiCad export, หรือ PDM system
+**Owner:** Design Engineer / R&D  
+**Stored in:** Altium / KiCad export, or PDM system
 
-**ลักษณะ:**
-- มี Reference Designator ครบ (R1, C2, U3...)
-- Part number ชัดเจน พร้อม manufacturer PN
-- ยังไม่มี process information (reflow temp, paste type)
-- อาจมี DNI (Do Not Install) components
+**Characteristics:**
+- Complete reference designators (R1, C2, U3...)
+- Clear part numbers with manufacturer PN
+- No process information yet (reflow temp, paste type)
+- May include DNI (Do Not Install) components
 
-**ใช้สำหรับ:**
+**Used for:**
 - Design review
 - DFM/DFA analysis
 - ICT test list generation
@@ -59,92 +59,92 @@ RFQ BOM → Engineering BOM → Manufacturing BOM → Odoo Active BOM
 
 ## Stage 3 — Manufacturing BOM (mBOM)
 
-**เจ้าของ:** Process / Manufacturing Engineer  
-**เก็บที่:** ERP / MES (Odoo mrp.bom)
+**Owner:** Process / Manufacturing Engineer  
+**Stored in:** ERP / MES (Odoo mrp.bom)
 
-**ลักษณะ:**
-- Derived จาก eBOM แต่เพิ่ม process info:
-  - Assembly side (Top/Bottom)
-  - Solder type (Reflow/Wave/Hand)
-  - Lot traceability requirement
-- DNI ถูก remove ออกแล้ว
-- Substitute part approved อยู่ใน system
+**Characteristics:**
+- Derived from eBOM, with added process information:
+  - Assembly side (Top / Bottom)
+  - Solder type (Reflow / Wave / Hand)
+  - Lot traceability requirements
+- DNI components removed
+- Approved substitutes registered in the system
 
-**ใช้สำหรับ:**
+**Used for:**
 - Production order generation
 - Material requisition
 - MRP calculation
 
 ---
 
-## Stage 4 — Active BOM ใน Odoo
+## Stage 4 — Active BOM in Odoo
 
-**เจ้าของ:** Production/MRP Team  
-**เก็บที่:** Odoo `mrp.bom` (เฉพาะ BOM ที่เปิด PO แล้ว + active)
+**Owner:** Production / MRP Team  
+**Stored in:** Odoo `mrp.bom` — only BOMs with an open PO and active status
 
 ```
 Odoo mrp.bom:
-  product_id  → Finished Good
-  type        → manufacture
-  bom_line_ids → components (product + qty + uom)
+  product_id    → Finished Good
+  type          → manufacture
+  bom_line_ids  → components (product + qty + uom)
 ```
 
-**Rule สำคัญ:**
-- BOM ใน Odoo = **ผ่าน PO และ approved สำหรับ production แล้วเท่านั้น**
-- RFQ stage BOM ยังอยู่ใน Excel → ยังไม่ขึ้น Odoo
-- หนึ่ง Finished Good ควรมี Active BOM เดียว (ถ้ามีหลายตัว MRP งง)
+**Key rules:**
+- BOM in Odoo = **approved for production, with PO issued**
+- RFQ-stage BOMs stay in Excel until PO is approved
+- One Finished Good should have one Active BOM (multiple active BOMs confuse MRP)
 
 ---
 
-## BOM ECR (Engineering Change Request)
+## ECR Process (Engineering Change Request)
 
-เมื่อต้องเปลี่ยน component ใน production BOM:
+When a production BOM component needs to change:
 
 ```
-1. สร้าง ECR document
-   - เหตุผล (obsolescence / cost reduction / quality)
+1. Create ECR document
+   - Reason (obsolescence / cost reduction / quality)
    - Old PN vs New PN
    - Affected boards / serial number range
 
 2. Validation
-   - EVT หรือ qualification test (ถ้า critical component)
-   - DFM check (ถ้าแก้ layout)
+   - EVT or qualification test (for critical components)
+   - DFM check (if layout affected)
 
-3. Update BOM
-   - Odoo: deactivate old BOM → create new revision
-   - ระบุ effective date / serial number range
+3. Update BOM in Odoo
+   - Deactivate old BOM → create new revision
+   - Set effective date / serial number range
 
-4. Notify Production + QA
+4. Notify Production and QA
 ```
 
 ---
 
 ## Common BOM Mistakes
 
-| Mistake | ผลที่ตามมา |
-|---------|-----------|
-| ใส่ RFQ BOM ขึ้น Odoo โดยตรง | MRP สั่งซื้อ spec ผิด, cost ผิด |
-| มี BOM หลายตัว active พร้อมกัน | MRP ไม่รู้จะใช้ตัวไหน |
-| ไม่ update Odoo BOM หลัง ECR | Production ใช้ component เก่า |
-| ลืม remove DNI จาก mBOM | สั่งซื้อ component ที่ไม่ได้ใส่บอร์ด |
-| Reference designator ไม่ตรงกับ layout | ICT fixture test ผิดจุด |
+| Mistake | Consequence |
+|---------|-------------|
+| Upload RFQ BOM directly to Odoo | MRP orders wrong specs, incorrect cost |
+| Multiple active BOMs for same product | MRP doesn't know which to use |
+| Not updating Odoo BOM after ECR | Production uses obsolete components |
+| Forgetting to remove DNIs from mBOM | Orders components that are never installed |
+| Reference designators don't match layout | ICT fixture probes wrong locations |
 
 ---
 
-## สรุป Flow
+## Summary Flow
 
 ```
-NPI รับ spec
+NPI receives spec
     ↓
-สร้าง RFQ BOM (Excel) → ใช้คิดราคา
+Create RFQ BOM (Excel) → use for costing
     ↓
-Design ออก eBOM (Altium export)
+Design produces eBOM (Altium export)
     ↓
-Process Engineer สร้าง mBOM + add process info
+Process Engineer creates mBOM + adds process info
     ↓
-PO approved → upload ขึ้น Odoo mrp.bom
+PO approved → upload to Odoo mrp.bom
     ↓
-Production ใช้ → MRP สั่งซื้อจาก Odoo
+Production uses → MRP orders from Odoo
 ```
 
-BOM lifecycle ชัดเจน = MRP แม่นยำ = สั่งของตรง = ลด waste ค่ะ
+A clear BOM lifecycle = accurate MRP = correct purchasing = less waste.
