@@ -25,6 +25,8 @@ avatar: ""
 
 theme_mode: light
 
+future: true
+
 toc: true
 
 paginate: 10
