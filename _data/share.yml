@@ -1,0 +1,5 @@
+# Share buttons on posts
+- type: twitter
+  icon: "fa-brands fa-square-x-twitter"
+- type: linkedin
+  icon: "fab fa-linkedin"
