@@ -1,22 +1,24 @@
 ---
-title: "Financial Core vs Operational Core — Mental Model สำหรับ System Integration"
+title: "Financial Core vs Operational Core — A Mental Model for System Integration"
 date: 2026-05-27 16:00:00 +0700
 categories: [System, Architecture]
 tags: [erp, wms, mrp, odoo, system-integration, architecture]
 ---
 
-> **TL;DR** — ERP (Odoo) = Book of Record สำหรับเงิน; ระบบปฏิบัติการ (WMS/MRP/MES) = System of Engagement สำหรับงาน ทั้งสองต้องคุยกันแต่ห้าม merge เป็นระบบเดียว
+> **TL;DR** — ERP (Odoo) = Book of Record for money. Operational systems (WMS/MRP/MES) = Systems of Engagement for work. Both must communicate, but must never be merged into one.
 
 ---
 
-## ปัญหาที่เกิดจากไม่แยก Layer
+## The Problem with "ERP Does Everything"
 
-หลายบริษัท SME พยายามให้ ERP ทำทุกอย่าง:
-- บันทึก GR ใน ERP → slow, ไม่ real-time
-- พนักงาน warehouse ใช้ ERP โดยตรง → error สูง
-- หรือบางทีกลับกัน: ระบบ warehouse ทำเอง → ERP accounting ไม่รู้
+Many Thai SMEs try to make ERP handle all operations:
+- Record GR in ERP → slow, not real-time
+- Warehouse staff use ERP directly → high error rate
 
-ผลคือ **ข้อมูลสองระบบไม่ตรงกัน** = ไม่รู้จะเชื่ออะไร
+Or the opposite:
+- Warehouse system works standalone → ERP accounting has no visibility
+
+The result: **two systems with mismatched data — nobody knows which to trust.**
 
 ---
 
@@ -24,20 +26,21 @@ tags: [erp, wms, mrp, odoo, system-integration, architecture]
 
 ```
 ┌─────────────────────────────────────────┐
-│         FINANCIAL CORE (ERP)            │
+│           FINANCIAL CORE (ERP)          │
 │  Odoo — Book of Record                  │
 │                                         │
 │  PO / Bill / Payment / GL / Invoice     │
-│  "ตัวเลขที่ใช้ยื่นภาษีและรายงานผู้บริหาร"      │
+│  "Numbers used for tax and management   │
+│   reporting"                            │
 └──────────────────┬──────────────────────┘
-                   │ sync (scheduled / event)
+                   │ sync (scheduled / event-driven)
 ┌──────────────────▼──────────────────────┐
-│       OPERATIONAL CORE                  │
+│         OPERATIONAL CORE                │
 │  WMS / MRP / MES / CRM / AP Tracker    │
-│  System of Engagement                   │
+│  Systems of Engagement                  │
 │                                         │
 │  GR / GI / Production / IQC / Delivery  │
-│  "สิ่งที่ทีมทำจริงๆ ทุกวัน"                 │
+│  "What the team actually does every day"│
 └─────────────────────────────────────────┘
 ```
 
@@ -45,101 +48,101 @@ tags: [erp, wms, mrp, odoo, system-integration, architecture]
 
 ## Financial Core — ERP (Odoo)
 
-**Authority on:**
-- PO (Purchase Order) — สัญญากับ supplier
-- Vendor Bill — ใบแจ้งหนี้
-- Payment — การจ่ายเงิน
-- General Ledger — บัญชีแยกประเภท
-- Customer Invoice
+**Authoritative on:**
+- Purchase Orders — supplier contracts
+- Vendor Bills — invoices
+- Payments — disbursements
+- General Ledger — all accounting entries
+- Customer Invoices
 
 **Rules:**
-- ทุก transaction ที่กระทบเงิน → ต้องผ่าน ERP
-- ERP คือ single source of truth สำหรับตัวเลขการเงิน
-- ห้ามแก้ตัวเลขการเงินนอก ERP
+- Every money-touching transaction → must pass through ERP
+- ERP is the single source of truth for financial figures
+- Never modify financial records outside ERP
 
-**Analogy:** ธนาคาร — ทุกการเคลื่อนไหวเงินต้อง record ที่นี่
+**Analogy:** A bank — every monetary movement must be recorded here.
 
 ---
 
 ## Operational Core — Systems of Engagement
 
-**Authority on:**
-- Inventory movement (GR/GI/Transfer)
-- Production status (MO start/complete)
-- Quality inspection (IQC pass/fail)
-- Customer interaction (CRM lead/quote)
+**Authoritative on:**
+- Inventory movement (GR / GI / Transfer)
+- Production status (MO start / complete)
+- Quality inspection (IQC pass / fail)
+- Customer interaction (CRM lead / quote)
 
 **Rules:**
-- Optimize for speed + usability + real-time
-- User-friendly UI → ลด error
-- Push summary ไปหา ERP (ไม่ใช่ real-time sync ทุก transaction)
+- Optimize for speed, usability, and real-time visibility
+- User-friendly UI → fewer errors
+- Push summaries to ERP (not real-time sync on every transaction)
 
-**Analogy:** หน้าร้าน — ลูกค้าและพนักงานทำงานที่นี่ แต่สิ้นวันต้องส่งยอดเข้าระบบบัญชี
+**Analogy:** The shop floor — customers and staff work here, but end-of-day totals go to accounting.
 
 ---
 
-## Integration Pattern
+## Integration Patterns
 
 ### Sync Direction
 
 ```
-Operational → Financial (Push summary)
+Operational → Financial  (push summary)
   WMS GR complete → Odoo stock.move + vendor bill matching
 
-Financial → Operational (Pull master data)
-  Odoo: Item master, Supplier, Customer, Analytic account
-  → ดึงเข้า WMS/MRP ก่อนใช้งาน
+Financial → Operational  (pull master data)
+  Odoo: Item master, Supplier, Customer, Analytic accounts
+  → pulled into WMS/MRP before use
 ```
 
 ### Two-Status Pattern
 
-transaction เดียวมีได้ 2 status:
+A single transaction can carry two independent statuses:
 
-| Status Type | Owner | ตัวอย่าง |
+| Status Type | Owner | Example |
 |-------------|-------|---------|
 | Operational | WMS | `received` → `iqc_pass` → `in_stock` |
 | Financial | Odoo | `draft` → `posted` → `paid` |
 
-ทั้งสองไม่ต้องเป็น 1:1 เสมอ เช่น:
-- WMS: `iqc_pass` (ของเข้าคลังแล้ว)
-- Odoo: Bill ยัง `draft` (รอ Accounting post)
+These are not required to be 1:1. For example:
+- WMS: `iqc_pass` (goods are in the warehouse)
+- Odoo Bill: still `draft` (Accounting hasn't posted yet)
 
 ---
 
-## Common Integration Anti-patterns
+## Integration Anti-patterns
 
-| Anti-pattern | ปัญหา |
-|-------------|-------|
-| Read Odoo stock ตรงจาก WMS ทุก transaction | Odoo load สูง, latency สูง |
-| WMS เขียน Odoo GL โดยตรง | ข้าม accounting rules, audit fail |
-| Real-time sync ทุก field | network dependency สูง — WMS ดับเมื่อ Odoo down |
-| ไม่มี sync log | ไม่รู้ว่า transaction ไหน push ไป Odoo แล้ว |
+| Anti-pattern | Problem |
+|-------------|---------|
+| WMS reads Odoo stock directly on every transaction | High Odoo load, high latency |
+| WMS writes directly to Odoo GL | Bypasses accounting rules, fails audit |
+| Full real-time sync on every field | WMS goes down when Odoo is unavailable |
+| No sync log | No way to verify which transactions reached Odoo |
 
 ---
 
-## Outbox Pattern สำหรับ Reliability
+## Outbox Pattern for Reliability
 
 ```
-WMS transaction complete
+WMS transaction completes
     ↓
-Write to outbox table (local DB)
+Write to local outbox table
     ↓
-Background job push ไป Odoo ทุก 15 นาที
+Background job pushes to Odoo every 15 minutes
     ↓
-Mark outbox as sent หลัง Odoo confirm
+Mark outbox record as sent after Odoo confirms
     ↓
-ถ้า fail → retry with exponential backoff
+On failure → retry with exponential backoff
 ```
 
-**ข้อดี:** WMS ไม่ขึ้นกับ Odoo availability → ทำงานได้แม้ Odoo down
+**Benefit:** WMS operates independently of Odoo availability — continues working even when Odoo is down.
 
 ---
 
-## สรุป
+## Summary
 
-> ถามตัวเองก่อนทุก design decision:
-> - "transaction นี้กระทบเงินไหม?" → ต้องผ่าน ERP
-> - "transaction นี้คือการทำงานจริงของทีมไหม?" → อยู่ใน Operational system
-> - "ทั้งสองระบบต้องรู้ไหม?" → sync ด้วย outbox pattern
+> Ask yourself before every design decision:
+> - "Does this transaction touch money?" → must go through ERP
+> - "Is this what the team actually does operationally?" → belongs in Operational system
+> - "Does both systems need to know?" → sync via outbox pattern
 
-แยก layer ชัดเจน = scale ได้ + maintain ง่าย + audit ผ่านค่ะ
+Clear layer separation = scalable + maintainable + audit-ready.

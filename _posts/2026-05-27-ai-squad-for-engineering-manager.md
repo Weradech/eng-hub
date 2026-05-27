@@ -1,166 +1,166 @@
 ---
-title: "AI Squad สำหรับ Engineering Manager — ทำงานคนเดียวได้เหมือนมีทีม 10 คน"
+title: "AI Squad for Engineering Managers — One Person, Ten-Person Output"
 date: 2026-05-27 11:00:00 +0700
 categories: [Tools, AI]
 tags: [claude-code, ai, productivity, engineering-management, llm]
 ---
 
-> **TL;DR** — Engineering Manager คนเดียวสามารถ run NPI + RFQ + BOM + SOP + System Integration ได้พร้อมกัน ด้วย AI agent squad ที่ถูก assign role ชัดเจน
+> **TL;DR** — A solo Engineering Manager can run NPI + RFQ + BOM + SOP + System Integration simultaneously by assigning specialized AI agents with clearly defined roles.
 
 ---
 
-## ปัญหาของ Engineering Manager คนเดียว
+## The Solo Engineering Manager Problem
 
-ใน SME ไทย Engineering Manager มักต้องทำทุกอย่างพร้อมกัน:
-- Review BOM จากทีม procurement
-- ตอบ RFQ ให้ลูกค้า
-- ดู DFM/DFA กับ design team
-- เขียน SOP/WI สำหรับ ISO audit
-- Monitor production KPI
+In Thai SMEs, an Engineering Manager often handles everything at once:
+- Reviewing BOM from procurement
+- Responding to customer RFQs
+- DFM/DFA review with the design team
+- Writing SOP/WI for ISO audits
+- Monitoring production KPIs
 
-**ปัญหา**: งาน context-switch สูงมาก → output ช้า → deadline พลาด
+**The result**: high context-switching → slow output → missed deadlines.
 
 ---
 
-## แนวคิด AI Squad
+## The AI Squad Concept
 
-แทนที่จะใช้ AI เป็น "chatbot ตอบคำถาม" → ใช้เป็น **specialized agent** แต่ละตัวมี role ชัดเจน
+Instead of using AI as a "chatbot that answers questions" — treat each agent as a **specialist** with a clearly defined role.
 
 ```
-Engineering Manager (คุณ)
+Engineering Manager (you)
         │
    ┌────┴────┐
    ▼         ▼
-[BOM Agent] [RFQ Agent]   ← ทำ parallel
-   │              │
-[Design Agent] [Doc Agent] ← ส่งงานกันได้
+[BOM Agent] [RFQ Agent]    ← run in parallel
+      │            │
+[DFM Agent]  [Doc Agent]   ← can hand off to each other
 ```
 
 ---
 
-## 4 Core Agents สำหรับ NPI/SE
+## 4 Core Agents for NPI/SE
 
-### 1. BOM Agent — ตรวจ BOM + Cost Roll-up
+### 1. BOM Agent — Review & Cost Roll-up
 
 **Prompt template:**
 ```
-คุณคือ BOM Engineer ที่เชี่ยวชาญ PCBA
-BOM ด้านล่างนี้: [วาง BOM]
-ทำ:
-1. ตรวจ reference designator ซ้ำ
-2. Flag component ที่ไม่มี approved vendor
-3. Roll-up material cost รวม OH 15%
+You are a PCBA BOM Engineer.
+Given the BOM below: [paste BOM]
+Please:
+1. Flag duplicate reference designators
+2. Flag components with no approved vendor
+3. Roll up material cost with 15% OH
 Output: table + summary
 ```
 
-**ใช้กับ:** Excel BOM, Altium BOM export, Odoo mrp.bom
+**Works with:** Excel BOM, Altium export, Odoo mrp.bom
 
 ---
 
-### 2. RFQ Agent — เขียน quotation + technical scope
+### 2. RFQ Agent — Quotation & Technical Scope
 
 **Prompt template:**
 ```
-คุณคือ NPI Engineer ที่ทำ quotation
-Scope: [ใส่ spec/drawing summary]
-คำนวณราคาตาม pattern:
-- Material: [ราคาจาก BOM]
-- Assembly: [จำนวน placements]
-- OH: 15% on mfg
+You are an NPI Engineer preparing a customer quotation.
+Scope: [paste spec/drawing summary]
+Calculate price using:
+- Material: [from BOM]
+- Assembly: [placement count]
+- OH: 15% on mfg costs
 - Margin: 25%
 - NRE: [tooling list]
-Output: quotation format ภาษาอังกฤษ lump sum
+Output: English quotation, lump sum format
 ```
 
 ---
 
-### 3. DFM Agent — Review drawing สำหรับ manufacturability
+### 3. DFM Agent — Drawing Review for Manufacturability
 
-**สิ่งที่ต้องให้:**
-- PDF drawing หรือ screenshot
-- Assembly process ที่จะใช้ (SMT/THT/Wave)
+**What to provide:**
+- PDF drawing or screenshot
+- Intended assembly process (SMT / THT / Wave)
 - Target annual volume
 
-**Output ที่ได้:**
-- DFM checklist ผ่าน/ไม่ผ่าน
-- Recommended changes พร้อม rationale
+**Output:**
+- DFM checklist (pass / fail per item)
+- Recommended changes with rationale
 - Risk ranking
 
 ---
 
-### 4. Doc Agent — เขียน SOP/WI ตาม ISO structure
+### 4. Doc Agent — SOP/WI to ISO Structure
 
 **Prompt template:**
 ```
-เขียน Work Instruction สำหรับ [ชื่อ process]
-ตาม ISO 9001:2015 structure:
+Write a Work Instruction for [process name]
+following ISO 9001:2015 structure:
 - Header: Doc No / Rev / Effective Date / Process Owner
-- Purpose (1 ย่อหน้า)
+- Purpose (1 paragraph)
 - Scope
-- Steps (numbered, action-oriented)
-- Quality checkpoint ทุก critical step
+- Steps (numbered, action-oriented verbs)
+- Quality checkpoint at every critical step
 - Related documents
-ภาษา: ไทย
+Language: English
 ```
 
 ---
 
-## Setup จริงที่ใช้อยู่
+## Real Setup in Use
 
 ### Claude Code (Primary)
 - **Model**: Claude Sonnet 4.6
-- **Use case**: Complex analysis, BOM review, SOP เขียน, code
+- **Use cases**: Complex analysis, BOM review, SOP writing, code
 - **Cost**: ~$3/hr heavy use
 
 ### Gemini CLI (Secondary)
-- **Use case**: Browser-bound tasks, NotebookLM upload, Excel reading
-- **Strength**: Google Workspace integration
+- **Use cases**: Browser-bound tasks, Google Workspace integration
+- **Strength**: File reading from Google Drive, NotebookLM uploads
 
 ### NotebookLM (Knowledge Base)
-- Upload SOP + Drawing + BOM เก่าๆ ทั้งหมด
-- Query ด้วย natural language ว่า "เคยทำ project แบบนี้ไหม?"
-- ช่วย recall ได้เร็วมาก
+- Upload all historical SOPs, drawings, and BOMs
+- Query in natural language: "Have we done a project like this before?"
+- Dramatically faster recall than searching folders
 
 ---
 
-## Workflow ตัวอย่าง — RFQ ใหม่ใน 30 นาที
+## Sample Workflow — New RFQ in 30 Minutes
 
 ```
-1. รับ spec จากลูกค้า (5 นาที)
+1. Receive spec from customer           (5 min)
    ↓
-2. BOM Agent: extract component list จาก spec (5 นาที)
+2. BOM Agent: extract component list    (5 min)
    ↓
-3. BOM Agent: query ราคาจาก Odoo/supplier portal (5 นาที)
+3. BOM Agent: query prices from Odoo   (5 min)
    ↓
-4. RFQ Agent: calculate + generate quotation draft (10 นาที)
+4. RFQ Agent: calculate + draft quote  (10 min)
    ↓
-5. Review + approve + send (5 นาที)
+5. Review + approve + send             (5 min)
 ```
 
-เดิมใช้เวลา 1–2 วัน → เหลือ 30 นาที
+Previously: 1–2 days → now: 30 minutes.
 
 ---
 
-## Tips จากประสบการณ์
+## Tips from Experience
 
 | Do | Don't |
 |----|-------|
-| ให้ context ชัดเจน (เป็น engineer ระดับไหน?) | ถามกว้างๆ "ช่วยทำ BOM หน่อย" |
-| ตรวจ output ทุกครั้ง โดยเฉพาะตัวเลข | Blind trust output |
-| ใช้ structured prompt (role + task + output format) | Free-form paragraph |
-| ให้ sample output ที่ต้องการ | อธิบาย output แค่คำ |
+| Provide clear context (what engineering level?) | Ask vaguely: "help me with this BOM" |
+| Always verify output, especially numbers | Blindly trust AI output |
+| Use structured prompts (role + task + format) | Write free-form paragraphs |
+| Include a sample output format | Just describe it in words |
 
 ---
 
-## ROI จริง
+## Observed ROI
 
-| งาน | เดิม | ด้วย AI |
-|-----|------|---------|
-| PCBA Quotation | 1–2 วัน | 30–60 นาที |
-| SOP เขียนใหม่ | 3–5 วัน | 2–4 ชั่วโมง |
-| BOM Review | 2–3 ชั่วโมง | 15–30 นาที |
-| RCA Report | 1 วัน | 2–3 ชั่วโมง |
+| Task | Before AI | With AI Squad |
+|------|-----------|---------------|
+| PCBA Quotation | 1–2 days | 30–60 min |
+| SOP from scratch | 3–5 days | 2–4 hours |
+| BOM Review | 2–3 hours | 15–30 min |
+| RCA Report | 1 day | 2–3 hours |
 
 ---
 
-> จุดสำคัญ: AI ไม่ได้แทน engineering judgment — AI ลด **administrative overhead** ให้คุณมีเวลา focus ที่ decision-making จริงๆ
+> The key insight: AI doesn't replace engineering judgment — it eliminates **administrative overhead**, freeing you to focus on the decisions that actually require your expertise.

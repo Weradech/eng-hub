@@ -6,19 +6,19 @@ order: 4
 
 ## Syntech Engineering Hub
 
-แหล่งรวมความรู้ด้าน NPI, PCBA Engineering, Circuit Design และ System Integration จากประสบการณ์จริงในอุตสาหกรรม EMS/OEM ไทย
+A practical knowledge base covering NPI, PCBA Engineering, Circuit Design, and System Integration — built from real-world experience in Thailand's EMS/OEM industry.
 
-### ครอบคลุมหัวข้อ
+### Topics Covered
 
-- **NPI Process** — RFQ, BOM Costing, Stage Gate, DFM/DFA
-- **Circuit & Electronics** — Power electronics, LED driver, RCA methodology
-- **AI Tools** — Claude Code, Gemini CLI, AI-assisted engineering workflow
-- **ISO / SOP** — Document structure, Process ownership, Work Instruction writing
+- **NPI Process** — RFQ costing, BOM lifecycle, stage gates, DFM/DFA
+- **Circuit & Electronics** — Power electronics, LED drivers, field failure RCA
+- **AI-Assisted Engineering** — Claude Code, Gemini CLI, AI workflow for engineers
+- **ISO / Documentation** — SOP structure, Work Instructions, process ownership
 - **System Integration** — WMS, MRP, MES architecture patterns
 
-### ผู้เขียน
+### Author
 
 NPI & System Engineering Manager  
-Synergy Technology Co., Ltd.
+Synergy Technology Co., Ltd. · Thailand
 
-> เนื้อหาทั้งหมดมาจากประสบการณ์งานจริง ไม่ใช่ textbook
+> All content comes from hands-on project experience, not textbooks.

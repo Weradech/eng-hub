@@ -1,101 +1,104 @@
 ---
-title: "NPI Stage Gate — PoC → EVT → DVT → PVT → MP ทำไมต้องมีทุก Gate?"
+title: "NPI Stage Gate — Why Every Gate from PoC to MP Exists"
 date: 2026-05-27 13:00:00 +0700
 categories: [NPI, Process]
 tags: [npi, stage-gate, evt, dvt, pvt, product-development]
 ---
 
-> **TL;DR** — Stage Gate ไม่ใช่ bureaucracy แต่คือ risk firewall แต่ละ gate ปิด risk ประเภทหนึ่งก่อนลงทุนเพิ่ม
+> **TL;DR** — Stage gates are not bureaucracy. Each gate is a risk firewall that prevents exponentially more expensive problems downstream.
 
 ---
 
-## ทำไมต้องมี Stage Gate?
+## Why Stage Gates Exist
 
-ต้นทุนแก้ปัญหาเพิ่มแบบ exponential ตามระยะของ project:
+The cost to fix a problem grows exponentially with project stage:
 
 ```
-Design stage:    ฿1,000   (แก้ schematic)
-EVT stage:       ฿10,000  (แก้ layout + respin)
-DVT stage:       ฿100,000 (แก้ tooling/mold)
-Production:      ฿1,000,000+ (recall, rework, warranty)
+Design stage:   ฿1,000      (edit schematic)
+EVT stage:      ฿10,000     (layout respin)
+DVT stage:      ฿100,000    (tooling rework)
+Production:     ฿1,000,000+ (recall, rework, warranty claims)
 ```
 
-**Gate = จุดตัดสินใจว่าพร้อมลงทุนขั้นต่อไปหรือยัง**
+**A gate = a decision point: are we ready to invest in the next stage?**
 
 ---
 
-## 5 Stages
+## Stage 1 — PoC (Proof of Concept)
 
-### PoC — Proof of Concept
-**เป้าหมาย:** พิสูจน์ว่า concept ทำงานได้จริงในหลักการ
+**Goal:** Prove the core concept works in principle.
 
 **Deliverables:**
-- Breadboard / dev kit prototype
-- Key function demo (ไม่ต้องครบทุก feature)
-- BOM draft (ไม่ต้อง costed)
-- Go/No-Go decision
+- Breadboard / dev-kit prototype
+- Key function demo (full feature set not required)
+- Draft BOM (no costing needed yet)
+- Go / No-Go decision
 
-**Gate ออก:** Core function works → ลงทุน layout จริง
+**Exit gate:** Core function demonstrated → invest in real layout
 
 ---
 
-### EVT — Engineering Validation Test
-**เป้าหมาย:** validate ว่า design ทำงานได้ตาม spec ทุกข้อ
+## Stage 2 — EVT (Engineering Validation Test)
+
+**Goal:** Validate that the design meets every spec.
 
 **Deliverables:**
-- First PCB spin (hand-built หรือ proto house)
-- Schematic + Layout complete
+- First PCB spin (hand-built or proto house)
+- Complete schematic + layout
 - BOM with approved vendors
-- Test report vs. spec
-- Failure analysis ทุกจุดที่ fail
+- Test report vs. specification
+- Failure analysis for every failing item
 
-**Gate ออก:** All critical specs pass → ลงทุน DVT tooling
+**Exit gate:** All critical specs pass → invest in DVT tooling
 
-**EVT fail patterns:**
-- Power integrity (noise, ripple)
-- Thermal ไม่ผ่าน (component เกิน Tjmax)
-- EMI fail pre-scan
-- Firmware stability
+**Common EVT failure modes:**
+- Power integrity (noise, ripple out of spec)
+- Thermal violation (component exceeds Tjmax)
+- EMI pre-scan failure
+- Firmware instability
 
 ---
 
-### DVT — Design Validation Test
-**เป้าหมาย:** validate ว่า design + process ผลิตได้จริง และผ่าน reliability
+## Stage 3 — DVT (Design Validation Test)
+
+**Goal:** Validate that the design AND process are production-ready and pass reliability.
 
 **Deliverables:**
-- Production-intent PCB (จาก production vendor)
-- Tooling / fixture / jig complete
-- Reliability test: temp cycle, humidity, vibration
-- Regulatory compliance: CE/FCC/TIS pre-test
+- Production-intent PCB (from production vendor, not prototype house)
+- Tooling / fixtures / jigs complete
+- Reliability tests: thermal cycling, humidity, vibration
+- Regulatory pre-compliance: CE / FCC / TIS
 - DFM/DFA sign-off
 - SOP draft
 
-**Gate ออก:** Reliability pass + yield ≥ target → ลงทุน PVT
+**Exit gate:** Reliability pass + yield ≥ target → invest in PVT
 
-**DVT คือ stage ที่แพงที่สุดถ้า fail** เพราะมี tooling cost แล้ว
+**DVT is the most expensive stage to fail** because tooling costs have already been committed.
 
 ---
 
-### PVT — Production Validation Test
-**เป้าหมาย:** validate ว่า production line ผลิตได้ที่ volume จริง พร้อม ship
+## Stage 4 — PVT (Production Validation Test)
+
+**Goal:** Validate that the production line can hit volume at quality targets.
 
 **Deliverables:**
-- Pilot run 50–500 pcs (ขึ้นกับ volume)
-- Yield data จาก production line
-- Test coverage verify (ICT/FCT pass rate)
-- Packaging + label verify
-- Golden sample + limit sample เซ็ต
+- Pilot run of 50–500 units (depending on volume)
+- Yield data from production line
+- Test coverage verification (ICT/FCT pass rates)
+- Packaging and label verification
+- Golden sample + limit samples established
 
-**Gate ออก:** Yield ≥ target, 0 critical defect → MP ramp
+**Exit gate:** Yield ≥ target, zero critical defects → full MP ramp
 
 ---
 
-### MP — Mass Production
-**เป้าหมาย:** ผลิตซ้ำได้อย่างสม่ำเสมอ ภายใต้ cost target
+## Stage 5 — MP (Mass Production)
 
-**Ongoing:**
+**Goal:** Consistently produce at volume within cost targets.
+
+**Ongoing activities:**
 - SPC monitoring (Cpk ≥ 1.33)
-- ECR process สำหรับ continuous improvement
+- ECR process for continuous improvement
 - End-of-life planning
 
 ---
@@ -107,7 +110,7 @@ Production:      ฿1,000,000+ (recall, rework, warranty)
 | PoC → EVT | Core function | Performance ballpark | BOM cost |
 | EVT → DVT | All specs | Yield > 70% | Regulatory |
 | DVT → PVT | Reliability | Yield > 90% | Cost target |
-| PVT → MP | Yield ≥ target | 0 critical defects | Supplier readiness |
+| PVT → MP | Yield ≥ target | Zero critical defects | Supplier readiness |
 
 ---
 
@@ -115,21 +118,21 @@ Production:      ฿1,000,000+ (recall, rework, warranty)
 
 | Mistake | Impact |
 |---------|--------|
-| ข้าม EVT ไป DVT เลย (รีบ) | DVT fail → cost สูง + delay มากกว่าเดิม |
-| DVT ด้วย prototype board แทน production board | Yield ใน PVT ต่างจาก DVT มาก |
-| ไม่ทำ DFM review ก่อน DVT | Tooling ต้อง rework = ค่าใช้จ่ายสูง |
-| Pass gate แบบ "majority pass" | Minority fail = field failure ในอนาคต |
+| Skipping EVT to rush DVT | DVT failure costs more + longer delay than EVT would have |
+| Running DVT with prototype PCB (not production) | PVT yield diverges significantly from DVT data |
+| No DFM review before DVT | Tooling rework = additional cost |
+| Passing a gate with "majority pass" | Minority failures become field failures |
 
 ---
 
 ## NPI Timeline Reference
 
 ```
-PoC:  2–4 สัปดาห์
-EVT:  4–8 สัปดาห์ (รวม PCB lead time 2–3 สัปดาห์)
-DVT:  8–12 สัปดาห์ (รวม reliability test)
-PVT:  4–6 สัปดาห์
+PoC:  2–4 weeks
+EVT:  4–8 weeks  (includes 2–3 week PCB lead time)
+DVT:  8–12 weeks (includes reliability testing)
+PVT:  4–6 weeks
 MP:   ongoing
-─────────────────────
-Total NPI: 18–30 สัปดาห์ (4.5–7.5 เดือน) สำหรับ product ซับซ้อนปานกลาง
+─────────────────────────────────────────
+Total NPI: 18–30 weeks (4.5–7.5 months) for medium-complexity products
 ```
