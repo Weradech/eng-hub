@@ -1,0 +1,84 @@
+theme: jekyll-theme-chirpy
+
+lang: th
+timezone: Asia/Bangkok
+
+title: "Syntech Engineering Hub"
+tagline: "NPI & System Engineering Knowledge Base"
+description: >-
+  แหล่งรวมความรู้ด้าน NPI, PCBA Engineering, Circuit Design และ System Integration
+  จากประสบการณ์จริงในอุตสาหกรรม EMS/OEM
+
+url: "https://weradech.github.io"
+baseurl: "/eng-hub"
+
+github:
+  username: Weradech
+
+social:
+  name: Weradech K.
+  email: w.kumtong@gmail.com
+  links:
+    - https://github.com/Weradech
+
+avatar: ""
+
+theme_mode: light
+
+toc: true
+
+paginate: 10
+
+kramdown:
+  footnote_backlink: "&#8617;&#xfe0e;"
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    default_lang: plaintext
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: false
+      toc: true
+  - scope:
+      path: "_tabs"
+      type: tabs
+    values:
+      layout: page
+      permalink: /:title/
+
+sass:
+  style: compressed
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: [development]
+
+exclude:
+  - "*.gem"
+  - "*.gemspec"
+  - README.md
+  - LICENSE
+  - "rollup.config.js"
+  - "package*.json"
+  - "node_modules"
+  - Gemfile.lock
