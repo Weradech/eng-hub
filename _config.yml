@@ -75,6 +75,15 @@ compress_html:
   ignore:
     envs: [development]
 
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/
+
 exclude:
   - "*.gem"
   - "*.gemspec"
