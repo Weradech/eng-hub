@@ -1,7 +1,7 @@
 ---
 title: "Is the Number Wrong, or Is the Stock Gone? Reconciliation Without False Alarms"
 date: 2026-06-13 14:00:00 +0700
-categories: [System, Data Integrity]
+categories: [System, Data-Integrity]
 tags: [data-integrity, reconciliation, inventory, rca, wms, erp]
 mermaid: true
 ---
