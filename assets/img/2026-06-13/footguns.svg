@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" role="img" aria-label="Four bugs a green build cannot see, the tool that was blind, and the one-line fix">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .n{font-size:15px;font-weight:800;fill:#ffffff}
+    .bug{font-size:13.5px;font-weight:700;fill:#1f2933}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .body{font-size:12px;fill:#52606d}
+    .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:11.5px;fill:#b02a2a}
+    .fix{font-size:12px;fill:#2f7a37;font-weight:600}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="500" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Four bugs a green build can&#8217;t see</text>
+  <text x="30" y="64" class="sub">Each tool you trusted was structurally blind to its class of bug. Add the check that can see it.</text>
+
+  <!-- Card A -->
+  <g>
+    <rect x="30" y="88" width="410" height="172" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <circle cx="58" cy="116" r="15" fill="#2b3a4a"/><text x="58" y="121" text-anchor="middle" class="n">1</text>
+    <text x="82" y="113" class="bug">The &#8220;::&#8221; that ate the bind param</text>
+    <text x="82" y="131" class="mono">WHERE qty &gt; :v::numeric</text>
+    <text x="50" y="162" class="lbl" fill="#7b8794">BLIND SPOT</text>
+    <text x="50" y="180" class="body">Type-checker can&#8217;t see a runtime SQL</text>
+    <text x="50" y="196" class="body">parser &#8212; &#8220;::&#8221; reads as a 2nd bind name.</text>
+    <text x="50" y="226" class="lbl" fill="#2f9e44">FIX</text>
+    <text x="50" y="244" class="fix">CAST(:v AS numeric) + run the real SQL</text>
+  </g>
+
+  <!-- Card B -->
+  <g>
+    <rect x="460" y="88" width="410" height="172" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <circle cx="488" cy="116" r="15" fill="#2b3a4a"/><text x="488" y="121" text-anchor="middle" class="n">2</text>
+    <text x="512" y="113" class="bug">The bare logger that hid the error</text>
+    <text x="512" y="131" class="mono">except: logger.warn(..)  # NameError</text>
+    <text x="480" y="162" class="lbl" fill="#7b8794">BLIND SPOT</text>
+    <text x="480" y="180" class="body">Tests rarely run except-blocks &#8212; a</text>
+    <text x="480" y="196" class="body">NameError masks the real exception.</text>
+    <text x="480" y="226" class="lbl" fill="#2f9e44">FIX</text>
+    <text x="480" y="244" class="fix">ruff F821 (undefined name) on pre-push</text>
+  </g>
+
+  <!-- Card C -->
+  <g>
+    <rect x="30" y="276" width="410" height="172" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <circle cx="58" cy="304" r="15" fill="#2b3a4a"/><text x="58" y="309" text-anchor="middle" class="n">3</text>
+    <text x="82" y="301" class="bug">LAN HTTP is not a secure context</text>
+    <text x="82" y="319" class="mono">crypto.randomUUID() // undefined</text>
+    <text x="50" y="350" class="lbl" fill="#7b8794">BLIND SPOT</text>
+    <text x="50" y="368" class="body">Works on localhost (a secure context);</text>
+    <text x="50" y="384" class="body">blank screen over http://LAN-IP/.</text>
+    <text x="50" y="414" class="lbl" fill="#2f9e44">FIX</text>
+    <text x="50" y="432" class="fix">Feature-detect + fallback for each API</text>
+  </g>
+
+  <!-- Card D -->
+  <g>
+    <rect x="460" y="276" width="410" height="172" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <circle cx="488" cy="304" r="15" fill="#2b3a4a"/><text x="488" y="309" text-anchor="middle" class="n">4</text>
+    <text x="512" y="301" class="bug">&#8220;Build passed&#8221; is not &#8220;it renders&#8221;</text>
+    <text x="512" y="319" class="mono">tsc &#10003;  tests &#10003;  chart = blank</text>
+    <text x="480" y="350" class="lbl" fill="#7b8794">BLIND SPOT</text>
+    <text x="480" y="368" class="body">Unit tests see logic, not pixels &#8212; a</text>
+    <text x="480" y="384" class="body">collapsed chart still type-checks.</text>
+    <text x="480" y="414" class="lbl" fill="#2f9e44">FIX</text>
+    <text x="480" y="432" class="fix">Render-verify: headless screenshot diff</text>
+  </g>
+
+  <rect x="30" y="462" width="840" height="30" rx="8" fill="#e7f1fb"/>
+  <text x="450" y="482" text-anchor="middle" class="foot">The fix is never &#8220;be more careful&#8221; &#8212; it&#8217;s adding the check that can see the bug.</text>
+</svg>

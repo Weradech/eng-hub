@@ -10,6 +10,9 @@ mermaid: true
 
 ---
 
+![Three "outages" that were never down — a small server refusing connection bursts, a host preferring an unroutable IPv6, and a native addon with an ABI mismatch]({{ "/assets/img/2026-06-13/connection-refused.svg" | relative_url }})
+_Three "outages" — and not one was actually down. The real cause was on our side every time._
+
 The same discipline from the [Buck LED Driver RCA]({% post_url 2026-05-27-buck-led-driver-rca %}) applies to infrastructure: **measure before you replace the diode.** "The integration is broken" is a symptom, not a diagnosis. In all three of these, the loud assumption ("the upstream is down") was wrong, and the real cause was on our side of the wire.
 
 ---

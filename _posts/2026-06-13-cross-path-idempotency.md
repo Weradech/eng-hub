@@ -10,6 +10,9 @@ mermaid: true
 
 ---
 
+![One source record reaching five import paths: per-path dedup lets duplicates through, but a single ingest funnel keyed on the source identity yields exactly one unit]({{ "/assets/img/2026-06-13/cross-path-idempotency.svg" | relative_url }})
+_Per-path guards duplicate the same record; one funnel keyed on the source's identity doesn't._
+
 ## The over-count nobody owned
 
 An operational system was over-counting inventory versus the ERP. Each importer, reviewed in isolation, looked correct. The bug was structural.

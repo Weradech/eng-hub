@@ -9,6 +9,9 @@ tags: [engineering, gotchas, python, sqlalchemy, web-platform, qa]
 
 ---
 
+![Four bugs a green build cannot see — a SQLAlchemy double-colon cast, a bare logger NameError, a LAN-HTTP secure-context gap, and a build that passes but renders blank — each with its one-line fix]({{ "/assets/img/2026-06-13/footguns.svg" | relative_url }})
+_Four bugs a green build can't see — each tool you trusted was blind to its own class of bug._
+
 ## 1. The `::` that ate the bind parameter
 
 Writing a raw query with a PostgreSQL cast looks harmless and *compiles* fine:

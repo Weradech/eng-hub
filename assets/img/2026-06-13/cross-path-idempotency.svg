@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="One source record through five import paths: per-path dedup duplicates, one ingest funnel does not">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:15px;font-weight:700}
+    .chip{font-size:11px;fill:#1f2933}
+    .src{font-size:12.5px;font-weight:700;fill:#ffffff}
+    .out{font-size:14px;font-weight:700}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">One source record, five doors</text>
+  <text x="30" y="64" class="sub">Per-path &#8220;have I seen this?&#8221; guards miss the overlap. Key idempotency on the source&#8217;s identity instead.</text>
+
+  <!-- arrow marker -->
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#7b8794"/></marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d64545"/></marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+  </defs>
+
+  <!-- LEFT: per-path = duplicates -->
+  <rect x="24" y="84" width="420" height="356" rx="12" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="44" y="112" class="ph" fill="#b02a2a">&#10007; Per-path dedup</text>
+  <rect x="44" y="128" width="96" height="40" rx="8" fill="#2b3a4a"/>
+  <text x="92" y="146" text-anchor="middle" class="src">Source</text>
+  <text x="92" y="160" text-anchor="middle" class="src">record</text>
+
+  <!-- 5 importer chips -->
+  <g>
+    <rect x="208" y="120" width="150" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9"/><text x="218" y="137" class="chip">PO receipt</text>
+    <rect x="208" y="152" width="150" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9"/><text x="218" y="169" class="chip">Warehouse transfer</text>
+    <rect x="208" y="184" width="150" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9"/><text x="218" y="201" class="chip">Scheduled sync</text>
+    <rect x="208" y="216" width="150" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9"/><text x="218" y="233" class="chip">Reconciliation</text>
+    <rect x="208" y="248" width="150" height="26" rx="6" fill="#ffffff" stroke="#cbd2d9"/><text x="218" y="265" class="chip">Manual entry</text>
+  </g>
+  <!-- arrows source->chips -->
+  <path d="M140 148 C175 140, 180 133, 206 133" fill="none" stroke="#7b8794" marker-end="url(#ar)"/>
+  <path d="M140 150 C175 158, 180 165, 206 165" fill="none" stroke="#7b8794" marker-end="url(#ar)"/>
+  <path d="M140 152 L206 197" fill="none" stroke="#7b8794" marker-end="url(#ar)"/>
+  <path d="M140 154 C175 200, 180 222, 206 229" fill="none" stroke="#7b8794" marker-end="url(#ar)"/>
+  <path d="M140 156 C172 230, 178 254, 206 261" fill="none" stroke="#7b8794" marker-end="url(#ar)"/>
+  <!-- chips -> dup output -->
+  <path d="M358 197 C384 250, 300 300, 234 322" fill="none" stroke="#d64545" marker-end="url(#arr)"/>
+  <rect x="120" y="330" width="228" height="86" rx="10" fill="#ffffff" stroke="#d64545"/>
+  <text x="234" y="360" text-anchor="middle" class="out" fill="#b02a2a">2&#8211;4 duplicate units</text>
+  <text x="234" y="384" text-anchor="middle" class="chip" fill="#7b8794">the same pile, counted again</text>
+  <text x="234" y="402" text-anchor="middle" class="chip" fill="#7b8794">at every path it never saw</text>
+
+  <!-- RIGHT: one funnel = one unit -->
+  <rect x="456" y="84" width="420" height="356" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="476" y="112" class="ph" fill="#2f7a37">&#10003; One identity, one door</text>
+  <rect x="476" y="128" width="96" height="40" rx="8" fill="#2b3a4a"/>
+  <text x="524" y="146" text-anchor="middle" class="src">Source</text>
+  <text x="524" y="160" text-anchor="middle" class="src">record</text>
+
+  <!-- 5 thin path lines into funnel -->
+  <path d="M572 140 C640 140, 660 175, 690 188" fill="none" stroke="#9aa5b1"/>
+  <path d="M572 146 C640 152, 660 178, 690 192" fill="none" stroke="#9aa5b1"/>
+  <path d="M572 150 L690 196" fill="none" stroke="#9aa5b1"/>
+  <path d="M572 154 C640 200, 660 200, 690 200" fill="none" stroke="#9aa5b1"/>
+  <path d="M572 158 C640 230, 660 210, 690 204" fill="none" stroke="#9aa5b1"/>
+
+  <rect x="690" y="170" width="150" height="56" rx="10" fill="#ffffff" stroke="#2f9e44"/>
+  <text x="765" y="192" text-anchor="middle" class="chip" fill="#1f2933" font-weight="700">Single ingest funnel</text>
+  <text x="765" y="210" text-anchor="middle" class="chip" fill="#52606d">key = source identity</text>
+
+  <path d="M765 226 L765 256" fill="none" stroke="#2f9e44" marker-end="url(#arg)"/>
+  <rect x="676" y="262" width="178" height="30" rx="8" fill="#ffffff" stroke="#cbd2d9"/>
+  <text x="765" y="282" text-anchor="middle" class="chip">UNIQUE INDEX (the backstop)</text>
+
+  <path d="M765 292 L660 322" fill="none" stroke="#2f9e44" marker-end="url(#arg)"/>
+  <rect x="540" y="330" width="228" height="86" rx="10" fill="#ffffff" stroke="#2f9e44"/>
+  <text x="654" y="360" text-anchor="middle" class="out" fill="#2f7a37">Exactly one unit</text>
+  <text x="654" y="384" text-anchor="middle" class="chip" fill="#7b8794">a new door added later</text>
+  <text x="654" y="402" text-anchor="middle" class="chip" fill="#7b8794">goes through the same gate</text>
+
+  <text x="450" y="458" text-anchor="middle" class="foot">&#8220;Each path is correct&#8221; is not a system property &#8212; test the intersection.</text>
+</svg>

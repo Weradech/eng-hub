@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Three outages that were never down: burst-refuse, IPv6 ULA, and ABI segfault">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .h{font-size:15px;font-weight:700;fill:#ffffff}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .body{font-size:12.5px;fill:#1f2933}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect x="0" y="0" width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Three &#8220;outages&#8221; &#8212; and not one was actually down</text>
+  <text x="30" y="64" class="sub">The loud guess blamed the other system. Every time, the fault was on our side of the wire.</text>
+
+  <!-- Card template: 3 columns -->
+  <!-- Card 1 -->
+  <g>
+    <rect x="30" y="92" width="266" height="320" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <path d="M30 104 a12 12 0 0 1 12 -12 h242 a12 12 0 0 1 12 12 v26 h-266 z" fill="#2b3a4a"/>
+    <text x="46" y="122" class="h">1 · Connection refused</text>
+    <text x="46" y="156" class="lbl" fill="#7b8794">LOOKS LIKE</text>
+    <text x="46" y="174" class="body">Bulk read dies at the same</text>
+    <text x="46" y="190" class="body">offset; a single read is fine</text>
+    <rect x="46" y="206" width="74" height="20" rx="10" fill="#fbeaea"/>
+    <text x="56" y="220" class="lbl" fill="#d64545">&#10007; REFLEX</text>
+    <text x="128" y="220" class="body" fill="#a61b1b">&#8220;The ERP is down&#8221;</text>
+    <rect x="46" y="236" width="86" height="20" rx="10" fill="#e9f7ee"/>
+    <text x="56" y="250" class="lbl" fill="#2f9e44">&#10003; REAL CAUSE</text>
+    <text x="46" y="276" class="body" fill="#1f2933">We burst past the server&#8217;s</text>
+    <text x="46" y="292" class="body" fill="#1f2933">small connection pool</text>
+    <text x="46" y="324" class="lbl" fill="#1c7ed6">FIX</text>
+    <text x="46" y="342" class="body">One shared gate +</text>
+    <text x="46" y="358" class="body">gentle paged pulls</text>
+    <text x="46" y="392" class="lbl" fill="#7b8794">TELL: limit, not outage</text>
+  </g>
+
+  <!-- Card 2 -->
+  <g>
+    <rect x="316" y="92" width="268" height="320" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <path d="M316 104 a12 12 0 0 1 12 -12 h244 a12 12 0 0 1 12 12 v26 h-268 z" fill="#2b3a4a"/>
+    <text x="332" y="122" class="h">2 · Network &#8220;flaky&#8221;</text>
+    <text x="332" y="156" class="lbl" fill="#7b8794">LOOKS LIKE</text>
+    <text x="332" y="174" class="body">Some hosts hang &amp; recover,</text>
+    <text x="332" y="190" class="body">others are perfectly fine</text>
+    <rect x="332" y="206" width="74" height="20" rx="10" fill="#fbeaea"/>
+    <text x="342" y="220" class="lbl" fill="#d64545">&#10007; REFLEX</text>
+    <text x="414" y="220" class="body" fill="#a61b1b">&#8220;ISP is flaky&#8221;</text>
+    <rect x="332" y="236" width="86" height="20" rx="10" fill="#e9f7ee"/>
+    <text x="342" y="250" class="lbl" fill="#2f9e44">&#10003; REAL CAUSE</text>
+    <text x="332" y="276" class="body" fill="#1f2933">Host prefers an unroutable</text>
+    <text x="332" y="292" class="body" fill="#1f2933">IPv6 (mesh-VPN ULA)</text>
+    <text x="332" y="324" class="lbl" fill="#1c7ed6">FIX</text>
+    <text x="332" y="342" class="body">gai.conf: rank</text>
+    <text x="332" y="358" class="body">mapped-IPv4 first</text>
+    <text x="332" y="392" class="lbl" fill="#7b8794">TELL: breakage is per-host</text>
+  </g>
+
+  <!-- Card 3 -->
+  <g>
+    <rect x="604" y="92" width="266" height="320" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <path d="M604 104 a12 12 0 0 1 12 -12 h242 a12 12 0 0 1 12 12 v26 h-266 z" fill="#2b3a4a"/>
+    <text x="620" y="122" class="h">3 · Won&#8217;t restart</text>
+    <text x="620" y="156" class="lbl" fill="#7b8794">LOOKS LIKE</text>
+    <text x="620" y="174" class="body">Exit 139, silent, right after</text>
+    <text x="620" y="190" class="body">a host runtime upgrade</text>
+    <rect x="620" y="206" width="74" height="20" rx="10" fill="#fbeaea"/>
+    <text x="630" y="220" class="lbl" fill="#d64545">&#10007; REFLEX</text>
+    <text x="702" y="220" class="body" fill="#a61b1b">&#8220;DB is corrupt&#8221;</text>
+    <rect x="620" y="236" width="86" height="20" rx="10" fill="#e9f7ee"/>
+    <text x="630" y="250" class="lbl" fill="#2f9e44">&#10003; REAL CAUSE</text>
+    <text x="620" y="276" class="body" fill="#1f2933">Native addon built for the</text>
+    <text x="620" y="292" class="body" fill="#1f2933">old ABI &#8212; segfaults</text>
+    <text x="620" y="324" class="lbl" fill="#1c7ed6">FIX</text>
+    <text x="620" y="342" class="body">Rebuild the native</text>
+    <text x="620" y="358" class="body">module for the runtime</text>
+    <text x="620" y="392" class="lbl" fill="#7b8794">TELL: 139 = SIGSEGV</text>
+  </g>
+
+  <rect x="30" y="428" width="840" height="30" rx="8" fill="#e7f1fb"/>
+  <text x="450" y="448" text-anchor="middle" class="foot">Localize before you escalate &#8212; which leg is dead: yours, the network, or theirs?</text>
+</svg>
