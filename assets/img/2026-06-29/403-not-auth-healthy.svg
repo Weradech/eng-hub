@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" role="img" aria-label="One 403 has two opposite meanings: a control working, or your own job's credential dead behind a green dashboard">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .code{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:26px;font-weight:700;fill:#ffffff}
+    .codesub{font-size:12.5px;fill:#cbd2d9}
+    .oh{font-size:16px;font-weight:700}
+    .ob{font-size:12.5px;fill:#52606d}
+    .band{font-size:13px;fill:#3e4c59}
+    .bandh{font-size:12px;font-weight:700;letter-spacing:1px}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="500" fill="#ffffff"/>
+  <text x="30" y="40" class="title">A 403 isn&#8217;t proof auth is healthy</text>
+  <text x="30" y="64" class="sub">Same status code, opposite meaning. Identify whose credential failed before you call it &#8220;expected.&#8221;</text>
+
+  <defs>
+    <marker id="arg" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d64545"/></marker>
+  </defs>
+
+  <!-- 403 box -->
+  <rect x="50" y="170" width="170" height="100" rx="12" fill="#2b3a4a"/>
+  <text x="135" y="218" text-anchor="middle" class="code">403</text>
+  <text x="135" y="244" text-anchor="middle" class="codesub">your scheduled job</text>
+
+  <!-- arrows -->
+  <path d="M220 200 C290 180, 300 158, 348 153" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#arg)"/>
+  <path d="M220 240 C290 262, 300 286, 348 291" fill="none" stroke="#d64545" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- green: control working -->
+  <rect x="352" y="110" width="518" height="86" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="372" y="140" class="oh" fill="#2f7a37">&#10003; A control working</text>
+  <text x="372" y="164" class="ob">The service blocked an unauthorized caller.</text>
+  <text x="372" y="182" class="ob">Security is doing exactly its job &#8212; healthy.</text>
+
+  <!-- red: dead integration -->
+  <rect x="352" y="248" width="518" height="86" rx="12" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="372" y="278" class="oh" fill="#b02a2a">&#10007; A dead integration</text>
+  <text x="372" y="302" class="ob" fill="#a61b1b">Your job&#8217;s token was rotated out from under it.</text>
+  <text x="372" y="320" class="ob" fill="#a61b1b">Hundreds of silent failures; the automation stopped.</text>
+
+  <!-- grey band -->
+  <rect x="30" y="350" width="840" height="34" rx="8" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="450" y="372" text-anchor="middle" class="band">Meanwhile <tspan font-family="'SFMono-Regular',Consolas,monospace" font-weight="700" fill="#1f2933">/healthz</tspan> pings with a different credential &#8212; so the dashboard stays green.</text>
+
+  <!-- blue fix band -->
+  <rect x="30" y="394" width="840" height="46" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="48" y="414" class="bandh" fill="#1c7ed6">FIX</text>
+  <text x="48" y="432" class="band">Monitor the job&#8217;s OUTCOME, not endpoint liveness &#183; alert on a failure streak &#183; on rotation, enumerate every consumer.</text>
+
+  <text x="450" y="478" text-anchor="middle" class="foot">A status code describes one request&#8217;s fate &#8212; not the system&#8217;s health.</text>
+</svg>

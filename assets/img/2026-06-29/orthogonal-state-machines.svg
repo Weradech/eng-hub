@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="One overloaded status column explodes into invalid combinations; three orthogonal columns grow additively">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:15px;font-weight:700}
+    .hd{font-size:12.5px;font-weight:700;fill:#ffffff}
+    .row{font-size:12.5px;fill:#1f2933}
+    .axis{font-size:11.5px;font-weight:700;fill:#1f2933}
+    .val{font-size:11.5px;fill:#3e4c59}
+    .out{font-size:13px;font-weight:700}
+    .note{font-size:12px;fill:#52606d}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">When one status column isn&#8217;t enough</text>
+  <text x="30" y="64" class="sub">One column forced to answer three questions explodes into invalid combinations. Split the axes &#8212; they grow additively.</text>
+
+  <!-- LEFT: overloaded -->
+  <rect x="24" y="84" width="420" height="356" rx="12" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="44" y="112" class="ph" fill="#b02a2a">&#10007; One overloaded column</text>
+  <rect x="44" y="124" width="380" height="26" rx="6" fill="#2b3a4a"/>
+  <text x="54" y="141" class="hd">status &#8212; lifecycle + pipeline + workflow</text>
+  <text x="54" y="172" class="row" fill="#2f7a37">new &#183; contacted &#183; qualified</text>
+  <text x="54" y="194" class="row" fill="#d9760a">won &#183; won_pending_handoff &#183; won_invoiced</text>
+  <text x="54" y="216" class="row" fill="#b02a2a">lost &#183; lost_to_competitor &#183; on_hold_qualified</text>
+  <text x="54" y="238" class="row" fill="#b02a2a">reopened &#183; negotiation &#183; proposal_sent &#8230;</text>
+  <rect x="44" y="258" width="380" height="64" rx="8" fill="#ffffff" stroke="#e3a3a3"/>
+  <text x="54" y="280" class="note" fill="#a61b1b">Invalid combos you must guard by hand:</text>
+  <text x="54" y="302" class="row" fill="#b02a2a">lost + negotiation + handoff  &#8230; and dozens more</text>
+  <rect x="120" y="338" width="228" height="34" rx="10" fill="#ffffff" stroke="#d64545"/>
+  <text x="234" y="360" text-anchor="middle" class="out" fill="#b02a2a">multiplicative growth</text>
+
+  <!-- RIGHT: orthogonal -->
+  <rect x="456" y="84" width="420" height="356" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="476" y="112" class="ph" fill="#2f7a37">&#10003; One column per axis</text>
+  <rect x="476" y="126" width="380" height="46" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="488" y="146" class="axis">lead_status</text>
+  <text x="488" y="164" class="val">active &#183; won &#183; lost &#183; dormant</text>
+  <rect x="476" y="180" width="380" height="46" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="488" y="200" class="axis">opportunity_stage</text>
+  <text x="488" y="218" class="val">prospect &#8594; qualified &#8594; proposal &#8594; negotiation &#8594; closed</text>
+  <rect x="476" y="234" width="380" height="46" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="488" y="254" class="axis">workflow_stage</text>
+  <text x="488" y="272" class="val">new &#8594; in_progress &#8594; handoff &#8594; done</text>
+  <text x="476" y="304" class="note" fill="#2f7a37">A state = one point in three small spaces.</text>
+  <text x="476" y="322" class="note" fill="#2f7a37">&#8220;Won, awaiting handoff&#8221; needs no new value.</text>
+  <rect x="552" y="338" width="228" height="34" rx="10" fill="#ffffff" stroke="#2f9e44"/>
+  <text x="666" y="360" text-anchor="middle" class="out" fill="#2f7a37">additive growth</text>
+
+  <text x="450" y="416" text-anchor="middle" class="foot">If a new rule forces new enum values, you&#8217;re modelling a <tspan font-style="italic">product</tspan> of states &#8212; split it into orthogonal columns.</text>
+</svg>

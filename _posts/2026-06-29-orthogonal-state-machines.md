@@ -9,6 +9,9 @@ tags: [data-modeling, state-machine, crm, schema-design, postgres, sql]
 
 ---
 
+![One overloaded status column explodes into invalid combinations; three orthogonal columns grow additively]({{ "/assets/img/2026-06-29/orthogonal-state-machines.svg" | relative_url }})
+_One column answering three questions grows multiplicatively; orthogonal columns grow additively._
+
 ## The smell: a status enum that keeps growing
 
 A CRM lead starts with a clean `status` column: `new`, `contacted`, `qualified`, `won`, `lost`. Tidy.
