@@ -9,6 +9,9 @@ tags: [erp, wms, mrp, odoo, system-integration, architecture]
 
 ---
 
+![Two-panel mental model: Financial Core (Odoo) owns money and master data, Operational Core (WMS/MRP/MES) owns daily work, and the two sync via outbox without merging]({{ "/assets/img/2026-05-27/financial-core-vs-operational-core.svg" | relative_url }})
+_Each core is authoritative for its own domain and reads &#8212; never writes &#8212; the other&#8217;s; they sync, they never merge._
+
 ## The Problem with "ERP Does Everything"
 
 Many Thai SMEs try to make ERP handle all operations:

@@ -9,6 +9,9 @@ tags: [dfm, dfa, pcba, smt, pcb, npi, manufacturing]
 
 ---
 
+![DFM is the cheapest quality gate in NPI: a layout issue costs nothing to fix at EVT, some rework at prototype, and 10,000 to 100,000 baht in production. The review checks SMT placement, reflow solder, wave solder, pick and place, and test access]({{ "/assets/img/2026-06-29/dfm-checklist-pcba.svg" | relative_url }})
+_The same fix is free on the screen and a fortune on the line — DFM is the one gate that costs nothing to pass._
+
 ## Why DFM Gets Skipped (and Why That's Expensive)
 
 DFM review happens at the worst possible time: after the schematic is finalised and the PCB layout is "done," but before the first boards are ordered. Engineers are tired, the schedule is slipping, and the board "looks fine" on screen.

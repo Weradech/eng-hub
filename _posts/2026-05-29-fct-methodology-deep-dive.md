@@ -7,6 +7,9 @@ tags: [fct, functional-test, test-engineering, pcba, firmware, calibration, burn
 
 > **TL;DR** — FCT is the *final gate before Box Build*. It verifies the board actually performs its intended function — power sequencing, communication, sensor read, actuator drive, firmware boot, calibration. NRE ฿58K–203K. Per-unit cost ฿100/test point. Combined with ICT, achieves 98%+ defect coverage.
 
+![FCT is the final gate before Box Build: a board runs through power-on, communication, sensor read, actuator drive, firmware boot, and calibration; passing all six releases it. ICT checks parts are present, FCT checks the board functions, and together they reach 98 percent-plus defect coverage]({{ "/assets/img/2026-05-29/fct-methodology-deep-dive.svg" | relative_url }})
+_ICT asks “is it built right?”; FCT asks “does it work?” — a board needs both before it ships._
+
 This is a companion to the [ICT Methodology Deep Dive]({% post_url 2026-05-29-ict-methodology-deep-dive %}). ICT verifies components are present and correct; FCT verifies the board *works*.
 
 ---

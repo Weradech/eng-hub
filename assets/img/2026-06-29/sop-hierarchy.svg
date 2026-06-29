@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="SOP hierarchy: a Procedure is for multiple people across departments and is outcome-focused; a Work Instruction is for one person doing one task, step by step. The boundary is one person versus several people doing handoffs">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:16px;font-weight:700}
+    .tag{font-size:11.5px;font-style:italic}
+    .k{font-size:10px;font-weight:700;letter-spacing:.5px;fill:#7b8794}
+    .v{font-size:12.5px;fill:#1f2933}
+    .rule{font-size:13px;font-weight:700;fill:#1f2933}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">SOP Hierarchy: Procedure vs Work Instruction</text>
+  <text x="30" y="64" class="sub">Writing the wrong document type wastes everyone&#8217;s time. The boundary is usually one person vs. several doing handoffs.</text>
+
+  <!-- decision strip -->
+  <rect x="24" y="84" width="852" height="42" rx="10" fill="#eef1f5" stroke="#cbd2d9"/>
+  <text x="44" y="111" class="rule">Decision rule:  1 person, 1 task &#8594; <tspan fill="#1c7a3f">Work Instruction</tspan>     &#183;     N persons, handoffs across depts &#8594; <tspan fill="#1c5fa8">Procedure</tspan></text>
+
+  <!-- Procedure -->
+  <rect x="24" y="144" width="416" height="246" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="44" y="174" class="ph" fill="#1c5fa8">Procedure (P)</text>
+  <text x="44" y="193" class="tag" fill="#1c5fa8">Outcome-focused &#8212; what &amp; who</text>
+  <text x="44" y="224" class="k">WHO</text><text x="180" y="224" class="v">Multiple people</text>
+  <text x="44" y="254" class="k">SCOPE</text><text x="180" y="254" class="v">Cross-department</text>
+  <text x="44" y="284" class="k">FOCUS</text><text x="180" y="284" class="v">Outcome &amp; responsibility</text>
+  <text x="44" y="314" class="k">FORM</text><text x="180" y="314" class="v">Flowchart + RACI</text>
+  <text x="44" y="344" class="k">EXAMPLE</text><text x="180" y="344" class="v">GR &#8594; IQC handoff</text>
+
+  <!-- Work Instruction -->
+  <rect x="460" y="144" width="416" height="246" rx="12" fill="#e6f4ea" stroke="#9ed6ad"/>
+  <text x="480" y="174" class="ph" fill="#1c7a3f">Work Instruction (WI)</text>
+  <text x="480" y="193" class="tag" fill="#1c7a3f">Step-focused &#8212; how</text>
+  <text x="480" y="224" class="k">WHO</text><text x="616" y="224" class="v">One person</text>
+  <text x="480" y="254" class="k">SCOPE</text><text x="616" y="254" class="v">One task</text>
+  <text x="480" y="284" class="k">FOCUS</text><text x="616" y="284" class="v">Step-by-step actions</text>
+  <text x="480" y="314" class="k">FORM</text><text x="616" y="314" class="v">Numbered steps + photos</text>
+  <text x="480" y="344" class="k">EXAMPLE</text><text x="616" y="344" class="v">How to scan a GRN</text>
+
+  <text x="30" y="430" class="foot">A 30-page Procedure operators can&#8217;t follow on the floor is worse than no document at all. The MR approves; the doer authors.</text>
+</svg>

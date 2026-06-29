@@ -10,6 +10,9 @@ mermaid: true
 
 ---
 
+![Two drifted inventory systems reconciled in one direction by overwriting WMS to match ERP in three tagged passes, then verified with an audit trail and a restorable snapshot]({{ "/assets/img/2026-06-14/authoritative-overwrite-pattern.svg" | relative_url }})
+_Reconcile in one direction, snapshot first, tag every adjustment as an auditable movement &#8212; the overwrite buys a clean baseline; idempotent writes keep it._
+
 ## When You Need an Authoritative Overwrite
 
 Co-master architectures (two systems sharing inventory authority) accumulate drift. The drift grows from:

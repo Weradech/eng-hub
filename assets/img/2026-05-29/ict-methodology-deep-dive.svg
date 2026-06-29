@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="ICT verifies components are present and correct, not that the board functions. Bed-of-Nails has high fixture NRE but is fast and suits high-volume low-mix; Flying Probe has zero NRE but is slow and suits low-volume high-mix. ICT alone covers 70 to 85 percent, reaching 98 percent-plus combined with AOI and FCT">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:16px;font-weight:700}
+    .role{font-size:11.5px;font-style:italic}
+    .k{font-size:11px;font-weight:700;letter-spacing:.5px;fill:#7b8794}
+    .v{font-size:13px;fill:#1f2933}
+    .gate{font-size:13.5px;font-weight:700;fill:#1c7a3f}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">ICT: Bed-of-Nails vs Flying Probe</text>
+  <text x="30" y="64" class="sub">ICT verifies components are <tspan font-style="italic">present and correct</tspan> &#8212; not that the board functions. The fixture choice is a volume decision.</text>
+
+  <!-- Bed-of-Nails -->
+  <rect x="24" y="90" width="412" height="232" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="44" y="120" class="ph" fill="#1c5fa8">Bed-of-Nails</text>
+  <text x="44" y="139" class="role" fill="#1c5fa8">Custom fixture &#8212; tests every node at once</text>
+  <text x="44" y="172" class="k">FIXTURE NRE</text><text x="240" y="172" class="v">&#3647;44.5K &#8211; &#3647;66K (high)</text>
+  <text x="44" y="202" class="k">SPEED</text><text x="240" y="202" class="v">Fast &#8212; seconds/board</text>
+  <text x="44" y="232" class="k">BEST FOR</text><text x="240" y="232" class="v">HVLM &#8212; high vol, low mix</text>
+  <text x="44" y="262" class="k">BREAK-EVEN</text><text x="240" y="262" class="v">&#8805; 200 pcs / year</text>
+  <text x="44" y="298" class="role" fill="#1c5fa8">Pay once up front, then test cheaply forever.</text>
+
+  <!-- Flying Probe -->
+  <rect x="462" y="90" width="412" height="232" rx="12" fill="#fff7e6" stroke="#f0cf8a"/>
+  <text x="482" y="120" class="ph" fill="#9e6b00">Flying Probe</text>
+  <text x="482" y="139" class="role" fill="#9e6b00">Moving probes &#8212; no custom fixture</text>
+  <text x="482" y="172" class="k">FIXTURE NRE</text><text x="678" y="172" class="v">&#3647;0</text>
+  <text x="482" y="202" class="k">SPEED</text><text x="678" y="202" class="v">Slow &#8212; minutes/board</text>
+  <text x="482" y="232" class="k">BEST FOR</text><text x="678" y="232" class="v">LVHM &#8212; low vol, high mix</text>
+  <text x="482" y="262" class="k">BREAK-EVEN</text><text x="678" y="262" class="v">Prototypes &amp; short runs</text>
+  <text x="482" y="298" class="role" fill="#9e6b00">No setup cost, but pay per board in time.</text>
+
+  <!-- coverage / rule band -->
+  <rect x="24" y="338" width="850" height="66" rx="12" fill="#e6f4ea" stroke="#9ed6ad"/>
+  <text x="44" y="364" class="gate">Coverage: ICT alone 70&#8211;85%  &#8594;  with AOI + FCT  98%+</text>
+  <text x="44" y="390" class="v">Rule: volume &#8805; 200/yr or a stable design &#8594; Bed-of-Nails; otherwise Flying Probe.</text>
+
+  <text x="30" y="436" class="foot">ICT catches the wrong, missing, or backwards part &#8212; the failures FCT can&#8217;t see until the board misbehaves.</text>
+</svg>

@@ -9,6 +9,9 @@ tags: [sop, iso9001, work-instruction, process-documentation, quality]
 
 ---
 
+![An SOP revamp: the ISO document hierarchy runs Quality Manual to Procedures to Work Instructions to Forms and Records; a legacy 30-page prose SOP nobody follows is replaced by a one-page numbered work instruction a new hire can execute immediately]({{ "/assets/img/2026-05-27/sop-revamp-playbook.svg" | relative_url }})
+_The best SOP isn't the longest — it's the one a new hire can act on without asking._
+
 ## The Problem with Legacy SOPs
 
 Most SOPs in Thai SMEs share the same issues:

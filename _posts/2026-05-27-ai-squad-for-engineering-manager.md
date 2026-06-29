@@ -9,6 +9,9 @@ tags: [claude-code, ai, productivity, engineering-management, llm]
 
 ---
 
+![One engineering manager delegates to an orchestrator that fans work out to four specialist AI agents, keeping judgment while the squad does the administrative overhead]({{ "/assets/img/2026-05-27/ai-squad-for-engineering-manager.svg" | relative_url }})
+_The manager keeps the judgment; the squad absorbs the administrative overhead._
+
 ## The Solo Engineering Manager Problem
 
 In Thai SMEs, an Engineering Manager often handles everything at once:

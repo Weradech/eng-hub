@@ -10,6 +10,9 @@ mermaid: true
 
 ---
 
+![The reflex jumps straight to a fix; the discipline gathers symptoms, distrusts the convenient hypothesis, verifies the end state, makes the fix auditable, and states the blast radius first]({{ "/assets/img/2026-05-27/rca-for-software-symptoms-before-hypothesis.svg" | relative_url }})
+_Gather symptoms, distrust the convenient hypothesis, verify the end state — before you touch the keyboard._
+
 In hardware RCA the rule is simple: **gather symptoms before forming a hypothesis.** Measure before you replace the diode. Software incidents are no different — except the urge to "just try a fix" is stronger, because a code change *feels* free. It isn't.
 
 ---

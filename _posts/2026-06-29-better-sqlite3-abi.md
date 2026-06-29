@@ -9,6 +9,9 @@ tags: [node, sqlite, native-modules, pm2, devops, reliability]
 
 ---
 
+![Native addon compiled for one Node ABI dies after the runtime flips; the fix is to rebuild for the new ABI and pin the PM2 interpreter to an absolute path]({{ "/assets/img/2026-06-29/better-sqlite3-abi.svg" | relative_url }})
+_A native addon is married to one Node ABI &#8212; rebuild it for the new runtime, and pin the interpreter so Node can't silently drift._
+
 ## The Failure Signature
 
 ```

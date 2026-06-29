@@ -9,6 +9,9 @@ tags: [npi, stage-gate, evt, dvt, pvt, product-development]
 
 ---
 
+![NPI stage-gate pipeline from PoC to Mass Production: each gate is a risk firewall answering one question, and the cost to fix grows tenfold per stage]({{ "/assets/img/2026-05-27/npi-stage-gate.svg" | relative_url }})
+_Every gate is a risk firewall answering one question — and the cost to fix grows tenfold past each one._
+
 ## Why Stage Gates Exist
 
 The cost to fix a problem grows exponentially with project stage:

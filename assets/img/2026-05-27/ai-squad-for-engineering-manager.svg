@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="One engineering manager delegates to an orchestrator that fans work out to four specialist AI agents, keeping judgment while the squad does the administrative overhead">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .node{font-size:13.5px;font-weight:700;fill:#ffffff}
+    .nodesub{font-size:11px;fill:#cbd2d9}
+    .agent{font-size:13px;font-weight:700;fill:#1f2933}
+    .agentsub{font-size:11px;fill:#52606d}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .keep{font-size:12px;fill:#1f2933}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">One person, ten-person output</text>
+  <text x="30" y="64" class="sub">You keep the engineering judgment; an orchestrator fans the administrative work out to a squad of specialists.</text>
+
+  <defs>
+    <marker id="ab" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1c7ed6"/></marker>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#7b8794"/></marker>
+  </defs>
+
+  <!-- EM -> Orchestrator -->
+  <path d="M150 158 L150 192" fill="none" stroke="#1c7ed6" stroke-width="2.5" marker-end="url(#ab)"/>
+  <!-- Orchestrator -> fan-out hub point -->
+  <path d="M260 220 L312 220" fill="none" stroke="#1c7ed6" stroke-width="2.5" marker-end="url(#ab)"/>
+
+  <!-- ENGINEERING MANAGER (human) -->
+  <rect x="40" y="96" width="220" height="60" rx="12" fill="#2b3a4a"/>
+  <text x="150" y="124" text-anchor="middle" class="node">Engineering Manager</text>
+  <text x="150" y="142" text-anchor="middle" class="nodesub">one human &#183; the decision-maker</text>
+
+  <!-- ORCHESTRATOR -->
+  <rect x="40" y="194" width="220" height="58" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="150" y="219" text-anchor="middle" class="agent" fill="#1c5fa8">Orchestrator</text>
+  <text x="150" y="238" text-anchor="middle" class="agentsub">routes &#183; sets role + context</text>
+
+  <!-- spokes from hub (x=312,y=220) to 4 agents -->
+  <path d="M312 220 C336 220, 348 124, 372 124" fill="none" stroke="#9aa5b1" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M312 220 C336 220, 348 186, 372 186" fill="none" stroke="#9aa5b1" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M312 220 C336 220, 348 254, 372 254" fill="none" stroke="#9aa5b1" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M312 220 C336 220, 348 316, 372 316" fill="none" stroke="#9aa5b1" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- PARALLEL label -->
+  <text x="312" y="354" class="lbl" fill="#7b8794">RUN IN PARALLEL &#183; HAND OFF TO EACH OTHER</text>
+
+  <!-- 4 specialist agents -->
+  <!-- BOM Agent -->
+  <rect x="374" y="96" width="234" height="56" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="388" y="119" class="agent">BOM Agent</text>
+  <text x="388" y="138" class="agentsub">flag dupes &#183; no-vendor &#183; cost roll-up +15% OH</text>
+
+  <!-- RFQ Agent -->
+  <rect x="374" y="158" width="234" height="56" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="388" y="181" class="agent">RFQ Agent</text>
+  <text x="388" y="200" class="agentsub">price from BOM &#183; +25% margin &#183; lump-sum quote</text>
+
+  <!-- DFM Agent -->
+  <rect x="374" y="226" width="234" height="56" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="388" y="249" class="agent">DFM Agent</text>
+  <text x="388" y="268" class="agentsub">drawing review &#183; pass/fail &#183; risk ranking</text>
+
+  <!-- Doc Agent -->
+  <rect x="374" y="288" width="234" height="56" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="388" y="311" class="agent">Doc Agent</text>
+  <text x="388" y="330" class="agentsub">SOP / WI in ISO 9001 structure</text>
+
+  <!-- divider -->
+  <line x1="630" y1="96" x2="630" y2="344" stroke="#e4e7eb" stroke-width="1.5"/>
+
+  <!-- YOU STILL OWN panel -->
+  <rect x="648" y="96" width="222" height="118" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="664" y="119" class="lbl" fill="#2f9e44">YOU STILL OWN</text>
+  <text x="664" y="142" class="keep" fill="#2f7a37">&#10003; engineering judgment</text>
+  <text x="664" y="164" class="keep" fill="#2f7a37">&#10003; verify every number</text>
+  <text x="664" y="186" class="keep" fill="#2f7a37">&#10003; approve &amp; send</text>
+  <text x="664" y="206" class="agentsub">the decisions that need your expertise</text>
+
+  <!-- SQUAD HANDLES panel -->
+  <rect x="648" y="226" width="222" height="118" rx="10" fill="#fff4e0" stroke="#f3c677"/>
+  <text x="664" y="249" class="lbl" fill="#9a5b00">SQUAD HANDLES</text>
+  <text x="664" y="272" class="keep" fill="#9a5b00">&#183; the administrative overhead</text>
+  <text x="664" y="294" class="keep" fill="#9a5b00">&#183; context-switching between tasks</text>
+  <text x="664" y="316" class="keep" fill="#9a5b00">&#183; RFQ: 1&#8211;2 days &#8594; 30 min</text>
+  <text x="664" y="336" class="agentsub">leverage, not headcount</text>
+
+  <rect x="30" y="416" width="840" height="34" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="438" text-anchor="middle" class="foot">AI doesn&#8217;t replace your judgment &#8212; it removes the overhead, so one manager ships a team&#8217;s worth of work.</text>
+</svg>

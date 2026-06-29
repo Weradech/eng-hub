@@ -9,6 +9,9 @@ tags: [wms, odoo, erp, architecture, inventory, data-integrity]
 
 ---
 
+![Co-master split: WMS owns operational movements while Odoo owns financial and master data, with a scheduled sync mirroring each domain into the other instead of dual-writing]({{ "/assets/img/2026-06-29/wms-odoo-comaster.svg" | relative_url }})
+_Give every data type one owner: WMS writes movement, Odoo writes money, and the sync mirrors &#8212; it never dual-writes._
+
 ## The Problem With Dual-Write
 
 The instinct when building a WMS alongside an ERP is to keep both in sync by writing to both on every transaction. GR posted in WMS? Write it to Odoo too. Quantity adjusted? Update both.

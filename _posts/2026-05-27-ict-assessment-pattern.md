@@ -9,6 +9,9 @@ tags: [ict, dft, test-engineering, npi, pcba, nre]
 
 ---
 
+![ICT assessment pipeline from NPI stage: review Gerber, count test points and coverage, score nine DFT criteria, then branch on the score to full ICT, limited ICT, or FVT/AOI instead]({{ "/assets/img/2026-05-27/ict-assessment-pattern.svg" | relative_url }})
+_Score the board for testability at NPI, then let the number choose full ICT, limited ICT, or FVT/AOI._
+
 ## Why Assess ICT at NPI Stage?
 
 An ICT fixture is built once and used throughout production. If the layout doesn't support DFT:

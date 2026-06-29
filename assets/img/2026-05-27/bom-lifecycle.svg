@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="A BOM moves through four stages — RFQ costing BOM, engineering eBOM, manufacturing mBOM, then the active BOM in Odoo — each with a different owner, store, and what gets locked">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .stg{font-size:14px;font-weight:700;fill:#1f2933}
+    .num{font-size:11px;font-weight:800;letter-spacing:.5px}
+    .lbl{font-size:9.5px;font-weight:700;letter-spacing:.6px;fill:#7b8794}
+    .own{font-size:11.5px;fill:#1f2933}
+    .store{font-size:11px;fill:#52606d}
+    .lock{font-size:11px;font-weight:700}
+    .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:11px;fill:#52606d}
+    .never{font-size:11.5px;font-weight:700;fill:#b02a2a}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">The BOM lifecycle &#8212; from RFQ stage to active in Odoo</text>
+  <text x="30" y="64" class="sub">Each stage has a different owner and format. Loading the wrong stage into the ERP is a leading cause of MRP errors.</text>
+
+  <defs>
+    <marker id="ag" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#7b8794"/></marker>
+  </defs>
+
+  <!-- ===== Stage 1: RFQ BOM (blue) ===== -->
+  <rect x="30" y="92" width="196" height="216" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="46" y="116" class="num" fill="#1c5fa8">STAGE 1</text>
+  <text x="46" y="136" class="stg">RFQ BOM</text>
+  <text x="46" y="153" class="store" fill="#1c5fa8">costing</text>
+  <text x="46" y="180" class="lbl">OWNER</text>
+  <text x="46" y="196" class="own">NPI / Sales Eng.</text>
+  <text x="46" y="221" class="lbl">STORED IN</text>
+  <text x="46" y="237" class="store">Excel in project folder</text>
+  <text x="46" y="251" class="store">(not in ERP yet)</text>
+  <rect x="46" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="56" y="277" class="lbl" fill="#1c5fa8">LOCKED</text>
+  <text x="56" y="290" class="lock" fill="#1c5fa8">nothing &#8212; prices, alt parts open</text>
+
+  <!-- ===== Stage 2: eBOM (blue) ===== -->
+  <rect x="248" y="92" width="196" height="216" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="264" y="116" class="num" fill="#1c5fa8">STAGE 2</text>
+  <text x="264" y="136" class="stg">Engineering eBOM</text>
+  <text x="264" y="153" class="store" fill="#1c5fa8">design intent</text>
+  <text x="264" y="180" class="lbl">OWNER</text>
+  <text x="264" y="196" class="own">Design Engineer / R&amp;D</text>
+  <text x="264" y="221" class="lbl">STORED IN</text>
+  <text x="264" y="237" class="store">Altium / KiCad export,</text>
+  <text x="264" y="251" class="store">or PDM system</text>
+  <rect x="264" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="274" y="277" class="lbl" fill="#1c5fa8">LOCKED</text>
+  <text x="274" y="290" class="lock" fill="#1c5fa8">ref-des + mfr PN (no process)</text>
+
+  <!-- ===== Stage 3: mBOM (green) ===== -->
+  <rect x="466" y="92" width="196" height="216" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="482" y="116" class="num" fill="#2f7a37">STAGE 3</text>
+  <text x="482" y="136" class="stg">Manufacturing mBOM</text>
+  <text x="482" y="153" class="store" fill="#2f7a37">process-aware</text>
+  <text x="482" y="180" class="lbl">OWNER</text>
+  <text x="482" y="196" class="own">Process / Mfg Engineer</text>
+  <text x="482" y="221" class="lbl">STORED IN</text>
+  <text x="482" y="237" class="store">ERP / MES</text>
+  <text x="482" y="251" class="store">(Odoo mrp.bom)</text>
+  <rect x="482" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="492" y="277" class="lbl" fill="#2f7a37">LOCKED</text>
+  <text x="492" y="290" class="lock" fill="#2f7a37">side, solder, lot &#183; DNIs removed</text>
+
+  <!-- ===== Stage 4: Odoo Active (dark) ===== -->
+  <rect x="684" y="92" width="196" height="216" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <path d="M684 104 a12 12 0 0 1 12 -12 h172 a12 12 0 0 1 12 12 v22 h-196 z" fill="#2b3a4a"/>
+  <text x="700" y="114" class="num" fill="#ffffff">STAGE 4 &#183; SOURCE OF TRUTH</text>
+  <text x="700" y="146" class="stg">Active BOM in Odoo</text>
+  <text x="700" y="163" class="store" fill="#2f7a37">MRP source</text>
+  <text x="700" y="190" class="lbl">OWNER</text>
+  <text x="700" y="206" class="own">Production / MRP Team</text>
+  <text x="700" y="229" class="lbl">STORED IN</text>
+  <text x="700" y="245" class="mono">mrp.bom &#183; type=manufacture</text>
+  <rect x="700" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="710" y="277" class="lbl" fill="#2f7a37">LOCKED</text>
+  <text x="710" y="290" class="lock" fill="#2f7a37">approved + PO issued &#183; 1 per FG</text>
+
+  <!-- arrows between stages -->
+  <path d="M226 200 L246 200" fill="none" stroke="#7b8794" stroke-width="2.5" marker-end="url(#ag)"/>
+  <path d="M444 200 L464 200" fill="none" stroke="#7b8794" stroke-width="2.5" marker-end="url(#ag)"/>
+  <path d="M662 200 L682 200" fill="none" stroke="#7b8794" stroke-width="2.5" marker-end="url(#ag)"/>
+
+  <!-- PO gate callout on the last arrow -->
+  <rect x="600" y="318" width="262" height="30" rx="8" fill="#fff4e0" stroke="#f3c677"/>
+  <text x="616" y="338" class="lock" fill="#9a5b00">&#9888; PO approved is the gate into Odoo</text>
+
+  <!-- the never-do line -->
+  <rect x="30" y="318" width="540" height="30" rx="8" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="46" y="338" class="never">&#10007; Never source a production order from an RFQ-stage Excel BOM</text>
+
+  <!-- footer band -->
+  <rect x="30" y="392" width="840" height="34" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="414" text-anchor="middle" class="foot">A clean BOM lifecycle = accurate MRP = correct purchasing = less waste.</text>
+</svg>

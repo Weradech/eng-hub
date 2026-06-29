@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="One orchestrator routes work to model-tiered specialist squads through a strict dispatch protocol: full-context brief, propose before risky, results back as status plus next action">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .sec{font-size:11px;font-weight:700;letter-spacing:1px;fill:#7b8794}
+    .orc{font-size:13px;font-weight:700;fill:#ffffff}
+    .orcs{font-size:10.5px;fill:#cbd2d9}
+    .sq{font-size:12px;font-weight:700;fill:#1f2933}
+    .tier{font-size:9.5px;font-weight:700;letter-spacing:.5px}
+    .num{font-size:14px;font-weight:800;fill:#ffffff}
+    .step{font-size:12.5px;font-weight:700;fill:#1f2933}
+    .ex{font-size:11px;fill:#52606d}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">An AI squad is an org-design problem</text>
+  <text x="30" y="64" class="sub">One orchestrator routes work to model-tiered specialists through a deliberately boring protocol.</text>
+
+  <defs>
+    <marker id="ga" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#7b8794"/></marker>
+    <marker id="gb" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1c7ed6"/></marker>
+  </defs>
+
+  <!-- ============ LEFT: ORG CHART ============ -->
+  <text x="30" y="94" class="sec">THE ORG CHART</text>
+
+  <!-- Manager -->
+  <rect x="148" y="104" width="180" height="30" rx="8" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="238" y="124" text-anchor="middle" class="sq">Product Owner / Manager</text>
+  <line x1="238" y1="134" x2="238" y2="150" stroke="#7b8794" stroke-width="2" marker-end="url(#ga)"/>
+
+  <!-- Orchestrator -->
+  <rect x="138" y="154" width="200" height="48" rx="10" fill="#2b3a4a"/>
+  <text x="238" y="174" text-anchor="middle" class="orc">Orchestrator</text>
+  <text x="238" y="190" text-anchor="middle" class="orcs">main thread &#183; triage &#183; routing</text>
+
+  <!-- fan-out trunk -->
+  <line x1="238" y1="202" x2="238" y2="218" stroke="#7b8794" stroke-width="2"/>
+  <line x1="78" y1="218" x2="398" y2="218" stroke="#7b8794" stroke-width="2"/>
+  <line x1="78" y1="218" x2="78" y2="232" stroke="#7b8794" stroke-width="2"/>
+  <line x1="158" y1="218" x2="158" y2="232" stroke="#7b8794" stroke-width="2"/>
+  <line x1="238" y1="218" x2="238" y2="232" stroke="#7b8794" stroke-width="2"/>
+  <line x1="318" y1="218" x2="318" y2="232" stroke="#7b8794" stroke-width="2"/>
+  <line x1="398" y1="218" x2="398" y2="232" stroke="#7b8794" stroke-width="2"/>
+
+  <!-- squad row (strong tier, blue) -->
+  <g>
+    <rect x="38" y="234" width="76" height="42" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <text x="76" y="252" text-anchor="middle" class="sq">Warehouse</text>
+    <text x="76" y="269" text-anchor="middle" class="tier" fill="#1c5fa8">STRONG</text>
+  </g>
+  <g>
+    <rect x="120" y="234" width="76" height="42" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <text x="158" y="252" text-anchor="middle" class="sq">Planning</text>
+    <text x="158" y="269" text-anchor="middle" class="tier" fill="#1c5fa8">STRONG</text>
+  </g>
+  <g>
+    <rect x="200" y="234" width="76" height="42" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <text x="238" y="252" text-anchor="middle" class="sq">Production</text>
+    <text x="238" y="269" text-anchor="middle" class="tier" fill="#1c5fa8">STRONG</text>
+  </g>
+  <!-- squad row (fast tier, neutral) -->
+  <g>
+    <rect x="280" y="234" width="76" height="42" rx="8" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <text x="318" y="252" text-anchor="middle" class="sq">CRM</text>
+    <text x="318" y="269" text-anchor="middle" class="tier" fill="#7b8794">FAST</text>
+  </g>
+  <g>
+    <rect x="360" y="234" width="76" height="42" rx="8" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <text x="398" y="252" text-anchor="middle" class="sq">AP / Proc</text>
+    <text x="398" y="269" text-anchor="middle" class="tier" fill="#7b8794">FAST</text>
+  </g>
+
+  <!-- cross-functional band -->
+  <rect x="38" y="288" width="398" height="34" rx="8" fill="#fff4e0" stroke="#f3c677"/>
+  <text x="237" y="309" text-anchor="middle" class="ex" fill="#9a5b00">Cross-functional gates &#183; DevOps &#183; QA (before deploy) &#183; ERP-bridge (before ERP)</text>
+
+  <!-- model tier legend -->
+  <rect x="38" y="334" width="16" height="14" rx="3" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="60" y="345" class="ex"><tspan font-weight="700" fill="#1c5fa8">Strong model</tspan> &#8212; high cost-of-being-wrong</text>
+  <rect x="38" y="356" width="16" height="14" rx="3" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="60" y="367" class="ex"><tspan font-weight="700" fill="#3e4c59">Fast model</tspan> &#8212; high-volume, well-specified work</text>
+
+  <!-- divider -->
+  <line x1="466" y1="92" x2="466" y2="378" stroke="#e1e7ec" stroke-width="1.5"/>
+
+  <!-- ============ RIGHT: DISPATCH PROTOCOL ============ -->
+  <text x="492" y="94" class="sec">THE DISPATCH PROTOCOL</text>
+
+  <!-- step 1 -->
+  <g>
+    <rect x="492" y="104" width="378" height="56" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <circle cx="520" cy="132" r="15" fill="#1c7ed6"/>
+    <text x="520" y="137" text-anchor="middle" class="num">1</text>
+    <text x="546" y="126" class="step">Dispatch carries full context</text>
+    <text x="546" y="146" class="ex">scope &#183; acceptance criteria &#183; files it may touch &#183; what it must NOT touch</text>
+  </g>
+  <line x1="681" y1="160" x2="681" y2="172" stroke="#1c7ed6" stroke-width="2" marker-end="url(#gb)"/>
+
+  <!-- step 2 -->
+  <g>
+    <rect x="492" y="176" width="378" height="56" rx="10" fill="#fff4e0" stroke="#f3c677"/>
+    <circle cx="520" cy="204" r="15" fill="#f08c00"/>
+    <text x="520" y="209" text-anchor="middle" class="num">2</text>
+    <text x="546" y="198" class="step" fill="#9a5b00">Propose before executing anything risky</text>
+    <text x="546" y="218" class="ex">irreversible / prod-facing &#8594; draft a plan, wait for human OK</text>
+  </g>
+  <line x1="681" y1="232" x2="681" y2="244" stroke="#1c7ed6" stroke-width="2" marker-end="url(#gb)"/>
+
+  <!-- step 3 -->
+  <g>
+    <rect x="492" y="248" width="378" height="56" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+    <circle cx="520" cy="276" r="15" fill="#2f9e44"/>
+    <text x="520" y="281" text-anchor="middle" class="num">3</text>
+    <text x="546" y="270" class="step" fill="#2f7a37">Results flow back: status + next action</text>
+    <text x="546" y="290" class="ex">the orchestrator keeps the map current and routes the follow-up</text>
+  </g>
+
+  <!-- shared state note -->
+  <rect x="492" y="320" width="378" height="50" rx="10" fill="#f5f7fa" stroke="#cbd2d9" stroke-dasharray="5 4"/>
+  <text x="512" y="342" class="step" fill="#52606d">A curated wiki, not a chat log</text>
+  <text x="512" y="361" class="ex">one page per system / squad / concept &#8212; query it first, fix it as a side effect</text>
+
+  <!-- footer band -->
+  <rect x="30" y="392" width="840" height="34" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="414" text-anchor="middle" class="foot">The quality of the output is set by how you decompose and route work &#8212; not by how clever any single prompt is.</text>
+</svg>

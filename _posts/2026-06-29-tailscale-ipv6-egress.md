@@ -9,6 +9,9 @@ tags: [tailscale, ipv6, networking, devops, reliability]
 
 ---
 
+![Tailscale adds an IPv6 ULA the OS prefers; the IPv6 packet routes into the tunnel to a dead end while the IPv4 path works, so it looks like a flaky ISP. The fix is to rank mapped-IPv4 first.]({{ "/assets/img/2026-06-29/tailscale-ipv6-egress.svg" | relative_url }})
+_It looks like a flaky ISP; it's an IPv6 ULA the OS prefers routing into a tunnel that dead-ends._
+
 ## The Symptom
 
 Everything looks fine. The server is reachable via SSH. Internal services talk to each other. But external API calls — Odoo cloud, package registries, webhook endpoints — start timing out. No error, no refusal, just silence until the TCP timeout fires.
