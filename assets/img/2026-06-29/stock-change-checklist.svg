@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="The stock-change checklist: capture before, change through one path, verify the delta, and apply counts as a delta">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .num{font-size:22px;font-weight:800;fill:#ffffff}
+    .step{font-size:16px;font-weight:700;fill:#1f2933}
+    .ex{font-size:12.5px;fill:#52606d}
+    .tag{font-size:11px;font-weight:700;letter-spacing:.5px}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">The stock-change checklist</text>
+  <text x="30" y="64" class="sub">Never mutate live inventory blind. Capture the before, change through one path, verify the delta.</text>
+
+  <line x1="60" y1="96" x2="60" y2="392" stroke="#1c7ed6" stroke-width="2.5"/>
+  <polygon points="60,400 54,388 66,388" fill="#1c7ed6"/>
+  <text x="44" y="250" transform="rotate(-90 44 250)" text-anchor="middle" class="tag" fill="#1c7ed6">SAME THREE STEPS, EVERY TIME</text>
+
+  <!-- Step 1 -->
+  <g>
+    <rect x="84" y="96" width="786" height="64" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <circle cx="120" cy="128" r="22" fill="#1c7ed6"/>
+    <text x="120" y="136" text-anchor="middle" class="num">1</text>
+    <text x="160" y="124" class="step">Capture the pre-state</text>
+    <text x="160" y="146" class="ex">Record on-hand &#43; movements before you touch anything. Can&#8217;t read it? Then you can&#8217;t safely write it.</text>
+    <rect x="734" y="116" width="118" height="24" rx="12" fill="#ffffff" stroke="#1c7ed6"/>
+    <text x="793" y="132" text-anchor="middle" class="tag" fill="#1c7ed6">CAPTURE BEFORE</text>
+  </g>
+
+  <!-- Step 2 -->
+  <g>
+    <rect x="84" y="172" width="786" height="64" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <circle cx="120" cy="204" r="22" fill="#1c7ed6"/>
+    <text x="120" y="212" text-anchor="middle" class="num">2</text>
+    <text x="160" y="200" class="step">Change through one path</text>
+    <text x="160" y="222" class="ex">The stock service posts a movement &#43; updates the balance together. Never a raw UPDATE alongside it.</text>
+    <rect x="734" y="192" width="118" height="24" rx="12" fill="#ffffff" stroke="#1c7ed6"/>
+    <text x="793" y="208" text-anchor="middle" class="tag" fill="#1c7ed6">ONE PATH ONLY</text>
+  </g>
+
+  <!-- Step 3 -->
+  <g>
+    <rect x="84" y="248" width="786" height="64" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+    <circle cx="120" cy="280" r="22" fill="#2f9e44"/>
+    <text x="120" y="288" text-anchor="middle" class="num">3</text>
+    <text x="160" y="276" class="step">Verify the delta</text>
+    <text x="160" y="298" class="ex">Assert post &#8722; pre == intended_delta &#8212; not &#8220;the new number looks plausible.&#8221;</text>
+    <rect x="734" y="268" width="118" height="24" rx="12" fill="#ffffff" stroke="#2f9e44"/>
+    <text x="793" y="284" text-anchor="middle" class="tag" fill="#2f7a37">VERIFY DELTA</text>
+  </g>
+
+  <!-- Trap -->
+  <g>
+    <rect x="84" y="324" width="786" height="64" rx="10" fill="#fff4e0" stroke="#f3c677"/>
+    <circle cx="120" cy="356" r="22" fill="#f08c00"/>
+    <text x="120" y="365" text-anchor="middle" class="num">!</text>
+    <text x="160" y="352" class="step">The counting trap</text>
+    <text x="160" y="374" class="ex">A count produces an adjustment. Post the difference as a movement (&#8722;5) &#8212; don&#8217;t wipe-and-reinsert the total.</text>
+    <rect x="724" y="344" width="128" height="24" rx="12" fill="#ffffff" stroke="#f08c00"/>
+    <text x="788" y="360" text-anchor="middle" class="tag" fill="#d9760a">APPLY A DELTA</text>
+  </g>
+
+  <text x="450" y="430" text-anchor="middle" class="foot">Mixing the service layer with a raw UPDATE forks the balance from its own ledger &#8212; permanently, with no audit trail.</text>
+</svg>

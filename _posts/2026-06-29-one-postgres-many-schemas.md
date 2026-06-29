@@ -9,6 +9,9 @@ tags: [postgres, architecture, schemas, microservices, database, devops]
 
 ---
 
+![Database-per-service multiplies ops overhead; one Postgres instance with a schema per domain keeps it to one]({{ "/assets/img/2026-06-29/one-postgres-many-schemas.svg" | relative_url }})
+_Database-per-service multiplies the ops you maintain; one instance with a schema per domain keeps it to one._
+
 ## The instinct, and why it doesn't fit a small team
 
 "Database per service" exists to let independent teams deploy, scale, and back up independently without coordinating. That's the right call when you have many teams and real scale.

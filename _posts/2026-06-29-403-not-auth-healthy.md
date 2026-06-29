@@ -9,6 +9,9 @@ tags: [devops, monitoring, auth, observability, rca, reliability]
 
 ---
 
+![One 403 has two opposite meanings: a control working, or your own job's credential dead behind a green dashboard]({{ "/assets/img/2026-06-29/403-not-auth-healthy.svg" | relative_url }})
+_Same status code, opposite meaning — identify whose credential failed before you call a 403 "expected."_
+
 ## The false comfort of a rejection
 
 An automated planner ran on a schedule, calling an internal API to recompute and post a plan. At some point it started getting `403 Forbidden`. Someone glanced at it and reasoned:

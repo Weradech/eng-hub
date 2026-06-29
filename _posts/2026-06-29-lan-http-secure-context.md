@@ -9,6 +9,9 @@ tags: [web-platform, https, secure-context, getusermedia, browser, devops]
 
 ---
 
+![localhost is a secure context so powerful features work; a plain-HTTP LAN IP is not, so the camera and crypto APIs vanish]({{ "/assets/img/2026-06-29/lan-http-secure-context.svg" | relative_url }})
+_`localhost` is a secure context; a plain-HTTP LAN IP is not — so the camera and crypto APIs silently vanish._
+
 ## The symptom: works on localhost, dead on the LAN
 
 You build a warehouse scanner page. On your dev machine at `http://localhost:3000` the camera opens fine. You deploy it to the server and operators open it on their phones at `http://192.168.1.50:3000`. The camera button does nothing. No error dialog. In the console:

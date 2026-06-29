@@ -9,6 +9,9 @@ tags: [ocr, pdfplumber, tesseract, document-extraction, automation, python]
 
 ---
 
+![Document extraction pipeline: text layer first, OCR only for scans, anchored extraction, then cross-reference doc IDs]({{ "/assets/img/2026-06-29/doc-extraction-no-cloud-ai.svg" | relative_url }})
+_Text-layer first, OCR only for scans, anchored fields — then cross-reference the doc IDs into the existing chain._
+
 ## Why not just ship it to a cloud model?
 
 The fastest-to-demo approach is to hand each PDF to a hosted vision-LLM and ask for JSON. For an internal document pipeline that processes invoices, goods-receipt notes, and POs, that convenience carries costs that compound:

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="An empty 200 response: the naive sync overwrites and blanks the dashboard; the guarded sync keeps the last good snapshot and alerts">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .hd{font-size:13px;font-weight:700;fill:#ffffff}
+    .hdsub{font-size:11.5px;fill:#cbd2d9}
+    .ph{font-size:14.5px;font-weight:700}
+    .chip{font-size:12.5px;fill:#1f2933}
+    .end{font-size:13px;font-weight:700}
+    .cap{font-size:12px;fill:#52606d}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">The empty sync that wiped the dashboard</text>
+  <text x="30" y="64" class="sub">A 200 OK with zero rows isn&#8217;t proof the truth is zero. Treat sudden emptiness as a failure until proven.</text>
+
+  <defs>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#7b8794"/></marker>
+    <marker id="ad" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#9aa5b1"/></marker>
+  </defs>
+
+  <!-- top box -->
+  <rect x="330" y="88" width="240" height="56" rx="10" fill="#2b3a4a"/>
+  <text x="450" y="112" text-anchor="middle" class="hd">Upstream returns [ ]  &#183;  200 OK</text>
+  <text x="450" y="130" text-anchor="middle" class="hdsub">a token expired overnight</text>
+
+  <!-- split arrows -->
+  <path d="M380 144 C300 162, 250 176, 222 192" fill="none" stroke="#9aa5b1" stroke-width="2" marker-end="url(#ad)"/>
+  <path d="M520 144 C600 162, 650 176, 678 192" fill="none" stroke="#9aa5b1" stroke-width="2" marker-end="url(#ad)"/>
+
+  <!-- LEFT naive -->
+  <rect x="40" y="196" width="380" height="170" rx="12" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="60" y="222" class="ph" fill="#b02a2a">&#10007; Naive: &#8220;I got a response&#8221;</text>
+  <rect x="60" y="234" width="340" height="28" rx="7" fill="#ffffff" stroke="#e3a3a3"/>
+  <text x="230" y="253" text-anchor="middle" class="chip">trust the empty payload</text>
+  <path d="M230 262 L230 276" fill="none" stroke="#7b8794" stroke-width="1.5" marker-end="url(#ag)"/>
+  <rect x="60" y="280" width="340" height="28" rx="7" fill="#ffffff" stroke="#e3a3a3"/>
+  <text x="230" y="299" text-anchor="middle" class="chip">overwrite snapshot &#8594; 0 rows</text>
+  <path d="M230 308 L230 322" fill="none" stroke="#7b8794" stroke-width="1.5" marker-end="url(#ag)"/>
+  <rect x="60" y="326" width="340" height="30" rx="7" fill="#ffecec" stroke="#d64545"/>
+  <text x="230" y="346" text-anchor="middle" class="end" fill="#b02a2a">dashboard goes blank</text>
+
+  <!-- RIGHT guarded -->
+  <rect x="480" y="196" width="380" height="170" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="500" y="222" class="ph" fill="#2f7a37">&#10003; Guarded: empty is suspicious</text>
+  <rect x="500" y="234" width="340" height="28" rx="7" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="670" y="253" text-anchor="middle" class="chip">fetch failed? empty vs last good?</text>
+  <path d="M670 262 L670 276" fill="none" stroke="#7b8794" stroke-width="1.5" marker-end="url(#ag)"/>
+  <rect x="500" y="280" width="340" height="28" rx="7" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="670" y="299" text-anchor="middle" class="chip">keep last good snapshot + ALERT</text>
+  <path d="M670 308 L670 322" fill="none" stroke="#7b8794" stroke-width="1.5" marker-end="url(#ag)"/>
+  <rect x="500" y="326" width="340" height="30" rx="7" fill="#eafaf0" stroke="#2f9e44"/>
+  <text x="670" y="346" text-anchor="middle" class="end" fill="#2f7a37">dashboard intact</text>
+
+  <text x="450" y="392" text-anchor="middle" class="cap">Append snapshots, don&#8217;t overwrite in place &#183; reject a payload that drops far below the last good one.</text>
+  <rect x="30" y="408" width="840" height="34" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="430" text-anchor="middle" class="foot">Pair &#8220;don&#8217;t write the bad value&#8221; with &#8220;alert that you didn&#8217;t&#8221; &#8212; a stale dashboard is a silent failure too.</text>
+</svg>

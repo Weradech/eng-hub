@@ -9,6 +9,9 @@ tags: [data-integrity, sync, reliability, snapshot, etl, idempotency]
 
 ---
 
+![An empty 200 response: the naive sync overwrites and blanks the dashboard; the guarded sync keeps the last good snapshot and alerts]({{ "/assets/img/2026-06-29/empty-sync-wipes-data.svg" | relative_url }})
+_A 200 OK with zero rows isn't proof the truth is zero — the guarded path keeps the last good snapshot and alerts._
+
 ## The morning the dashboard was blank
 
 A revenue dashboard reads from a `revenue_snapshot` table. A scheduled job pulls figures from an upstream service every few hours and refreshes the snapshot. One morning the page rendered with everything at zero. No error banner, no alert — just a clean, empty, *confident-looking* dashboard.

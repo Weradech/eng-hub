@@ -9,6 +9,9 @@ tags: [inventory, data-integrity, operations, runbook, wms, checklist]
 
 ---
 
+![The stock-change checklist: capture before, change through one path, verify the delta, and apply counts as a delta]({{ "/assets/img/2026-06-29/stock-change-checklist.svg" | relative_url }})
+_Capture the before, change through one path, verify the delta — and post counts as an adjustment movement._
+
 ## Why a checklist, for something this routine
 
 Adjusting a quantity feels trivial — it's one number. That's exactly why it's dangerous. The number isn't the inventory; it's a *summary* of a ledger of movements. Change the summary without respecting the ledger and you get a value that looks right and reconciles to nothing. The damage is invisible until a [reconciliation report]({% post_url 2026-06-13-reconciliation-without-false-alarms %}) or an audit surfaces it weeks later, long after anyone remembers the change.

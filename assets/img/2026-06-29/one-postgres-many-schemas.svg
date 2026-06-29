@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Database-per-service multiplies ops overhead; one Postgres instance with a schema per domain keeps it to one">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:15px;font-weight:700}
+    .db{font-size:12.5px;font-weight:700;fill:#1f2933}
+    .cap{font-size:11.5px;fill:#52606d}
+    .li{font-size:12.5px;fill:#1f2933}
+    .sc{font-size:12px;font-weight:700;fill:#1f2933}
+    .out{font-size:13px;font-weight:700}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">One Postgres, many schemas</text>
+  <text x="30" y="64" class="sub">Database-per-service buys team independence a small team may not need &#8212; at an ops cost it can&#8217;t pay.</text>
+
+  <!-- LEFT: db per service -->
+  <rect x="24" y="84" width="420" height="356" rx="12" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="44" y="112" class="ph" fill="#b02a2a">&#10007; Database-per-service</text>
+  <!-- 3 db icons -->
+  <g>
+    <ellipse cx="106" cy="146" rx="54" ry="8" fill="#ffe3e3" stroke="#e3a3a3"/>
+    <rect x="52" y="146" width="108" height="52" fill="#ffffff" stroke="#e3a3a3"/>
+    <ellipse cx="106" cy="198" rx="54" ry="8" fill="#ffffff" stroke="#e3a3a3"/>
+    <text x="106" y="178" text-anchor="middle" class="db">WMS db</text>
+  </g>
+  <g>
+    <ellipse cx="230" cy="146" rx="54" ry="8" fill="#ffe3e3" stroke="#e3a3a3"/>
+    <rect x="176" y="146" width="108" height="52" fill="#ffffff" stroke="#e3a3a3"/>
+    <ellipse cx="230" cy="198" rx="54" ry="8" fill="#ffffff" stroke="#e3a3a3"/>
+    <text x="230" y="178" text-anchor="middle" class="db">MRP db</text>
+  </g>
+  <g>
+    <ellipse cx="354" cy="146" rx="54" ry="8" fill="#ffe3e3" stroke="#e3a3a3"/>
+    <rect x="300" y="146" width="108" height="52" fill="#ffffff" stroke="#e3a3a3"/>
+    <ellipse cx="354" cy="198" rx="54" ry="8" fill="#ffffff" stroke="#e3a3a3"/>
+    <text x="354" y="178" text-anchor="middle" class="db">MES db &#8230;</text>
+  </g>
+  <text x="52" y="226" class="cap">Each gets its own pool, backup, and credential.</text>
+  <text x="52" y="256" class="li" fill="#b02a2a">&#10007;  N backup jobs to schedule &amp; test</text>
+  <text x="52" y="280" class="li" fill="#b02a2a">&#10007;  N connection pools to tune</text>
+  <text x="52" y="304" class="li" fill="#b02a2a">&#10007;  N credential rotations</text>
+  <text x="52" y="328" class="li" fill="#b02a2a">&#10007;  cross-domain report &#8594; ETL / API hop</text>
+  <rect x="110" y="350" width="248" height="32" rx="10" fill="#ffffff" stroke="#d64545"/>
+  <text x="234" y="371" text-anchor="middle" class="out" fill="#b02a2a">ops overhead &#215; N</text>
+
+  <!-- RIGHT: one instance -->
+  <rect x="456" y="84" width="420" height="356" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="476" y="112" class="ph" fill="#2f7a37">&#10003; One instance, schema per domain</text>
+  <rect x="476" y="128" width="380" height="118" rx="12" fill="#f5fbf6" stroke="#a6dcb8"/>
+  <text x="486" y="150" class="db">productiondb &#8212; one Postgres instance</text>
+  <rect x="486" y="160" width="68" height="50" rx="6" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="520" y="190" text-anchor="middle" class="sc">public</text>
+  <rect x="560" y="160" width="68" height="50" rx="6" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="594" y="190" text-anchor="middle" class="sc">mrp</text>
+  <rect x="634" y="160" width="68" height="50" rx="6" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="668" y="190" text-anchor="middle" class="sc">bom</text>
+  <rect x="708" y="160" width="68" height="50" rx="6" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="742" y="187" text-anchor="middle" class="sc" font-size="10.5">mes_</text>
+  <text x="742" y="200" text-anchor="middle" class="sc" font-size="10.5">core</text>
+  <rect x="782" y="160" width="64" height="50" rx="6" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="814" y="190" text-anchor="middle" class="sc">rfq</text>
+  <text x="486" y="234" class="cap">One writer per table &#183; read others via views.</text>
+  <text x="476" y="280" class="li" fill="#2f7a37">&#10003;  1 backup &#183; 1 pool &#183; JOIN across schemas</text>
+  <rect x="476" y="298" width="380" height="34" rx="10" fill="#fff4e0" stroke="#f3c677"/>
+  <text x="486" y="320" class="li" fill="#9a5b00">&#9888;  shared role = shared blast radius</text>
+
+  <text x="450" y="458" text-anchor="middle" class="foot">Split a domain to its own DB when load, durability, or org structure makes the shared instance the bottleneck.</text>
+</svg>

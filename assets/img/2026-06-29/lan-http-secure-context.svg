@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" role="img" aria-label="localhost is a secure context so powerful features work; a plain-HTTP LAN IP is not, so the camera and crypto APIs vanish">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:15px;font-weight:700}
+    .url{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:13px;fill:#ffffff}
+    .api{font-size:13px;fill:#1f2933}
+    .apx{font-size:13px;fill:#9aa5b1}
+    .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:12.5px;fill:#b02a2a}
+    .note{font-size:12px;fill:#52606d}
+    .fixh{font-size:12px;font-weight:700;letter-spacing:1px}
+    .fix{font-size:13px;fill:#1f2933}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="500" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Why the camera fails on your LAN app</text>
+  <text x="30" y="64" class="sub">Browsers gate powerful features behind a secure context: HTTPS or localhost. A plain-HTTP LAN IP is neither.</text>
+
+  <!-- LEFT: localhost OK -->
+  <rect x="24" y="84" width="420" height="276" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="44" y="112" class="ph" fill="#2f7a37">&#10003; A secure context</text>
+  <rect x="44" y="122" width="230" height="28" rx="6" fill="#2b3a4a"/>
+  <text x="56" y="141" class="url">http://localhost</text>
+  <text x="44" y="180" class="api">&#10003;  getUserMedia  (camera / mic)</text>
+  <text x="44" y="210" class="api">&#10003;  navigator.clipboard</text>
+  <text x="44" y="240" class="api">&#10003;  crypto.subtle  (Web Crypto)</text>
+  <text x="44" y="270" class="api">&#10003;  Service Workers</text>
+  <text x="44" y="320" class="note" fill="#2f7a37">Every powerful feature is available &#8212; so it all works in dev.</text>
+
+  <!-- RIGHT: LAN IP not secure -->
+  <rect x="456" y="84" width="420" height="276" rx="12" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="476" y="112" class="ph" fill="#b02a2a">&#10007; Not a secure context</text>
+  <rect x="476" y="122" width="230" height="28" rx="6" fill="#2b3a4a"/>
+  <text x="488" y="141" class="url">http://172.16.x.x</text>
+  <text x="476" y="180" class="apx">&#10007;  getUserMedia</text>
+  <text x="476" y="210" class="apx">&#10007;  navigator.clipboard</text>
+  <text x="476" y="240" class="apx">&#10007;  crypto.subtle</text>
+  <text x="476" y="270" class="apx">&#10007;  Service Workers</text>
+  <text x="476" y="312" class="mono">navigator.mediaDevices === undefined</text>
+  <text x="476" y="332" class="note" fill="#a61b1b">Silent: the camera button just does nothing.</text>
+
+  <!-- FIX band -->
+  <rect x="24" y="376" width="852" height="62" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="44" y="400" class="fix"><tspan class="fixh" fill="#1c7ed6">FIX (worst &#8594; best): </tspan>1 dev flag (diagnose only)  &#183;  2 self-signed HTTPS  &#183;  3 real TLS via proxy / tunnel &#8592; best</text>
+  <text x="44" y="424" class="fix"><tspan class="fixh" fill="#1c7ed6">DETECT FIRST: </tspan>if (!window.isSecureContext) degrade gracefully &#8212; show a clear message, fall back to manual entry</text>
+
+  <text x="450" y="476" text-anchor="middle" class="foot">Test on the origin &amp; device your users actually have &#8212; the bug is invisible on localhost by design.</text>
+</svg>
