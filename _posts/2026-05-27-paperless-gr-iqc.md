@@ -9,6 +9,9 @@ tags: [wms, iqc, gr, paperless, quality, warehouse]
 
 ---
 
+![Going paperless on GR to IQC replaces physical stamps and wet signatures with digital trust signals — authenticated user, immutable timestamp, photo evidence, document-ID cross-reference, and an append-only audit log — that are more traceable than paper]({{ "/assets/img/2026-05-27/paperless-gr-iqc.svg" | relative_url }})
+_Paperless isn't fewer checks — it's swapping a stamp for a signal that proves who did what, when._
+
 ## Why Go Paperless?
 
 **Problems with paper-based GR/IQC:**

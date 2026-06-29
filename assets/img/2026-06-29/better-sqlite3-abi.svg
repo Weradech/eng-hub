@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="A native addon compiled for one Node ABI dies after Node upgrades to a new ABI; the fix is to rebuild for the new ABI and pin the PM2 interpreter to an absolute path">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .bx{font-size:13px;font-weight:700;fill:#1f2933}
+    .bxs{font-size:11.5px;fill:#52606d}
+    .wh{font-size:13px;font-weight:700;fill:#ffffff}
+    .whs{font-size:11px;fill:#cbd2d9}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:11.5px}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Why your app dies after a Node upgrade</text>
+  <text x="30" y="64" class="sub">A native addon is compiled for one Node ABI. Flip the runtime and the binary no longer matches &#8212; exit 139.</text>
+
+  <defs>
+    <marker id="ga" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#7b8794"/></marker>
+    <marker id="go" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d9760a"/></marker>
+    <marker id="gr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d64545"/></marker>
+    <marker id="gg" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+  </defs>
+
+  <!-- Stage 1: compiled for ABI 115 (blue / neutral-good) -->
+  <rect x="30" y="104" width="196" height="74" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="128" y="128" text-anchor="middle" class="bx" fill="#1c5fa8">better-sqlite3 built</text>
+  <text x="128" y="146" text-anchor="middle" class="bxs">.node binary compiled for</text>
+  <text x="128" y="164" text-anchor="middle" class="mono" fill="#1c5fa8">Node 20 &#183; ABI 115</text>
+  <path d="M226 141 L260 141" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ga)"/>
+
+  <!-- Stage 2: Node flips (orange / warning) -->
+  <rect x="262" y="104" width="196" height="74" rx="10" fill="#fff4e0" stroke="#f3c677"/>
+  <text x="360" y="128" text-anchor="middle" class="bx" fill="#9a5b00">Node runtime flips</text>
+  <text x="360" y="146" text-anchor="middle" class="bxs">reboot &#183; nvm default &#183; pkg update</text>
+  <text x="360" y="164" text-anchor="middle" class="mono" fill="#9a5b00">Node 18 &#183; ABI 108</text>
+  <path d="M458 141 L492 141" fill="none" stroke="#d9760a" stroke-width="2" marker-end="url(#go)"/>
+
+  <!-- Stage 3: mismatch (orange escalating to red) -->
+  <rect x="494" y="104" width="196" height="74" rx="10" fill="#fff4e0" stroke="#f3c677"/>
+  <text x="592" y="128" text-anchor="middle" class="bx" fill="#9a5b00">ABI no longer matches</text>
+  <text x="592" y="146" text-anchor="middle" class="bxs">binary wants 115, runtime is 108</text>
+  <text x="592" y="164" text-anchor="middle" class="mono" fill="#9a5b00">115 &#8800; 108</text>
+  <path d="M690 141 L724 141" fill="none" stroke="#d64545" stroke-width="2" marker-end="url(#gr)"/>
+
+  <!-- Stage 4: crash (red / danger) -->
+  <rect x="726" y="104" width="144" height="74" rx="10" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="798" y="128" text-anchor="middle" class="bx" fill="#b02a2a">&#10007; App crashes</text>
+  <text x="798" y="146" text-anchor="middle" class="bxs">SIGSEGV, silent</text>
+  <text x="798" y="164" text-anchor="middle" class="mono" fill="#b02a2a">exit 139</text>
+
+  <!-- Two failure modes note -->
+  <rect x="30" y="200" width="840" height="50" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="48" y="220" class="lbl" fill="#7b8794">TWO FACES OF THE SAME MISMATCH</text>
+  <text x="48" y="240" class="bxs"><tspan fill="#b02a2a" font-weight="700">exit 139</tspan> = silent segfault (no message)   &#183;   <tspan fill="#9a5b00" font-weight="700">NODE_MODULE_VERSION 115 vs 108</tspan> = the explicit, friendly version of the same crash</text>
+
+  <!-- THE FIX band header -->
+  <text x="30" y="290" class="lbl" fill="#2f9e44">THE DURABLE FIX</text>
+
+  <!-- Fix step 1 -->
+  <rect x="30" y="300" width="270" height="86" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <circle cx="56" cy="326" r="13" fill="#2f9e44"/>
+  <text x="56" y="331" text-anchor="middle" class="wh">1</text>
+  <text x="78" y="331" class="bx" fill="#2f7a37">Rebuild for the runtime</text>
+  <text x="48" y="356" class="mono" fill="#1f2933">npm rebuild better-sqlite3</text>
+  <text x="48" y="374" class="bxs">now the .node matches the live ABI</text>
+
+  <!-- Fix step 2 -->
+  <rect x="315" y="300" width="270" height="86" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <circle cx="341" cy="326" r="13" fill="#2f9e44"/>
+  <text x="341" y="331" text-anchor="middle" class="wh">2</text>
+  <text x="363" y="331" class="bx" fill="#2f7a37">Pin the interpreter</text>
+  <text x="333" y="356" class="mono" fill="#1f2933">interpreter: '/usr/bin/node'</text>
+  <text x="333" y="374" class="bxs">absolute path &#8212; immune to PATH flips</text>
+
+  <!-- Fix step 3 -->
+  <rect x="600" y="300" width="270" height="86" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <circle cx="626" cy="326" r="13" fill="#2f9e44"/>
+  <text x="626" y="331" text-anchor="middle" class="wh">3</text>
+  <text x="648" y="331" class="bx" fill="#2f7a37">Lock &amp; probe</text>
+  <text x="618" y="356" class="mono" fill="#1f2933">.nvmrc + health DB probe</text>
+  <text x="618" y="374" class="bxs">CI picks the version; crash caught early</text>
+
+  <rect x="30" y="408" width="840" height="34" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="430" text-anchor="middle" class="foot">A native addon is married to one ABI &#8212; rebuild it for the new Node, and pin the interpreter so the runtime can&#8217;t drift.</text>
+</svg>

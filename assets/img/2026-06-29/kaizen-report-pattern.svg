@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="The Kaizen five-section report as a decision path: Pain, State, Solution, Metrics, PDCA, each section with one job that forces a decision">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .num{font-size:20px;font-weight:800;fill:#ffffff}
+    .step{font-size:15.5px;font-weight:700;fill:#1f2933}
+    .ex{font-size:12px;fill:#52606d}
+    .tag{font-size:10.5px;font-weight:700;letter-spacing:.5px}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">A report format that forces a decision</text>
+  <text x="30" y="64" class="sub">Five sections, each with exactly one job &#8212; and none of them is &#8220;show how much work I did.&#8221;</text>
+
+  <!-- vertical flow arrow -->
+  <line x1="60" y1="94" x2="60" y2="394" stroke="#1c7ed6" stroke-width="2.5"/>
+  <polygon points="60,402 54,390 66,390" fill="#1c7ed6"/>
+  <text x="44" y="248" transform="rotate(-90 44 248)" text-anchor="middle" class="tag" fill="#1c7ed6">EACH SECTION ENDS IN A CONCLUSION</text>
+
+  <!-- Step 1 — Pain -->
+  <g>
+    <rect x="84" y="94" width="786" height="58" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <circle cx="118" cy="123" r="20" fill="#1c7ed6"/>
+    <text x="118" y="130" text-anchor="middle" class="num">1</text>
+    <text x="156" y="118" class="step">Pain &#8212; state what broke, quantified</text>
+    <text x="156" y="139" class="ex">&#8220;Stock overstated by 1,623 items vs Odoo&#8221; &#8212; a number, a unit, in money the reader cares about.</text>
+    <rect x="724" y="112" width="128" height="24" rx="12" fill="#ffffff" stroke="#1c7ed6"/>
+    <text x="788" y="128" text-anchor="middle" class="tag" fill="#1c7ed6">FORCES A NUMBER</text>
+  </g>
+
+  <!-- Step 2 — State -->
+  <g>
+    <rect x="84" y="160" width="786" height="58" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <circle cx="118" cy="189" r="20" fill="#1c7ed6"/>
+    <text x="118" y="196" text-anchor="middle" class="num">2</text>
+    <text x="156" y="184" class="step">State &#8212; the situation, on live data</text>
+    <text x="156" y="205" class="ex">Pull it fresh as you write. Not last week, not from memory &#8212; what is actually happening right now.</text>
+    <rect x="724" y="178" width="128" height="24" rx="12" fill="#ffffff" stroke="#1c7ed6"/>
+    <text x="788" y="194" text-anchor="middle" class="tag" fill="#1c7ed6">FORCES A QUERY</text>
+  </g>
+
+  <!-- Step 3 — Solution -->
+  <g>
+    <rect x="84" y="226" width="786" height="58" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <circle cx="118" cy="255" r="20" fill="#1c7ed6"/>
+    <text x="118" y="262" text-anchor="middle" class="num">3</text>
+    <text x="156" y="250" class="step">Solution &#8212; what was done, specifically</text>
+    <text x="156" y="271" class="ex">A proposal? Pick one option, give its cost, recommend it. Don&#8217;t hand the manager three blind choices.</text>
+    <rect x="724" y="244" width="128" height="24" rx="12" fill="#ffffff" stroke="#1c7ed6"/>
+    <text x="788" y="260" text-anchor="middle" class="tag" fill="#1c7ed6">FORCES A PICK</text>
+  </g>
+
+  <!-- Step 4 — Metrics -->
+  <g>
+    <rect x="84" y="292" width="786" height="58" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+    <circle cx="118" cy="321" r="20" fill="#2f9e44"/>
+    <text x="118" y="328" text-anchor="middle" class="num">4</text>
+    <text x="156" y="316" class="step">Metrics &#8212; before vs after, the evidence</text>
+    <text x="156" y="337" class="ex">No baseline? Then it&#8217;s another State section. &#8220;18% &#8594; 3%&#8221; is proof; &#8220;improved&#8221; is marketing.</text>
+    <rect x="724" y="310" width="128" height="24" rx="12" fill="#ffffff" stroke="#2f9e44"/>
+    <text x="788" y="326" text-anchor="middle" class="tag" fill="#2f7a37">FORCES A BASELINE</text>
+  </g>
+
+  <!-- Step 5 — PDCA -->
+  <g>
+    <rect x="84" y="358" width="786" height="58" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+    <circle cx="118" cy="387" r="20" fill="#2f9e44"/>
+    <text x="118" y="394" text-anchor="middle" class="num">5</text>
+    <text x="156" y="382" class="step">PDCA &#8212; next steps with owner and date</text>
+    <text x="156" y="403" class="ex">Plan, Do, Check, Act &#8212; every row names a person and a date. &#8220;Team&#8221; is not an owner.</text>
+    <rect x="724" y="376" width="128" height="24" rx="12" fill="#ffffff" stroke="#2f9e44"/>
+    <text x="788" y="392" text-anchor="middle" class="tag" fill="#2f7a37">FORCES AN OWNER</text>
+  </g>
+
+  <text x="450" y="446" text-anchor="middle" class="foot">If you can&#8217;t write a section&#8217;s conclusion sentence, that section isn&#8217;t done &#8212; and the decision can&#8217;t be made.</text>
+</svg>

@@ -10,6 +10,9 @@ mermaid: true
 
 ---
 
+![Pipeline from a goods-receipt event to an Adaptive Card rendered in a Teams channel, with the dict-not-string content gotcha called out]({{ "/assets/img/2026-06-14/teams-adaptive-card-webhook.svg" | relative_url }})
+_The webhook wants a JSON object; sending a JSON string fails silently as a 400 — the fix is deleting `json.dumps()`._
+
 ## The Flow
 
 ```mermaid

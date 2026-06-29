@@ -9,6 +9,9 @@ tags: [kaizen, reporting, lean, process, management, html]
 
 ---
 
+![The Kaizen 5-section report as a decision path: Pain, State, Solution, Metrics, PDCA, each section with one job that forces a decision]({{ "/assets/img/2026-06-29/kaizen-report-pattern.svg" | relative_url }})
+_Five sections, each with one job &#8212; and each one forces a decision the reader otherwise wouldn&#8217;t make._
+
 ## Why Most Engineering Reports Fail
 
 The failure mode is consistent across industries: the report is written for the author, not the reader.

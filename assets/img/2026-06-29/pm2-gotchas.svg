@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Three PM2 gotchas: killing the God daemon takes down every app, restart caches stale env, and a Node upgrade flips the native-module ABI">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .h{font-size:15px;font-weight:700;fill:#ffffff}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .body{font-size:12.5px;fill:#1f2933}
+    .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:11.5px;fill:#1f2933}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect x="0" y="0" width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Three PM2 gotchas that look unrelated</text>
+  <text x="30" y="64" class="sub">A killed daemon, a cached env, and a flipped ABI &#8212; each has one simple, predictable fix.</text>
+
+  <!-- Card 1 -->
+  <g>
+    <rect x="30" y="92" width="266" height="320" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <path d="M30 104 a12 12 0 0 1 12 -12 h242 a12 12 0 0 1 12 12 v26 h-266 z" fill="#2b3a4a"/>
+    <text x="46" y="122" class="h">1 &#183; The God daemon</text>
+    <text x="46" y="156" class="lbl" fill="#7b8794">SYMPTOM</text>
+    <text x="46" y="174" class="body">Kill one stuck process and</text>
+    <text x="46" y="190" class="body">unrelated apps die too</text>
+    <rect x="46" y="206" width="86" height="20" rx="10" fill="#fbeaea"/>
+    <text x="56" y="220" class="lbl" fill="#d64545">&#10007; CAUSE</text>
+    <text x="46" y="246" class="body" fill="#a61b1b">Every app is a child of</text>
+    <text x="46" y="262" class="body" fill="#a61b1b">one pm2-runtime daemon</text>
+    <rect x="46" y="278" width="58" height="20" rx="10" fill="#e9f7ee"/>
+    <text x="56" y="292" class="lbl" fill="#2f9e44">&#10003; FIX</text>
+    <text x="46" y="318" class="body">Stop by name, never</text>
+    <text x="46" y="334" class="body">kill the OS process</text>
+    <rect x="46" y="346" width="234" height="22" rx="6" fill="#eef1f5" stroke="#cbd2d9"/>
+    <text x="56" y="361" class="mono">pm2 stop &lt;name&gt;</text>
+    <text x="46" y="392" class="lbl" fill="#7b8794">TELL: the daemon is not a zombie</text>
+  </g>
+
+  <!-- Card 2 -->
+  <g>
+    <rect x="316" y="92" width="268" height="320" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <path d="M316 104 a12 12 0 0 1 12 -12 h244 a12 12 0 0 1 12 12 v26 h-268 z" fill="#2b3a4a"/>
+    <text x="332" y="122" class="h">2 &#183; restart caches env</text>
+    <text x="332" y="156" class="lbl" fill="#7b8794">SYMPTOM</text>
+    <text x="332" y="174" class="body">You edit .env, restart, and</text>
+    <text x="332" y="190" class="body">the old value is still live</text>
+    <rect x="332" y="206" width="86" height="20" rx="10" fill="#fbeaea"/>
+    <text x="342" y="220" class="lbl" fill="#d64545">&#10007; CAUSE</text>
+    <text x="332" y="246" class="body" fill="#a61b1b">Env is cached at first start;</text>
+    <text x="332" y="262" class="body" fill="#a61b1b">--update-env is unreliable</text>
+    <rect x="332" y="278" width="58" height="20" rx="10" fill="#e9f7ee"/>
+    <text x="342" y="292" class="lbl" fill="#2f9e44">&#10003; FIX</text>
+    <text x="332" y="318" class="body">delete + start is the only</text>
+    <text x="332" y="334" class="body">idempotent path</text>
+    <rect x="332" y="346" width="236" height="22" rx="6" fill="#eef1f5" stroke="#cbd2d9"/>
+    <text x="342" y="361" class="mono">pm2 delete &#183; pm2 start</text>
+    <text x="332" y="392" class="lbl" fill="#7b8794">TELL: restart keeps stale vars</text>
+  </g>
+
+  <!-- Card 3 -->
+  <g>
+    <rect x="604" y="92" width="266" height="320" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <path d="M604 104 a12 12 0 0 1 12 -12 h242 a12 12 0 0 1 12 12 v26 h-266 z" fill="#2b3a4a"/>
+    <text x="620" y="122" class="h">3 &#183; ABI flip-flop</text>
+    <text x="620" y="156" class="lbl" fill="#7b8794">SYMPTOM</text>
+    <text x="620" y="174" class="body">exit 139 / segfault right</text>
+    <text x="620" y="190" class="body">after a Node upgrade</text>
+    <rect x="620" y="206" width="86" height="20" rx="10" fill="#fbeaea"/>
+    <text x="630" y="220" class="lbl" fill="#d64545">&#10007; CAUSE</text>
+    <text x="620" y="246" class="body" fill="#a61b1b">Daemon restarts under a new</text>
+    <text x="620" y="262" class="body" fill="#a61b1b">Node; native addon ABI stale</text>
+    <rect x="620" y="278" width="58" height="20" rx="10" fill="#e9f7ee"/>
+    <text x="630" y="292" class="lbl" fill="#2f9e44">&#10003; FIX</text>
+    <text x="620" y="318" class="body">Pin an absolute interpreter</text>
+    <text x="620" y="334" class="body">path + npm rebuild</text>
+    <rect x="620" y="346" width="234" height="22" rx="6" fill="#eef1f5" stroke="#cbd2d9"/>
+    <text x="630" y="361" class="mono">interpreter:/usr/bin/node</text>
+    <text x="620" y="392" class="lbl" fill="#7b8794">TELL: 139 = SIGSEGV on load</text>
+  </g>
+
+  <rect x="30" y="428" width="840" height="30" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="448" text-anchor="middle" class="foot">Drive PM2 by name through its own commands &#8212; never reach around it to the OS process or the shell&#8217;s node.</text>
+</svg>

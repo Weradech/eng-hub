@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Co-master split: WMS owns operational movements, Odoo owns financial and master data; each writes only its own domain and reads the other through a scheduled sync, never dual-writing">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:15px;font-weight:700}
+    .own{font-size:11px;font-weight:700;letter-spacing:.6px}
+    .row{font-size:12.5px;fill:#1f2933}
+    .hub{font-size:12px;font-weight:700;fill:#ffffff}
+    .hubs{font-size:10.5px;fill:#cbd2d9}
+    .mlbl{font-size:10px;font-weight:700;letter-spacing:.5px}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Co-master: one owner per data type</text>
+  <text x="30" y="64" class="sub">Stop dual-writing. Each system writes only its own domain and reads the other &#8212; the sync mirrors, never authors.</text>
+
+  <defs>
+    <marker id="mb" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1c7ed6"/></marker>
+    <marker id="mg" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+  </defs>
+
+  <!-- LEFT: WMS owns operational -->
+  <rect x="24" y="86" width="338" height="300" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="44" y="114" class="ph" fill="#1c5fa8">WMS</text>
+  <rect x="246" y="98" width="100" height="22" rx="11" fill="#ffffff" stroke="#1c7ed6"/>
+  <text x="296" y="113" text-anchor="middle" class="own" fill="#1c7ed6">OPERATIONAL</text>
+  <text x="44" y="134" class="sub" fill="#1c5fa8">writes &#8212; the source of truth for movement</text>
+
+  <rect x="44" y="146" width="298" height="30" rx="7" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="58" y="166" class="row">Goods receipt / issue (GR / GI)</text>
+  <rect x="44" y="182" width="298" height="30" rx="7" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="58" y="202" class="row">IQC &#183; internal transfers</text>
+  <rect x="44" y="218" width="298" height="30" rx="7" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="58" y="238" class="row">On-hand stock quantity</text>
+  <rect x="44" y="254" width="298" height="30" rx="7" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="58" y="274" class="row">Analytic tag at post time</text>
+
+  <rect x="44" y="300" width="298" height="66" rx="9" fill="#f1f7fd" stroke="#9ec5f0" stroke-dasharray="5 4"/>
+  <text x="58" y="322" class="row" fill="#1c5fa8" font-weight="700">Reads from Odoo (cache only)</text>
+  <text x="58" y="342" class="sub">PO for GR match &#183; item master &#183; supplier</text>
+  <text x="58" y="358" class="sub">cost for valuation display &#8212; never edits</text>
+
+  <!-- RIGHT: Odoo owns financial / master -->
+  <rect x="538" y="86" width="338" height="300" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="558" y="114" class="ph" fill="#2f7a37">Odoo</text>
+  <rect x="700" y="98" width="158" height="22" rx="11" fill="#ffffff" stroke="#2f9e44"/>
+  <text x="779" y="113" text-anchor="middle" class="own" fill="#2f7a37">FINANCIAL &#183; MASTER</text>
+  <text x="558" y="134" class="sub" fill="#2f7a37">writes &#8212; the source of truth for money</text>
+
+  <rect x="558" y="146" width="298" height="30" rx="7" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="572" y="166" class="row">Purchase order header + lines</text>
+  <rect x="558" y="182" width="298" height="30" rx="7" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="572" y="202" class="row">Invoice / accounting entries</text>
+  <rect x="558" y="218" width="298" height="30" rx="7" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="572" y="238" class="row">Item master &#183; cost / standard price</text>
+  <rect x="558" y="254" width="298" height="30" rx="7" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="572" y="274" class="row">Supplier master &#183; analytic codes</text>
+
+  <rect x="558" y="300" width="298" height="66" rx="9" fill="#f3faf5" stroke="#a6dcb8" stroke-dasharray="5 4"/>
+  <text x="572" y="322" class="row" fill="#2f7a37" font-weight="700">Reads WMS movement (mirror only)</text>
+  <text x="572" y="342" class="sub">on-hand pulled in &#8212; never authoritative</text>
+  <text x="572" y="358" class="sub">catches up after WMS posts the event</text>
+
+  <!-- MIDDLE: scheduled sync / verify hub -->
+  <rect x="378" y="150" width="144" height="120" rx="12" fill="#2b3a4a"/>
+  <text x="450" y="182" text-anchor="middle" class="hub">Scheduled</text>
+  <text x="450" y="200" text-anchor="middle" class="hub">sync</text>
+  <text x="450" y="220" text-anchor="middle" class="hubs">every 15 min</text>
+  <text x="450" y="240" text-anchor="middle" class="hubs">pull before push</text>
+  <text x="450" y="258" text-anchor="middle" class="hubs">/verify surfaces drift</text>
+
+  <!-- WMS movement mirrors right into Odoo -->
+  <path d="M362 192 L376 192" fill="none" stroke="#1c7ed6" stroke-width="2"/>
+  <path d="M524 192 L536 192" fill="none" stroke="#1c7ed6" stroke-width="2" marker-end="url(#mb)"/>
+  <text x="450" y="146" text-anchor="middle" class="mlbl" fill="#1c5fa8">MOVEMENT &#8594; MIRROR</text>
+
+  <!-- Odoo master reads left into WMS -->
+  <path d="M538 228 L524 228" fill="none" stroke="#2f9e44" stroke-width="2"/>
+  <path d="M376 228 L364 228" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#mg)"/>
+  <text x="450" y="288" text-anchor="middle" class="mlbl" fill="#2f7a37">PO &#183; MASTER &#8592; PULL</text>
+
+  <!-- footer takeaway -->
+  <rect x="30" y="404" width="840" height="42" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="421" text-anchor="middle" class="foot">No dual-write means no atomic-cross-DB problem: WMS keeps posting when Odoo is down, the sync reconciles later.</text>
+  <text x="450" y="438" text-anchor="middle" class="foot">Odoo refs (odoo_po_id) are foreign metadata, not primary keys &#8212; swap the ERP, keep the WMS.</text>
+</svg>

@@ -9,6 +9,9 @@ tags: [npi, templates, rca, stage-gate, sop, costing]
 
 ---
 
+![Four copy-paste NPI engineering templates and the stage each one serves: RFQ costing, 8D/5-Why RCA, stage-gate checklist, and SOP skeleton]({{ "/assets/img/2026-05-27/npi-engineering-templates-toolkit.svg" | relative_url }})
+_Four copy-paste templates, one for each stage where engineering work tends to go undocumented._
+
 This is a companion page, not a tutorial. Each template links back to the deep-dive that explains it:
 
 - Costing → [PCBA RFQ Costing Pattern]({% post_url 2026-05-27-pcba-rfq-costing-pattern %})

@@ -9,6 +9,9 @@ tags: [led, circuit, rca, buck, power-electronics, field-failure]
 
 ---
 
+![A buck LED-driver field failure RCA: one symptom forks into four candidate causes, each isolated by datasheet and worst-case math, converging on an undersized freewheel diode and the B240A fix]({{ "/assets/img/2026-05-27/buck-led-driver-rca.svg" | relative_url }})
+_One symptom, four candidate causes — datasheet math, not guesswork, finds the undersized freewheel diode._
+
 ## Why Field Failure RCA Is Hard
 
 Field failures differ from lab failures because:

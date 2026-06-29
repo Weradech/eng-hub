@@ -9,6 +9,9 @@ tags: [paperless, gr, iqc, wms, operations, digitisation, npi]
 
 ---
 
+![Going paperless on GR to IQC in three phases: Phase 1 hybrid with digital primary and paper backup, Phase 2 paper only on demand, Phase 3 fully digital. Paper reliance drops from 100 percent to about 30 percent to zero across the phases, each taking 8 to 12 weeks]({{ "/assets/img/2026-06-29/paperless-gr-iqc-3phase.svg" | relative_url }})
+_Three phases, 8–12 weeks each: digitise the process without digitising the resistance._
+
 ## Why "Just Go Digital" Fails
 
 The standard digital transformation pitch: "We'll replace the paper form with a tablet app. Same fields, better data."

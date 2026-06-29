@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" role="img" aria-label="Four copy-paste NPI engineering templates and the stage each one serves: RFQ costing, 8D/5-Why RCA, stage-gate checklist, and SOP skeleton">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .n{font-size:15px;font-weight:800;fill:#ffffff}
+    .name{font-size:14.5px;font-weight:700;fill:#1f2933}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .body{font-size:12px;fill:#52606d}
+    .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:11px;fill:#1c5fa8}
+    .stage{font-size:11px;font-weight:700;fill:#1c5fa8}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="500" fill="#ffffff"/>
+  <text x="30" y="40" class="title">The NPI copy-paste toolkit</text>
+  <text x="30" y="64" class="sub">Four templates you paste straight into a sheet &#8212; the &#8220;what,&#8221; once you already know the why.</text>
+
+  <!-- Card 1: RFQ costing -->
+  <g>
+    <rect x="30" y="88" width="410" height="178" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <circle cx="58" cy="116" r="15" fill="#2b3a4a"/><text x="58" y="121" text-anchor="middle" class="n">1</text>
+    <text x="82" y="113" class="name">RFQ costing sheet</text>
+    <rect x="50" y="132" width="368" height="22" rx="6" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <text x="58" y="147" class="mono">Material + Assembly + OH 15% &#8594; lump sum</text>
+    <text x="50" y="178" class="lbl" fill="#7b8794">PURPOSE</text>
+    <text x="50" y="196" class="body">Internal cost build-up. Customer sees only</text>
+    <text x="50" y="212" class="body">the bottom line &#8212; OH &amp; margin stay hidden.</text>
+    <text x="50" y="240" class="lbl" fill="#1c7ed6">STAGE</text>
+    <text x="50" y="258" class="stage">Quote / RFQ &#8212; before the PO lands</text>
+  </g>
+
+  <!-- Card 2: 8D / 5-Why RCA -->
+  <g>
+    <rect x="460" y="88" width="410" height="178" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <circle cx="488" cy="116" r="15" fill="#2b3a4a"/><text x="488" y="121" text-anchor="middle" class="n">2</text>
+    <text x="512" y="113" class="name">8D / 5-Why RCA form</text>
+    <rect x="480" y="132" width="368" height="22" rx="6" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <text x="488" y="147" class="mono">D1 team &#8230; D4 5-Why &#8230; D8 lessons</text>
+    <text x="480" y="178" class="lbl" fill="#7b8794">PURPOSE</text>
+    <text x="480" y="196" class="body">Symptoms first, no guesses. Drive to a root</text>
+    <text x="480" y="212" class="body">cause with verification &#8212; evidence, not a log.</text>
+    <text x="480" y="240" class="lbl" fill="#1c7ed6">STAGE</text>
+    <text x="480" y="258" class="stage">Failure / closeout &#8212; when a defect appears</text>
+  </g>
+
+  <!-- Card 3: Stage-gate checklist -->
+  <g>
+    <rect x="30" y="282" width="410" height="178" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <circle cx="58" cy="310" r="15" fill="#2b3a4a"/><text x="58" y="315" text-anchor="middle" class="n">3</text>
+    <text x="82" y="307" class="name">Stage-gate checklist</text>
+    <rect x="50" y="326" width="368" height="22" rx="6" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <text x="58" y="341" class="mono">BOM frozen &#183; DFM &#183; FAI &#8594; GO / NO-GO</text>
+    <text x="50" y="372" class="lbl" fill="#7b8794">PURPOSE</text>
+    <text x="50" y="390" class="body">Each item is pass/fail before the build</text>
+    <text x="50" y="406" class="body">advances. A gate is a decision, not a status.</text>
+    <text x="50" y="434" class="lbl" fill="#1c7ed6">STAGE</text>
+    <text x="50" y="452" class="stage">Every gate &#8212; PoC / EVT / DVT / PVT / MP</text>
+  </g>
+
+  <!-- Card 4: SOP skeleton -->
+  <g>
+    <rect x="460" y="282" width="410" height="178" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+    <circle cx="488" cy="310" r="15" fill="#2b3a4a"/><text x="488" y="315" text-anchor="middle" class="n">4</text>
+    <text x="512" y="307" class="name">SOP / work-instruction skeleton</text>
+    <rect x="480" y="326" width="368" height="22" rx="6" fill="#e7f1fb" stroke="#9ec5f0"/>
+    <text x="488" y="341" class="mono">Purpose &#183; Scope &#183; Steps (1 action + pass)</text>
+    <text x="480" y="372" class="lbl" fill="#7b8794">PURPOSE</text>
+    <text x="480" y="390" class="body">One action per numbered step, each with a</text>
+    <text x="480" y="406" class="body">pass criterion. Plus safety, ESD &amp; sign-off.</text>
+    <text x="480" y="434" class="lbl" fill="#1c7ed6">STAGE</text>
+    <text x="480" y="452" class="stage">MP / handoff &#8212; once the process is frozen</text>
+  </g>
+
+  <rect x="30" y="470" width="840" height="30" rx="8" fill="#e7f1fb"/>
+  <text x="450" y="490" text-anchor="middle" class="foot">Paste, then tune the rates and rules to your shop &#8212; keep the external quote one clean number.</text>
+</svg>

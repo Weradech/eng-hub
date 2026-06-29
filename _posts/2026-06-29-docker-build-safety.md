@@ -9,6 +9,9 @@ tags: [docker, deployment, compose, safety, devops]
 
 ---
 
+![docker compose build overwrites the running image from disk; commit then build, verify, then up --no-build to deploy exactly what you verified]({{ "/assets/img/2026-06-29/docker-build-safety.svg" | relative_url }})
+_Code that isn&#8217;t committed doesn&#8217;t exist: commit first, then build, verify the image, and `up --no-build`._
+
 ## The Trap
 
 You make a hotfix directly in the running container (editing a file, pip-installing a package). The fix works. You then run `docker compose build` to "lock it in". You've just destroyed the fix.

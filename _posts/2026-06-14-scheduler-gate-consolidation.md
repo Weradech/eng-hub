@@ -10,6 +10,9 @@ mermaid: true
 
 ---
 
+![Four background jobs with separate semaphores burst the ERP into connection-refused; one shared gate serializes them for paced, healthy access]({{ "/assets/img/2026-06-14/scheduler-gate-consolidation.svg" | relative_url }})
+_&#8220;Each job has a gate&#8221; isn&#8217;t &#8220;at most one ERP call at a time&#8221; &#8212; carry the shared gate explicitly when you split a scheduler into modules._
+
 ## The Setup
 
 A WMS runs several background schedulers that call an external ERP via XML-RPC:

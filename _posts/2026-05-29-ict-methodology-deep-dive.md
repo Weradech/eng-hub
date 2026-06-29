@@ -7,6 +7,9 @@ tags: [ict, test-engineering, pcba, dft, fixture, bed-of-nails, flying-probe, jt
 
 > **TL;DR** — ICT verifies *components are present and correct* (not function). Choose between Bed-of-Nails (HVLM, fast, expensive NRE) and Flying Probe (LVHM, slow, zero NRE). Typical fixture NRE ฿44.5K–66K; break-even ≥200 pcs/year. Coverage: 70–85% alone, 98%+ when combined with AOI and FCT.
 
+![ICT verifies components are present and correct, not that the board functions. Bed-of-Nails has high fixture NRE but is fast and suits high-volume low-mix; Flying Probe has zero NRE but is slow and suits low-volume high-mix. ICT alone covers 70 to 85 percent, reaching 98 percent-plus combined with AOI and FCT]({{ "/assets/img/2026-05-29/ict-methodology-deep-dive.svg" | relative_url }})
+_Bed-of-Nails or Flying Probe is a volume call — pay the fixture once, or pay per board in time._
+
 This is a companion to the [ICT Assessment Pattern]({% post_url 2026-05-27-ict-assessment-pattern %}) post — that post covers the *assessment workflow*; this post covers the *engineering knowledge* needed to make decisions inside that workflow.
 
 ---

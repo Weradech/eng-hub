@@ -9,6 +9,9 @@ tags: [pcb, gerber, costing, rfq, npi, eda]
 
 ---
 
+![Sizing a PCB from Gerber files: parse the outline layer, extract the bounding box, compute area, apply panel yield, then divide panel price by boards-per-panel for unit cost. FR-4 and aluminium differ 2 to 3 times on substrate and are identified differently. Quoting from assumed size instead of the parsed outline caused a 2.5 times error]({{ "/assets/img/2026-06-29/gerber-pcb-costing.svg" | relative_url }})
+_Size the board from the outline layer, not the eyeball — every downstream cost multiplies that one number._
+
 ## Which Layer Is the Outline
 
 Gerber file naming conventions are set by the EDA tool, not a universal standard. The mechanical/outline layer has many aliases:

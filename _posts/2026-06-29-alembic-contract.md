@@ -9,6 +9,9 @@ tags: [alembic, sqlalchemy, python, database, migrations, reliability]
 
 ---
 
+![Three parties bound by one contract: the SQLAlchemy model, the Alembic revision, and the live DB schema must agree, or they drift and break]({{ "/assets/img/2026-06-29/alembic-contract.svg" | relative_url }})
+_A revision is a contract between code and schema, not a convenience — skip a signature and they drift silently until production._
+
 ## Failure Mode 1: The Model That Doesn't Exist
 
 Alembic's `autogenerate` works by importing your SQLAlchemy models and comparing them against the live database. If a model isn't imported, `autogenerate` treats it as if it doesn't exist — and generates no migration for it.

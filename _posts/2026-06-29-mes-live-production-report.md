@@ -9,6 +9,9 @@ tags: [mes, reporting, api, chart-js, production, traceability, html]
 
 ---
 
+![A static deck goes obsolete on arrival; a standalone HTML report that fetches the MES traceability API at generation time stays accurate]({{ "/assets/img/2026-06-29/mes-live-production-report.svg" | relative_url }})
+_Live data at generation time beats a static deck 10× — one API call bakes the floor's real numbers into a shareable HTML file._
+
 ## The Data Model
 
 Every unit entering the PCBA test station gets a serial number stamped at test time. The traceability system records two events per unit:

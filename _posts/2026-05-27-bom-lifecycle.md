@@ -9,6 +9,9 @@ tags: [bom, odoo, mrp, npi, rfq, erp]
 
 ---
 
+![A BOM moves through four stages — RFQ costing BOM, engineering eBOM, manufacturing mBOM, then the active BOM in Odoo — each with a different owner, store, and what gets locked]({{ "/assets/img/2026-05-27/bom-lifecycle.svg" | relative_url }})
+_The same BOM wears four hats; load the wrong stage into ERP and MRP inherits the error._
+
 ## BOM Stages and Their Roles
 
 ```

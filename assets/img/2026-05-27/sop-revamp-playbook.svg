@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="An SOP revamp: the ISO document hierarchy runs Quality Manual to Procedures to Work Instructions to Forms and Records; a legacy 30-page prose SOP nobody follows is replaced by a one-page numbered work instruction a new hire can execute immediately">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:15px;font-weight:700}
+    .role{font-size:11.5px;font-style:italic}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .li{font-size:12.5px;fill:#1f2933}
+    .pyr{font-size:13px;font-weight:700;fill:#ffffff}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">SOPs That Actually Get Used: 13 Principles</text>
+  <text x="30" y="64" class="sub">A good SOP is not the longest one. It is the one a new employee can follow immediately.</text>
+
+  <text x="40" y="100" class="lbl" fill="#7b8794">ISO DOCUMENT HIERARCHY</text>
+  <polygon points="160,120 220,120 250,182 130,182" fill="#1c5fa8"/>
+  <polygon points="130,182 250,182 280,244 100,244" fill="#2f7ec9"/>
+  <polygon points="100,244 280,244 310,306 70,306" fill="#5fa1de"/>
+  <polygon points="70,306 310,306 340,368 40,368" fill="#9ec5f0"/>
+  <text x="190" y="156" text-anchor="middle" class="pyr">Quality Manual</text>
+  <text x="190" y="218" text-anchor="middle" class="pyr">Procedures (P)</text>
+  <text x="190" y="280" text-anchor="middle" class="pyr">Work Instructions (WI)</text>
+  <text x="190" y="342" text-anchor="middle" class="pyr" fill="#1f2933">Forms / Records</text>
+  <text x="190" y="392" text-anchor="middle" class="role" fill="#7b8794">Abstract at the top, executable at the base</text>
+
+  <!-- LEGACY -->
+  <rect x="430" y="92" width="446" height="142" rx="12" fill="#fdecea" stroke="#e8a79c"/>
+  <text x="450" y="120" class="ph" fill="#b03a2e">Legacy SOP</text>
+  <text x="450" y="139" class="role" fill="#b03a2e">30 pages of prose &#8212; nobody reads it on the floor</text>
+  <text x="450" y="168" class="li">&#183;  Mixes policy, theory and steps in one wall of text</text>
+  <text x="450" y="190" class="li">&#183;  No photos, no numbered actions</text>
+  <text x="450" y="212" class="li">&#183;  Written to satisfy the auditor, not the operator</text>
+
+  <!-- REVAMPED -->
+  <rect x="430" y="250" width="446" height="142" rx="12" fill="#e6f4ea" stroke="#9ed6ad"/>
+  <text x="450" y="278" class="ph" fill="#1c7a3f">Revamped SOP</text>
+  <text x="450" y="297" class="role" fill="#1c7a3f">One-page WI a new hire can execute today</text>
+  <text x="450" y="326" class="li">&#183;  Purpose &#183; Scope &#183; Tools &#183; numbered Steps &#183; Record</text>
+  <text x="450" y="348" class="li">&#183;  One action per line, photo per critical step</text>
+  <text x="450" y="370" class="li">&#183;  Right altitude: P for handoffs, WI for the task</text>
+
+  <text x="30" y="438" class="foot">13 principles, one test: can a new hire do the task from the document alone? If not, it is too long &#8212; not too short.</text>
+</svg>

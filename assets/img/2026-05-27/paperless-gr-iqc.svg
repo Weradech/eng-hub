@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Going paperless on GR to IQC replaces physical stamps and wet signatures with digital trust signals — authenticated user, immutable timestamp, photo evidence, document-ID cross-reference, and an append-only audit log — that are more traceable than paper">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:15px;font-weight:700}
+    .role{font-size:11.5px;font-style:italic}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .li{font-size:13px;fill:#1f2933}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Paperless GR &#8594; IQC: Trust Signals Replace Stamps</text>
+  <text x="30" y="64" class="sub">Going paperless is not removing steps &#8212; it is swapping physical stamps for digital signals that are more traceable than paper.</text>
+
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+  </defs>
+
+  <!-- LEFT: paper -->
+  <rect x="24" y="90" width="360" height="312" rx="12" fill="#f4f5f7" stroke="#cbd2d9"/>
+  <text x="44" y="118" class="ph" fill="#52606d">Paper</text>
+  <text x="44" y="137" class="role" fill="#7b8794">Trust = &#8220;it looks official&#8221;</text>
+  <text x="44" y="170" class="lbl" fill="#9aa5b1">WHAT IT RELIES ON</text>
+  <text x="44" y="196" class="li">&#183;  Rubber stamp on the form</text>
+  <text x="44" y="222" class="li">&#183;  Wet signature</text>
+  <text x="44" y="248" class="li">&#183;  Hand-written checklist</text>
+  <text x="44" y="274" class="li">&#183;  Manual logbook entry</text>
+  <text x="44" y="300" class="li">&#183;  Physical filing cabinet</text>
+  <text x="44" y="344" class="role" fill="#9e6b00">Audit = dig through folders;</text>
+  <text x="44" y="362" class="role" fill="#9e6b00">a stamp proves nothing about who or when.</text>
+
+  <!-- arrow -->
+  <line x1="392" y1="246" x2="500" y2="246" stroke="#2f9e44" stroke-width="2.5" marker-end="url(#ar)"/>
+  <text x="446" y="236" text-anchor="middle" class="lbl" fill="#2f9e44">REPLACE WITH</text>
+
+  <!-- RIGHT: digital -->
+  <rect x="516" y="90" width="360" height="312" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="536" y="118" class="ph" fill="#1c5fa8">Digital trust signals</text>
+  <text x="536" y="137" class="role" fill="#1c5fa8">Trust = &#8220;it is provable&#8221;</text>
+  <text x="536" y="170" class="lbl" fill="#7b8794">WHAT EACH ACTION CARRIES</text>
+  <text x="536" y="196" class="li">&#183;  Authenticated user ID</text>
+  <text x="536" y="222" class="li">&#183;  Immutable timestamp</text>
+  <text x="536" y="248" class="li">&#183;  Photo evidence attached</text>
+  <text x="536" y="274" class="li">&#183;  Document-ID cross-reference</text>
+  <text x="536" y="300" class="li">&#183;  Append-only audit log</text>
+  <text x="536" y="344" class="role" fill="#1c7a3f">Audit = one query;</text>
+  <text x="536" y="362" class="role" fill="#1c7a3f">every action is attributed and time-stamped.</text>
+
+  <text x="30" y="438" class="foot">Same controls, more audit-ready: the goal is a trust signal stronger than a stamp &#8212; not fewer checks.</text>
+</svg>

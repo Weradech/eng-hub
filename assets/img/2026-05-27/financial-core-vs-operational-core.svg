@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Two-layer mental model: a Financial Core (Odoo) owns money and master data, an Operational Core (WMS/MRP/MES) owns daily work, and they sync without merging">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .ph{font-size:15px;font-weight:700}
+    .role{font-size:11.5px;font-style:italic}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1px}
+    .li{font-size:12.5px;fill:#1f2933}
+    .ana{font-size:11.5px;fill:#52606d}
+    .syn{font-size:11px;font-weight:700;letter-spacing:.5px}
+    .syncap{font-size:10.5px;fill:#52606d}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Financial Core vs Operational Core</text>
+  <text x="30" y="64" class="sub">ERP is the book of record for money; operational systems are where the work happens. They sync &#8212; never merge.</text>
+
+  <defs>
+    <marker id="ab" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1c7ed6"/></marker>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+  </defs>
+
+  <!-- LEFT: Financial Core (Odoo) -->
+  <rect x="24" y="86" width="380" height="300" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="44" y="114" class="ph" fill="#1c5fa8">Financial Core &#183; Odoo</text>
+  <text x="44" y="132" class="role" fill="#1c5fa8">Book of Record &#8212; money &amp; master data</text>
+
+  <text x="44" y="160" class="lbl" fill="#7b8794">AUTHORITATIVE ON</text>
+  <text x="44" y="180" class="li" fill="#1c5fa8">&#183;  Purchase Orders &#183; Vendor Bills</text>
+  <text x="44" y="200" class="li" fill="#1c5fa8">&#183;  Payments &#183; General Ledger</text>
+  <text x="44" y="220" class="li" fill="#1c5fa8">&#183;  Customer Invoices</text>
+  <text x="44" y="240" class="li" fill="#1c5fa8">&#183;  Item / Supplier / Customer master</text>
+
+  <rect x="44" y="258" width="340" height="48" rx="8" fill="#f5faff" stroke="#9ec5f0"/>
+  <text x="58" y="278" class="lbl" fill="#1c7ed6">RULE</text>
+  <text x="58" y="298" class="li" fill="#1c5fa8">Every money-touching txn passes through here.</text>
+
+  <rect x="44" y="318" width="340" height="48" rx="8" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="58" y="338" class="lbl" fill="#7b8794">ANALOGY</text>
+  <text x="58" y="357" class="ana">A bank &#8212; every monetary movement is recorded here.</text>
+
+  <!-- RIGHT: Operational Core -->
+  <rect x="496" y="86" width="380" height="300" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="516" y="114" class="ph" fill="#2f7a37">Operational Core &#183; WMS / MRP / MES</text>
+  <text x="516" y="132" class="role" fill="#2f7a37">Systems of Engagement &#8212; daily work</text>
+
+  <text x="516" y="160" class="lbl" fill="#7b8794">AUTHORITATIVE ON</text>
+  <text x="516" y="180" class="li" fill="#2f7a37">&#183;  Inventory movement (GR / GI / Transfer)</text>
+  <text x="516" y="200" class="li" fill="#2f7a37">&#183;  Production status (MO start / complete)</text>
+  <text x="516" y="220" class="li" fill="#2f7a37">&#183;  Quality inspection (IQC pass / fail)</text>
+  <text x="516" y="240" class="li" fill="#2f7a37">&#183;  On-hand &#183; CRM lead / quote</text>
+
+  <rect x="516" y="258" width="340" height="48" rx="8" fill="#f5fbf6" stroke="#a6dcb8"/>
+  <text x="530" y="278" class="lbl" fill="#2f9e44">RULE</text>
+  <text x="530" y="298" class="li" fill="#2f7a37">Optimize for speed, usability, real-time visibility.</text>
+
+  <rect x="516" y="318" width="340" height="48" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
+  <text x="530" y="338" class="lbl" fill="#7b8794">ANALOGY</text>
+  <text x="530" y="357" class="ana">The shop floor &#8212; staff work; day-end totals go up.</text>
+
+  <!-- CENTER sync connector -->
+  <rect x="412" y="170" width="76" height="132" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="450" y="190" text-anchor="middle" class="syn" fill="#3e4c59">SYNC</text>
+  <text x="450" y="204" text-anchor="middle" class="syncap">via outbox</text>
+
+  <!-- operational -> financial: push summary -->
+  <path d="M482 224 L418 224" fill="none" stroke="#1c7ed6" stroke-width="2" marker-end="url(#ab)"/>
+  <text x="450" y="240" text-anchor="middle" class="syncap" fill="#1c5fa8">push</text>
+  <text x="450" y="252" text-anchor="middle" class="syncap" fill="#1c5fa8">summary</text>
+
+  <!-- financial -> operational: pull master -->
+  <path d="M418 274 L482 274" fill="none" stroke="#2f9e44" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="450" y="290" text-anchor="middle" class="syncap" fill="#2f7a37">pull</text>
+  <text x="450" y="302" text-anchor="middle" class="syncap" fill="#2f7a37">master</text>
+
+  <!-- each reads the other (not writes) -->
+  <text x="450" y="404" text-anchor="middle" class="ana">Each is authoritative for its own domain and <tspan font-weight="700">reads</tspan> &#8212; never writes &#8212; the other&#8217;s.</text>
+
+  <rect x="30" y="420" width="840" height="34" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="442" text-anchor="middle" class="foot">Touches money? &#8594; ERP.  What the team does? &#8594; operational.  Both need to know? &#8594; sync via outbox.</text>
+</svg>

@@ -9,6 +9,9 @@ tags: [ap-tracker, procurement, erp, automation, wms, workflow]
 
 ---
 
+![AP Tracker pipeline: an Odoo PO and a WMS goods receipt auto-import into the tracker, which matches them by PO number and walks the state machine to a manual payment gate]({{ "/assets/img/2026-06-29/ap-tracker-flow.svg" | relative_url }})
+_Two systems feed it, the PO number joins them, and records auto-transition until a human approves payment._
+
 ## The Problem This Solves
 
 Before AP Tracker, the reconciliation workflow looked like this:

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="A buck LED-driver field failure RCA: one symptom forks into four candidate causes, each isolated by datasheet and worst-case math, converging on an undersized freewheel diode and the B240A fix">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:23px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13.5px;fill:#52606d}
+    .wh{font-size:13px;font-weight:700;fill:#ffffff}
+    .whs{font-size:11px;fill:#cbd2d9}
+    .cand{font-size:12.5px;font-weight:700;fill:#1f2933}
+    .cands{font-size:10.5px;fill:#52606d}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:.8px}
+    .bx{font-size:13px;font-weight:700;fill:#1f2933}
+    .bxs{font-size:11.5px;fill:#52606d}
+    .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:11px;fill:#1f2933}
+    .foot{font-size:13px;fill:#3e4c59}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="40" class="title">Fault-tree for a buck LED-driver field failure</text>
+  <text x="30" y="64" class="sub">Gather 4 symptoms, fork into suspects, then isolate each by datasheet &amp; worst-case math &#8212; never from memory.</text>
+
+  <defs>
+    <marker id="ag" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#7b8794"/></marker>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#d64545"/></marker>
+    <marker id="agr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+  </defs>
+
+  <!-- SYMPTOM input -->
+  <rect x="30" y="150" width="150" height="64" rx="10" fill="#2b3a4a"/>
+  <text x="105" y="176" text-anchor="middle" class="wh">Field complaint</text>
+  <text x="105" y="194" text-anchor="middle" class="whs">LED off &#183; 4 symptoms first</text>
+
+  <!-- fork to 4 candidates -->
+  <path d="M180 168 C204 142, 214 100, 238 96" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M180 176 C204 162, 214 150, 238 150" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M180 188 C204 196, 214 204, 238 204" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M180 196 C204 222, 214 254, 238 258" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- Candidate 1: Freewheel diode (the culprit) -->
+  <rect x="240" y="84" width="270" height="44" rx="9" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="254" y="103" class="cand" fill="#b02a2a">Freewheel diode</text>
+  <text x="254" y="120" class="cands">insufficient peak-current rating</text>
+  <rect x="466" y="94" width="36" height="24" rx="12" fill="#ffffff" stroke="#d64545"/>
+  <text x="484" y="110" text-anchor="middle" class="lbl" fill="#b02a2a">SUS</text>
+
+  <!-- Candidate 2: Inductor -->
+  <rect x="240" y="138" width="270" height="44" rx="9" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="254" y="157" class="cand">Inductor</text>
+  <text x="254" y="174" class="cands">core saturation at high current</text>
+
+  <!-- Candidate 3: Sense resistor -->
+  <rect x="240" y="192" width="270" height="44" rx="9" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="254" y="211" class="cand">Sense resistor</text>
+  <text x="254" y="228" class="cands">drift &#8594; wrong current regulation</text>
+
+  <!-- Candidate 4: Control IC -->
+  <rect x="240" y="246" width="270" height="44" rx="9" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <text x="254" y="265" class="cand">Control IC</text>
+  <text x="254" y="282" class="cands">latch-up from supply transients</text>
+
+  <!-- ISOLATE gate -->
+  <path d="M510 106 C540 120, 548 160, 560 176" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M510 160 L560 178" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M510 214 L560 192" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ag)"/>
+  <path d="M510 268 C540 252, 548 212, 560 196" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ag)"/>
+
+  <rect x="562" y="148" width="158" height="76" rx="10" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="641" y="170" text-anchor="middle" class="bx" fill="#1c5fa8">Isolate each</text>
+  <text x="641" y="188" text-anchor="middle" class="bxs">datasheet, not memory</text>
+  <text x="641" y="205" text-anchor="middle" class="bxs">worst-case I vs rating</text>
+  <text x="641" y="220" text-anchor="middle" class="mono" font-size="10">850mA peak &gt; 1A IFSM</text>
+
+  <!-- to ROOT CAUSE -->
+  <path d="M720 186 L756 186" fill="none" stroke="#d64545" stroke-width="2.2" marker-end="url(#ar)"/>
+  <rect x="758" y="148" width="120" height="76" rx="10" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="818" y="170" text-anchor="middle" class="lbl" fill="#b02a2a">ROOT CAUSE</text>
+  <text x="818" y="190" text-anchor="middle" class="bx" fill="#b02a2a" font-size="12.5">1SS355</text>
+  <text x="818" y="206" text-anchor="middle" class="bxs">undersized at</text>
+  <text x="818" y="220" text-anchor="middle" class="bxs">Tamb 85&#176;C</text>
+
+  <!-- corrective action band, below -->
+  <path d="M818 224 L818 268" fill="none" stroke="#2f9e44" stroke-width="2.2" marker-end="url(#agr)"/>
+  <rect x="240" y="312" width="638" height="64" rx="10" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <text x="258" y="334" class="lbl" fill="#2f7a37">CORRECTIVE ACTION</text>
+  <text x="258" y="356" class="bx" fill="#2f7a37" font-size="14">B240A Schottky &#8212; IFSM 60 A, V&#8324; 0.4 V</text>
+  <text x="258" y="371" class="bxs">+ headroom under surge &#183; lower V&#8324; = less heat &#183; SMA footprint &#8594; layout change &#183; change ONE part, then EVT</text>
+  <path d="M812 280 C780 296, 700 304, 660 312" fill="none" stroke="#2f9e44" stroke-width="2.2" marker-end="url(#agr)"/>
+
+  <!-- left rail: the discipline arrow -->
+  <rect x="30" y="312" width="190" height="64" rx="10" fill="#fff4e0" stroke="#f3c677"/>
+  <text x="48" y="334" class="lbl" fill="#9a5b00">THE DISCIPLINE</text>
+  <text x="48" y="354" class="bxs" fill="#9a5b00">Verify math is self-consistent</text>
+  <text x="48" y="370" class="bxs" fill="#9a5b00">before you specify the fix.</text>
+
+  <rect x="30" y="408" width="840" height="34" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <text x="450" y="430" text-anchor="middle" class="foot">No scope, no waveforms &#8212; so let datasheet numbers and worst-case math do the isolating for you.</text>
+</svg>
