@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Shop floor DMC traceability: hierarchical parent-child barcode binding across SMT, AOI, ICT, FCT, and Box Build with zero-trust station gates">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:22px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13px;fill:#52606d}
+    .ph{font-size:14px;font-weight:700}
+    .badge{font-size:10px;font-weight:700;letter-spacing:.6px}
+    .row{font-size:11.5px;fill:#1f2933}
+    .hub{font-size:12px;font-weight:700;fill:#ffffff}
+    .hubs{font-size:10px;fill:#d2e3fc}
+    .trap-title{font-size:11px;font-weight:700;fill:#1c5fa8}
+    .trap-desc{font-size:10px;fill:#52606d}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="38" class="title">Zero-Trust Shop Floor DMC Traceability Architecture</text>
+  <text x="30" y="60" class="sub">Hierarchical parent-child barcode binding from PCBA SMT to Box-Build with edge JIG event streaming.</text>
+
+  <defs>
+    <marker id="m-blue2" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1c7ed6"/></marker>
+    <marker id="m-green2" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+  </defs>
+
+  <!-- TOP FLOW: 4 Sequential Stage-Gates -->
+  <rect x="24" y="80" width="195" height="180" rx="8" fill="#e7f1fb" stroke="#9ec5f0" stroke-width="1.5"/>
+  <text x="36" y="104" class="ph" fill="#1c5fa8">Gate 1: SMT / AOI</text>
+  <rect x="140" y="92" width="70" height="18" rx="9" fill="#ffffff" stroke="#1c7ed6"/>
+  <text x="175" y="105" text-anchor="middle" class="badge" fill="#1c7ed6">PCBA LEVEL</text>
+  <rect x="34" y="118" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="42" y="134" class="row">2D Matrix Laser Etch</text>
+  <rect x="34" y="146" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="42" y="162" class="row">Component Reel Lot Link</text>
+  <rect x="34" y="174" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="42" y="190" class="row">Optical Inspection (AOI)</text>
+  <rect x="34" y="202" width="175" height="46" rx="4" fill="#d0ebff" stroke="#74c0fc"/>
+  <text x="42" y="220" class="row" font-weight="bold" fill="#1864ab">Output: Child DMC #1</text>
+  <text x="42" y="238" class="row" font-size="10px" fill="#1864ab">Status: SMT_PASSED</text>
+
+  <!-- Arrow 1 to 2 -->
+  <line x1="219" y1="170" x2="241" y2="170" stroke="#1c7ed6" stroke-width="2" marker-end="url(#m-blue2)"/>
+
+  <rect x="245" y="80" width="195" height="180" rx="8" fill="#e7f1fb" stroke="#9ec5f0" stroke-width="1.5"/>
+  <text x="257" y="104" class="ph" fill="#1c5fa8">Gate 2: ICT / FCT</text>
+  <rect x="361" y="92" width="70" height="18" rx="9" fill="#ffffff" stroke="#1c7ed6"/>
+  <text x="396" y="105" text-anchor="middle" class="badge" fill="#1c7ed6">TEST JIG</text>
+  <rect x="255" y="118" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="263" y="134" class="row">Bed-of-Nails ICT Check</text>
+  <rect x="255" y="146" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="263" y="162" class="row">MQTT JIG Telemetry Push</text>
+  <rect x="255" y="174" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="263" y="190" class="row">Firmware Flash &amp; MAC ID</text>
+  <rect x="255" y="202" width="175" height="46" rx="4" fill="#d0ebff" stroke="#74c0fc"/>
+  <text x="263" y="220" class="row" font-weight="bold" fill="#1864ab">Hard Gate Verification</text>
+  <text x="263" y="238" class="row" font-size="10px" fill="#1864ab">Reject if ICT &gt; 72h old</text>
+
+  <!-- Arrow 2 to 3 -->
+  <line x1="440" y1="170" x2="462" y2="170" stroke="#1c7ed6" stroke-width="2" marker-end="url(#m-blue2)"/>
+
+  <rect x="466" y="80" width="195" height="180" rx="8" fill="#e6f4ea" stroke="#9ed6ad" stroke-width="1.5"/>
+  <text x="478" y="104" class="ph" fill="#1c7a3f">Gate 3: Box Assembly</text>
+  <rect x="582" y="92" width="70" height="18" rx="9" fill="#ffffff" stroke="#2b8a3e"/>
+  <text x="617" y="105" text-anchor="middle" class="badge" fill="#2b8a3e">BINDING</text>
+  <rect x="476" y="118" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="484" y="134" class="row">Housing Serial Scan</text>
+  <rect x="476" y="146" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="484" y="162" class="row">Multi-Child Binding (1:N)</text>
+  <rect x="476" y="174" width="175" height="24" rx="4" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="484" y="190" class="row">Screw Torque Logger</text>
+  <rect x="476" y="202" width="175" height="46" rx="4" fill="#d3f9d8" stroke="#69db7c"/>
+  <text x="484" y="220" class="row" font-weight="bold" fill="#2b8a3e">Parent Serial Created</text>
+  <text x="484" y="238" class="row" font-size="10px" fill="#2b8a3e">Atomic 1:N Association</text>
+
+  <!-- Arrow 3 to 4 -->
+  <line x1="661" y1="170" x2="683" y2="170" stroke="#2f9e44" stroke-width="2" marker-end="url(#m-green2)"/>
+
+  <rect x="687" y="80" width="189" height="180" rx="8" fill="#e6f4ea" stroke="#9ed6ad" stroke-width="1.5"/>
+  <text x="699" y="104" class="ph" fill="#1c7a3f">Gate 4: Pack &amp; QA</text>
+  <rect x="797" y="92" width="70" height="18" rx="9" fill="#ffffff" stroke="#2b8a3e"/>
+  <text x="832" y="105" text-anchor="middle" class="badge" fill="#2b8a3e">SHIPPING</text>
+  <rect x="697" y="118" width="169" height="24" rx="4" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="705" y="134" class="row">End-of-Line QA Gate</text>
+  <rect x="697" y="146" width="169" height="24" rx="4" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="705" y="162" class="row">Customer Serial Mapping</text>
+  <rect x="697" y="174" width="169" height="24" rx="4" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="705" y="190" class="row">Master Carton Packing</text>
+  <rect x="697" y="202" width="169" height="46" rx="4" fill="#d3f9d8" stroke="#69db7c"/>
+  <text x="705" y="220" class="row" font-weight="bold" fill="#2b8a3e">Certificate of Conformance</text>
+  <text x="705" y="238" class="row" font-size="10px" fill="#2b8a3e">Instant Full Genealogy</text>
+
+  <!-- BOTTOM PANEL: 3 Architectural Core Pillars -->
+  <rect x="24" y="276" width="852" height="178" rx="10" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1.2"/>
+  <text x="40" y="298" class="ph" fill="#212529">Shop Floor Traceability Engineering Pillars</text>
+
+  <!-- Pillar 1 -->
+  <rect x="38" y="308" width="262" height="134" rx="6" fill="#ffffff" stroke="#ced4da"/>
+  <text x="50" y="328" class="trap-title">1. Parent-Child Tree Topology</text>
+  <text x="50" y="348" class="trap-desc">Box-Build Serial owns N PCBA DMCs.</text>
+  <text x="50" y="364" class="trap-desc">PCBA DMC owns M Component Lots.</text>
+  <text x="50" y="380" class="trap-desc">Unbinding requires immutable audit row;</text>
+  <text x="50" y="396" class="trap-desc">reworked parts maintain full history.</text>
+  <text x="50" y="422" class="trap-desc" font-weight="bold" fill="#1864ab">Query: Tree walk in single SQL recursive CTE</text>
+
+  <!-- Pillar 2 -->
+  <rect x="318" y="308" width="264" height="134" rx="6" fill="#ffffff" stroke="#ced4da"/>
+  <text x="330" y="328" class="trap-title">2. Edge MQTT Telemetry Streams</text>
+  <text x="330" y="348" class="trap-desc">Test JIG publishes to topic:</text>
+  <text x="330" y="364" class="trap-desc" font-family="monospace">me_jig/{jig_id}/run/summary</text>
+  <text x="330" y="380" class="trap-desc">Worker coerces types (float &rarr; int)</text>
+  <text x="330" y="396" class="trap-desc">preventing silent database insertion drops.</text>
+  <text x="330" y="422" class="trap-desc" font-weight="bold" fill="#1864ab">Throughput: &gt;500 test events/sec per worker</text>
+
+  <!-- Pillar 3 -->
+  <rect x="600" y="308" width="264" height="134" rx="6" fill="#ffffff" stroke="#ced4da"/>
+  <text x="612" y="328" class="trap-title">3. Zero-Trust Station Gates</text>
+  <text x="612" y="348" class="trap-desc">Every test station checks pre-conditions:</text>
+  <text x="612" y="364" class="trap-desc">&#8226; Previous gate passed within TTL window</text>
+  <text x="612" y="380" class="trap-desc">&#8226; No unresolved rework flags</text>
+  <text x="612" y="396" class="trap-desc">&#8226; Operator badge valid for current station</text>
+  <text x="612" y="422" class="trap-desc" font-weight="bold" fill="#1864ab">Fail-Safe: Offline local edge buffer on WAN drop</text>
+</svg>

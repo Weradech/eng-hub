@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Document-as-Code architecture: modularizing 350+ ISO standard compliance documents into offline-first standalone HTML with sub-10ms fuzzy search indexing">
+  <style>
+    text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+    .title{font-size:22px;font-weight:700;fill:#1f2933}
+    .sub{font-size:13px;fill:#52606d}
+    .ph{font-size:14px;font-weight:700}
+    .badge{font-size:10px;font-weight:700;letter-spacing:.6px}
+    .row{font-size:11.5px;fill:#1f2933}
+    .hub{font-size:12px;font-weight:700;fill:#ffffff}
+    .hubs{font-size:10px;fill:#d2e3fc}
+    .trap-title{font-size:11px;font-weight:700;fill:#b03a2e}
+    .trap-desc{font-size:10px;fill:#52606d}
+  </style>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="30" y="38" class="title">Document-as-Code &amp; Offline-First ISO 56001 Knowledge Base</text>
+  <text x="30" y="60" class="sub">Transforming 350+ compliance documents into modular standalone HTML with sub-10ms client search.</text>
+
+  <defs>
+    <marker id="m-blue5" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1c7ed6"/></marker>
+    <marker id="m-green5" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#2f9e44"/></marker>
+  </defs>
+
+  <!-- 3 COLUMNS -->
+  <!-- Col 1: Modular Source Structure -->
+  <rect x="24" y="80" width="268" height="230" rx="10" fill="#e7f1fb" stroke="#9ec5f0" stroke-width="1.5"/>
+  <text x="40" y="106" class="ph" fill="#1c5fa8">1. Granular Document Separation</text>
+  <rect x="206" y="92" width="74" height="20" rx="10" fill="#ffffff" stroke="#1c7ed6"/>
+  <text x="243" y="106" text-anchor="middle" class="badge" fill="#1c7ed6">1 DOC = 1 FILE</text>
+
+  <rect x="38" y="122" width="240" height="34" rx="5" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="48" y="144" class="row" font-weight="bold">359 Modular .dc.html Files</text>
+  <rect x="38" y="162" width="240" height="34" rx="5" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="48" y="184" class="row">Strict 2-Level Relative Asset Paths</text>
+  <rect x="38" y="202" width="240" height="34" rx="5" fill="#ffffff" stroke="#9ec5f0"/>
+  <text x="48" y="224" class="row">Zero External CDN / Font Dependencies</text>
+  <rect x="38" y="242" width="240" height="34" rx="5" fill="#d0ebff" stroke="#74c0fc"/>
+  <text x="48" y="264" class="row" font-weight="bold" fill="#1864ab">100% Air-Gapped Offline Ready</text>
+  <text x="40" y="298" class="row" font-size="10.5px" fill="#1c5fa8">Audit-ready even on isolated LANs</text>
+
+  <!-- Arrow 1 to 2 -->
+  <line x1="292" y1="195" x2="314" y2="195" stroke="#1c7ed6" stroke-width="2" marker-end="url(#m-blue5)"/>
+
+  <!-- Col 2: Inverted Index Search Engine -->
+  <rect x="318" y="80" width="264" height="230" rx="10" fill="#1864ab" stroke="#15aabf" stroke-width="1.5"/>
+  <text x="334" y="106" class="ph" fill="#ffffff">2. In-Memory Quick Finder</text>
+  <rect x="494" y="92" width="76" height="20" rx="10" fill="#e7f5ff" stroke="#339af0"/>
+  <text x="532" y="106" text-anchor="middle" class="badge" fill="#1864ab">&lt; 10ms</text>
+
+  <rect x="332" y="122" width="236" height="38" rx="5" fill="#1c7ed6" stroke="#4dabf7"/>
+  <text x="342" y="140" class="hub">Compressed Metadata Table</text>
+  <text x="342" y="152" class="hubs">Entire 359-doc registry packed into &lt;45 KB</text>
+
+  <rect x="332" y="166" width="236" height="38" rx="5" fill="#1c7ed6" stroke="#4dabf7"/>
+  <text x="342" y="184" class="hub">Client-Side Fuzzy Search</text>
+  <text x="342" y="196" class="hubs">Prefix matching on Code, Title, Role, Clause</text>
+
+  <rect x="332" y="210" width="236" height="38" rx="5" fill="#1c7ed6" stroke="#4dabf7"/>
+  <text x="342" y="228" class="hub">Dual Standalone / Portal Mode</text>
+  <text x="342" y="240" class="hubs">Works via HTTP server or direct file:// URI</text>
+
+  <rect x="332" y="254" width="236" height="44" rx="5" fill="#2f9e44" stroke="#8ce99a"/>
+  <text x="450" y="272" text-anchor="middle" class="hub">Instant 0.1s Document Retrieval</text>
+  <text x="450" y="286" text-anchor="middle" class="hubs">Zero search latency during auditor interviews</text>
+
+  <!-- Arrow 2 to 3 -->
+  <line x1="582" y1="195" x2="604" y2="195" stroke="#2f9e44" stroke-width="2" marker-end="url(#m-green5)"/>
+
+  <!-- Col 3: Governance & CI/CD Verification -->
+  <rect x="608" y="80" width="268" height="230" rx="10" fill="#e6f4ea" stroke="#9ed6ad" stroke-width="1.5"/>
+  <text x="624" y="106" class="ph" fill="#1c7a3f">3. CI Governance Verification</text>
+  <rect x="792" y="92" width="72" height="20" rx="10" fill="#ffffff" stroke="#2b8a3e"/>
+  <text x="828" y="106" text-anchor="middle" class="badge" fill="#2b8a3e">AUDIT GATE</text>
+
+  <rect x="622" y="122" width="240" height="34" rx="5" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="632" y="144" class="row" font-weight="bold">Committee Appointment Linting</text>
+  <rect x="622" y="162" width="240" height="34" rx="5" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="632" y="184" class="row">Dual Role Mapping (Corporate vs IMS)</text>
+  <rect x="622" y="202" width="240" height="34" rx="5" fill="#ffffff" stroke="#9ed6ad"/>
+  <text x="632" y="224" class="row">Broken Asset &amp; Relative Path Check</text>
+  <rect x="622" y="242" width="240" height="34" rx="5" fill="#d3f9d8" stroke="#69db7c"/>
+  <text x="632" y="264" class="row" font-weight="bold" fill="#2b8a3e">0 Broken Links &#183; 100% Verified</text>
+  <text x="624" y="298" class="row" font-size="10.5px" fill="#1c7a3f">Passed ISO 56001 Stage 2 Audit</text>
+
+  <!-- BOTTOM PANEL: Lessons Learned -->
+  <rect x="24" y="322" width="852" height="132" rx="10" fill="#fdecea" stroke="#e8a79c" stroke-width="1.2"/>
+  <text x="40" y="342" class="ph" fill="#b03a2e">Key Breakthroughs in Enterprise Document Engineering</text>
+
+  <rect x="38" y="352" width="262" height="90" rx="6" fill="#ffffff" stroke="#f5c6cb"/>
+  <text x="50" y="370" class="trap-title">1. Death to Monolithic Bundles</text>
+  <text x="50" y="388" class="trap-desc">Bundled toolkits hide specific procedures.</text>
+  <text x="50" y="402" class="trap-desc">Enforce 1 Document = 1 File rule.</text>
+  <text x="50" y="424" class="trap-desc" font-weight="bold" fill="#c92a2a">Result: Granular versioning &amp; direct URLs</text>
+
+  <rect x="318" y="352" width="264" height="90" rx="6" fill="#ffffff" stroke="#f5c6cb"/>
+  <text x="330" y="370" class="trap-title">2. Decouple Titles from Authority</text>
+  <text x="330" y="388" class="trap-desc">Never assume HR titles equal ISO roles.</text>
+  <text x="330" y="402" class="trap-desc">Map ISO Champion &amp; Leads explicitly.</text>
+  <text x="330" y="424" class="trap-desc" font-weight="bold" fill="#c92a2a">Result: Zero governance non-conformances</text>
+
+  <rect x="600" y="352" width="264" height="90" rx="6" fill="#ffffff" stroke="#f5c6cb"/>
+  <text x="612" y="370" class="trap-title">3. Deterministic Asset Paths</text>
+  <text x="612" y="388" class="trap-desc">Enforce strict depth-2 relative paths</text>
+  <text x="612" y="402" class="trap-desc">for offline rendering without base tags.</text>
+  <text x="612" y="424" class="trap-desc" font-weight="bold" fill="#c92a2a">Result: Works seamlessly on local disk</text>
+</svg>
