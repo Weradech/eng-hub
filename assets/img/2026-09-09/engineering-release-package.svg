@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="960" height="560" role="img" aria-labelledby="title desc">
+  <title id="title">Engineering release package review</title>
+  <desc id="desc">Four review steps connect build identity, file reconciliation, evidence and a scoped decision. A fictional R12 population conflict holds assembly release until resolved.</desc>
+  <style>
+    text { font-family: 'Segoe UI', Arial, sans-serif; }
+    .heading { font-size: 27px; font-weight: 700; fill: #192f42; }
+    .sub { font-size: 16px; fill: #4b6273; }
+    .label { font-size: 19px; font-weight: 700; fill: #192f42; }
+    .body { font-size: 16px; fill: #385267; }
+    .number { font-size: 16px; font-weight: 700; fill: #fff; }
+    .small { font-size: 14px; fill: #4b6273; }
+  </style>
+  <rect width="960" height="560" rx="16" fill="#f5f8fb"/>
+  <text x="32" y="49" class="heading">Are these files ready to build?</text>
+  <text x="32" y="79" class="sub">A release decision connects one configuration to its supporting evidence.</text>
+  <g transform="translate(32 106)">
+    <rect width="436" height="130" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="32" r="15" fill="#246486"/>
+    <text x="30" y="38" text-anchor="middle" class="number">1</text>
+    <text x="55" y="38" class="label">Identify the build</text>
+    <text x="22" y="73" class="body">Product, variant and intended activity</text>
+    <text x="22" y="101" class="body">Package revision and applicable lot</text>
+  </g>
+  <g transform="translate(492 106)">
+    <rect width="436" height="130" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="32" r="15" fill="#246486"/>
+    <text x="30" y="38" text-anchor="middle" class="number">2</text>
+    <text x="55" y="38" class="label">Reconcile the files</text>
+    <text x="22" y="73" class="body">BOM, placement and assembly instructions</text>
+    <text x="22" y="101" class="body">Fabrication data and revision mapping</text>
+  </g>
+  <g transform="translate(32 252)">
+    <rect width="436" height="130" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="32" r="15" fill="#246486"/>
+    <text x="30" y="38" text-anchor="middle" class="number">3</text>
+    <text x="55" y="38" class="label">Review the evidence</text>
+    <text x="22" y="73" class="body">Comparisons, inspection images and records</text>
+    <text x="22" y="101" class="body">Open issues, owners and closure evidence</text>
+  </g>
+  <g transform="translate(492 252)">
+    <rect width="436" height="130" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="32" r="15" fill="#246486"/>
+    <text x="30" y="38" text-anchor="middle" class="number">4</text>
+    <text x="55" y="38" class="label">Record the decision</text>
+    <text x="22" y="73" class="body">GO / HOLD / permitted scoped conditions</text>
+    <text x="22" y="101" class="body">Authorized person, scope and date</text>
+  </g>
+  <rect x="32" y="406" width="896" height="100" rx="12" fill="#fff4e3" stroke="#d7b780"/>
+  <text x="52" y="435" class="label">Fictional example: R12 population conflict</text>
+  <text x="52" y="463" class="body">BOM: DNP   |   Placement: included   |   Assembly drawing: fit</text>
+  <text x="52" y="488" class="body">HOLD assembly release until the intended population is resolved.</text>
+  <text x="32" y="538" class="small">Illustrative workflow only. Actual DFx findings require analysis images and source evidence.</text>
+</svg>
