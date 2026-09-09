@@ -1,0 +1,249 @@
+{
+  "dataset_version": "1.0",
+  "synthetic": true,
+  "notice": "Fictional training data only. No measured production results, company KPIs, real assignments or approvals. Do not import into live systems.",
+  "lot_id": "DEMO-PILOT-001",
+  "product": "DEMO-CTRL",
+  "variant": "BASE",
+  "configuration": {
+    "package": "DEMO-PKG-A",
+    "pcb_bom": "DEMO-REV-A",
+    "firmware": "DEMO-FW-A",
+    "test_procedure": "DEMO-TEST-A",
+    "fixture": "DEMO-FIXTURE-A",
+    "note": "Fictional identities only; no controlled design files or test procedures are supplied."
+  },
+  "checkpoint": "One defined pilot verification checkpoint; not whole-factory yield.",
+  "snapshot_label": "Fictional review cut-off after all 20 initial attempts and three additional attempts",
+  "planned_units": 20,
+  "units_entered": 20,
+  "units": [
+    {
+      "unit_id": "DEMO-001",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-002",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-003",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-004",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-005",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-006",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-007",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-008",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-009",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-010",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-011",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-012",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-013",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-014",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-015",
+      "attempt_results": [
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": []
+    },
+    {
+      "unit_id": "DEMO-016",
+      "attempt_results": [
+        "FAIL",
+        "PASS"
+      ],
+      "rework_performed": true,
+      "issue_ids": [
+        "DEMO-I01"
+      ]
+    },
+    {
+      "unit_id": "DEMO-017",
+      "attempt_results": [
+        "FAIL",
+        "PASS"
+      ],
+      "rework_performed": true,
+      "issue_ids": [
+        "DEMO-I01"
+      ]
+    },
+    {
+      "unit_id": "DEMO-018",
+      "attempt_results": [
+        "FAIL",
+        "PASS"
+      ],
+      "rework_performed": false,
+      "issue_ids": [
+        "DEMO-I02"
+      ]
+    },
+    {
+      "unit_id": "DEMO-019",
+      "attempt_results": [
+        "FAIL"
+      ],
+      "rework_performed": false,
+      "issue_ids": [
+        "DEMO-I03"
+      ]
+    },
+    {
+      "unit_id": "DEMO-020",
+      "attempt_results": [
+        "FAIL"
+      ],
+      "rework_performed": false,
+      "issue_ids": [
+        "DEMO-I03"
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "issue_id": "DEMO-I01",
+      "synthetic_observation": "DEMO-016 and DEMO-017 fail initially and pass after recorded solder rework.",
+      "confirmed_cause": null,
+      "verification_needed": "Establish cause, affected scope and evidence that corrective action prevents recurrence.",
+      "proposed_owner_function": "Manufacturing / quality",
+      "assigned_person": null,
+      "status": "OPEN",
+      "closure_evidence": null
+    },
+    {
+      "issue_id": "DEMO-I02",
+      "synthetic_observation": "DEMO-018 fails initially and passes on retest without physical unit rework.",
+      "confirmed_cause": null,
+      "verification_needed": "Distinguish product intermittency from test-system effects under a defined investigation.",
+      "proposed_owner_function": "Test engineering / design",
+      "assigned_person": null,
+      "status": "OPEN",
+      "closure_evidence": null
+    },
+    {
+      "issue_id": "DEMO-I03",
+      "synthetic_observation": "DEMO-019 and DEMO-020 have a reset symptom and remain failed / held.",
+      "confirmed_cause": null,
+      "verification_needed": "Determine cause, affected scope and verified corrective action before unrestricted production progression.",
+      "proposed_owner_function": "Design / test engineering",
+      "assigned_person": null,
+      "status": "OPEN",
+      "closure_evidence": null
+    }
+  ],
+  "derived_summary": {
+    "unique_units": 20,
+    "mutually_exclusive_current_counts": {
+      "first_pass": 15,
+      "rework_pass": 2,
+      "retest_only_pass": 1,
+      "held": 2
+    },
+    "checkpoint_fpy_pct": 75.0,
+    "current_passing_pct": 90.0,
+    "reworked_units": 2,
+    "retested_units_including_rework": 3,
+    "test_attempts": 23,
+    "pending_initial_results": 0,
+    "scrapped_units": 0,
+    "transferred_units": 0
+  },
+  "assessment_recommendation": "HOLD unrestricted production progression pending resolution of the stated evidence gaps. A separate controlled investigation requires its own authorization.",
+  "formal_decision": "PENDING",
+  "approved_next_scope": null,
+  "decided_by": null,
+  "decision_date": null
+}
