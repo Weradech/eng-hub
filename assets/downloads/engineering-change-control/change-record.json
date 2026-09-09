@@ -1,0 +1,62 @@
+{
+  "template_version": "1.0",
+  "record_status": "DRAFT",
+  "change_id": null,
+  "record_revision": null,
+  "authoritative_record": null,
+  "request": {
+    "requested_by": null,
+    "requested_at": null,
+    "product": null,
+    "variant": null,
+    "reference_designators": [],
+    "current_package": null,
+    "current_bom_revision": null,
+    "source_baseline": null,
+    "current_part": null,
+    "candidate_part": null,
+    "changed_characteristics": [],
+    "reason_and_evidence": null,
+    "requested_scope": null,
+    "proposed_effectivity": null,
+    "evaluation_authorization": null
+  },
+  "impact_assessment": [],
+  "verification": [],
+  "open_actions": [],
+  "material_disposition": [],
+  "assessment_recommendation": null,
+  "decision": {
+    "status": "PENDING",
+    "authority": null,
+    "decided_by": null,
+    "decided_at": null,
+    "evidence": null,
+    "customer_decision_or_na_reason": null,
+    "authorized_scope": null,
+    "approved_effectivity": null,
+    "conditions": [],
+    "deviation_expiry_or_quantity_limit": null,
+    "last_old_configuration_use": null,
+    "first_new_configuration_use": null,
+    "mixed_configuration_rule": null
+  },
+  "implementation": {
+    "controlled_item_changes": [],
+    "new_package": null,
+    "superseded_package": null,
+    "recipient_acknowledgements": [],
+    "first_affected_build": null,
+    "as_built_verification_evidence": null,
+    "disposition_execution_evidence": null,
+    "return_to_previous_configuration_authorization": null,
+    "remaining_follow_up": []
+  },
+  "closure": {
+    "status": "PENDING",
+    "authority": null,
+    "closed_by": null,
+    "closed_at": null,
+    "evidence": null
+  }
+}

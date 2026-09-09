@@ -115,3 +115,5 @@ Revision history:
 Take the templates, set the OH/margin rules and rates to match your shop, and keep the external quote a single clean number.
 
 For the manufacturing handoff, use the [Engineering Release Package review and downloadable templates]({% post_url 2026-09-09-engineering-release-package %}) to reconcile file revisions, population instructions and the scoped release decision.
+
+For a proposed component substitution or other baseline change, use the [Engineering Change Control assessment and worked example]({% post_url 2026-09-09-engineering-change-control %}) to record impacts, verification, material disposition and effectivity.
