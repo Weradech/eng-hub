@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="720pt" height="338.4pt" viewBox="0 0 720 338.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:description>Calculated intervals for the fictional DEMO-ECR-001 initial resistor tolerance screen. Not measured data.</dc:description>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 338.4 
+L 720 338.4 
+L 720 0 
+L 0 0 
+z
+" style="fill: #f5f8fb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 111.039771 278.319061 
+L 716.99976 278.319061 
+L 716.99976 24.61072 
+L 111.039771 24.61072 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 245.14567 278.319061 
+L 572.960091 278.319061 
+L 572.960091 24.61072 
+L 245.14567 24.61072 
+z
+" clip-path="url(#p5f4087aaff)" style="fill: #dfefe7; stroke: #dfefe7; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 160.708623 278.319061 
+L 160.708623 24.61072 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke: #d6dfe5; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="mdd6fc6bbca" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mdd6fc6bbca" x="160.708623" y="278.319061" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="160.708623" y="293.677343" transform="rotate(-0 160.708623 293.677343)">1.60</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 260.046326 278.319061 
+L 260.046326 24.61072 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke: #d6dfe5; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mdd6fc6bbca" x="260.046326" y="278.319061" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="260.046326" y="293.677343" transform="rotate(-0 260.046326 293.677343)">1.62</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 359.384029 278.319061 
+L 359.384029 24.61072 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke: #d6dfe5; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mdd6fc6bbca" x="359.384029" y="278.319061" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="359.384029" y="293.677343" transform="rotate(-0 359.384029 293.677343)">1.64</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 458.721732 278.319061 
+L 458.721732 24.61072 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke: #d6dfe5; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#mdd6fc6bbca" x="458.721732" y="278.319061" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="458.721732" y="293.677343" transform="rotate(-0 458.721732 293.677343)">1.66</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 558.059435 278.319061 
+L 558.059435 24.61072 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke: #d6dfe5; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#mdd6fc6bbca" x="558.059435" y="278.319061" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="558.059435" y="293.677343" transform="rotate(-0 558.059435 293.677343)">1.68</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 657.397138 278.319061 
+L 657.397138 24.61072 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke: #d6dfe5; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#mdd6fc6bbca" x="657.397138" y="278.319061" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="657.397138" y="293.677343" transform="rotate(-0 657.397138 293.677343)">1.70</text>
+     </g>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle" x="414.019766" y="308.32328" transform="rotate(-0 414.019766 308.32328)">Calculated output voltage (V)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_13"/>
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(16.193365 100.348207)">Original R1 ±1%</text>
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(62.733677 112.665801)">R2 ±1%</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_14"/>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(3.00024 228.483733)">Candidate R1 ±5%</text>
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'" transform="translate(62.733677 240.801327)">R2 ±1%</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_15">
+    <path d="M 327.099275 101.492036 
+L 491.006486 101.492036 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke: #246486; stroke-width: 5; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_16">
+    <defs>
+     <path id="m95ad338a2c" d="M 0 9 
+L 0 -9 
+" style="stroke: #246486; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#p5f4087aaff)">
+     <use xlink:href="#m95ad338a2c" x="327.099275" y="101.492036" style="fill: #246486; stroke: #246486; stroke-width: 2"/>
+     <use xlink:href="#m95ad338a2c" x="491.006486" y="101.492036" style="fill: #246486; stroke: #246486; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="line2d_17">
+    <path d="M 168.012866 229.627561 
+L 659.931263 229.627561 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke: #ab551b; stroke-width: 5; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_18">
+    <defs>
+     <path id="md9517499a9" d="M 0 9 
+L 0 -9 
+" style="stroke: #ab551b; stroke-width: 2"/>
+    </defs>
+    <g clip-path="url(#p5f4087aaff)">
+     <use xlink:href="#md9517499a9" x="168.012866" y="229.627561" style="fill: #ab551b; stroke: #ab551b; stroke-width: 2"/>
+     <use xlink:href="#md9517499a9" x="659.931263" y="229.627561" style="fill: #ab551b; stroke: #ab551b; stroke-width: 2"/>
+    </g>
+   </g>
+   <g id="line2d_19">
+    <path d="M 409.05288 278.319061 
+L 409.05288 24.61072 
+" clip-path="url(#p5f4087aaff)" style="fill: none; stroke-dasharray: 1.2,1.98; stroke-dashoffset: 0; stroke: #627889; stroke-width: 1.2"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 111.039771 278.319061 
+L 716.99976 278.319061 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #246486" x="409.05288" y="79.708996" transform="rotate(-0 409.05288 79.708996)">1.6335–1.6665 V</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ab551b" x="413.972064" y="207.844522" transform="rotate(-0 413.972064 207.844522)">1.6015–1.7005 V</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_5">
+     <path d="M 318.253359 41.209158 
+L 338.253359 41.209158 
+L 338.253359 34.209158 
+L 318.253359 34.209158 
+z
+" style="fill: #dfefe7; stroke: #dfefe7; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_12">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start" x="346.253359" y="41.209158" transform="rotate(-0 346.253359 41.209158)">Exercise limits: 1.6170–1.6830 V</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_13">
+   <text style="font-weight: 700; font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #192f42" x="360" y="15.15774" transform="rotate(-0 360 15.15774)">Same nominal voltage, wider tolerance interval</text>
+  </g>
+  <g id="text_14">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #4b6273" transform="translate(229.641328 323.45001)">Fictional inputs: Vin = 3.300 V; R1 = R2 = 10 kΩ nominal.</text>
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #4b6273" transform="translate(190.097578 333.528041)">Initial resistor tolerance only; no loading, temperature or measured results.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p5f4087aaff">
+   <rect x="111.039771" y="24.61072" width="605.959989" height="253.708341"/>
+  </clipPath>
+ </defs>
+</svg>

@@ -145,3 +145,5 @@ When a file changes, assess the affected checks, create a new package revision, 
 Start with the checklist and the Markdown manifest. The JSON version is an alternative for teams that want structured records; maintaining both is optional. When using both, designate one as authoritative and regenerate or reconcile the other before issue.
 
 These blank templates contain no customer data or release authorization. Fill them with actual package evidence and use the approval rules applicable to the build.
+
+For changes after release, continue with [Engineering Change Control: What Changes When One Component Changes?]({% post_url 2026-09-09-engineering-change-control %}) and its editable impact assessment.

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 550" width="960" height="550" role="img" aria-labelledby="title desc">
+  <title id="title">Engineering change control</title>
+  <desc id="desc">Six steps: define the request, review impacts, verify requirements, record the decision, control implementation, and verify the actual build. A fictional resistor tolerance change is held at assessment.</desc>
+  <style>
+    text{font-family:'Segoe UI',Arial,sans-serif}
+    .title{font-size:27px;font-weight:700;fill:#192f42}
+    .sub{font-size:16px;fill:#4b6273}
+    .label{font-size:19px;font-weight:700;fill:#192f42}
+    .body{font-size:16px;fill:#385267}
+    .n{font-size:16px;font-weight:700;fill:#fff}
+  </style>
+  <rect width="960" height="550" rx="16" fill="#f5f8fb"/>
+  <text x="32" y="47" class="title">One component changes. Check the whole build.</text>
+  <text x="32" y="77" class="sub">Keep the request, evidence, authorization and implementation traceable.</text>
+  <g transform="translate(32 102)">
+    <rect width="436" height="104" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="31" r="15" fill="#246486"/><text x="30" y="37" text-anchor="middle" class="n">1</text>
+    <text x="55" y="37" class="label">Define the request</text>
+    <text x="22" y="74" class="body">Current baseline, candidate and reason</text>
+  </g>
+  <g transform="translate(492 102)">
+    <rect width="436" height="104" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="31" r="15" fill="#246486"/><text x="30" y="37" text-anchor="middle" class="n">2</text>
+    <text x="55" y="37" class="label">Review the impacts</text>
+    <text x="22" y="74" class="body">Design, firmware, test, stock and customer</text>
+  </g>
+  <g transform="translate(32 220)">
+    <rect width="436" height="104" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="31" r="15" fill="#246486"/><text x="30" y="37" text-anchor="middle" class="n">3</text>
+    <text x="55" y="37" class="label">Verify requirements</text>
+    <text x="22" y="74" class="body">Defined criteria, calculations and tests</text>
+  </g>
+  <g transform="translate(492 220)">
+    <rect width="436" height="104" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="31" r="15" fill="#246486"/><text x="30" y="37" text-anchor="middle" class="n">4</text>
+    <text x="55" y="37" class="label">Record the decision</text>
+    <text x="22" y="74" class="body">Authority, evidence and permitted scope</text>
+  </g>
+  <g transform="translate(32 338)">
+    <rect width="436" height="104" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="31" r="15" fill="#246486"/><text x="30" y="37" text-anchor="middle" class="n">5</text>
+    <text x="55" y="37" class="label">Control implementation</text>
+    <text x="22" y="74" class="body">Effectivity, disposition and new package</text>
+  </g>
+  <g transform="translate(492 338)">
+    <rect width="436" height="104" rx="12" fill="#fff" stroke="#cbd7e1"/>
+    <circle cx="30" cy="31" r="15" fill="#246486"/><text x="30" y="37" text-anchor="middle" class="n">6</text>
+    <text x="55" y="37" class="label">Verify the actual build</text>
+    <text x="22" y="74" class="body">Fitted parts, records and closure evidence</text>
+  </g>
+  <rect x="32" y="466" width="896" height="58" rx="10" fill="#fff4e3" stroke="#d7b780"/>
+  <text x="52" y="492" class="body">Fictional example: R1 tolerance 1% → 5% exceeds the exercise voltage limits.</text>
+  <text x="52" y="514" class="body">Assessment: HOLD candidate. Formal approval and effectivity remain pending.</text>
+</svg>
