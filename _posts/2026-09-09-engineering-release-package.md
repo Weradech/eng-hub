@@ -8,7 +8,7 @@ description: "A practical release review for small NPI teams, with a fictional B
 
 > **TL;DR** — A build package needs a defined product variant, traceable file revisions, consistent manufacturing instructions, and a recorded release decision. This article provides a review sequence and editable templates for checking those conditions before a package reaches the factory.
 
-![Release package review: identify the build, reconcile the files, review evidence, and record a scoped GO or HOLD decision]({{ "/assets/img/2026-09-09/engineering-release-package.svg" | relative_url }})
+![Release package review: identify the build, reconcile the files, review evidence, and record a scoped GO or HOLD decision](/assets/img/2026-09-09/engineering-release-package.svg)
 _A proposed workflow for a small NPI team. The worked example below uses fictional data; it does not describe an actual customer release._
 
 ## The Problem: Every File Opens, but the Build Is Ambiguous
