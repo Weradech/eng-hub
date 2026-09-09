@@ -1,0 +1,54 @@
+{
+  "template_version": "1.0",
+  "record_status": "DRAFT",
+  "product": null,
+  "variant": null,
+  "package_id": null,
+  "package_revision": null,
+  "source_baseline": null,
+  "build_scope": null,
+  "effectivity": {
+    "order": null,
+    "lot": null,
+    "serial_range": null,
+    "quantity": null,
+    "quantity_basis": null,
+    "boards_per_panel": null
+  },
+  "authoritative_manifest": null,
+  "prepared_by": null,
+  "prepared_at": null,
+  "supersedes": null,
+  "change_record": null,
+  "deliverables": [],
+  "files": [],
+  "placement_conventions": {
+    "units": null,
+    "origin": null,
+    "side_and_rotation": null,
+    "dnp_rule": null,
+    "manual_and_through_hole_rule": null,
+    "non_component_rule": null,
+    "manufacturer_agreement": null
+  },
+  "review": {
+    "checklist": null,
+    "open_items": [],
+    "decision": "PENDING",
+    "authorized_activity_and_effectivity": null,
+    "decision_authority": null,
+    "decided_by": null,
+    "decided_at": null,
+    "decision_evidence": null,
+    "conditions": []
+  },
+  "issue": {
+    "issued_by": null,
+    "issued_at": null,
+    "recipient": null,
+    "transmittal": null,
+    "archive_sha256": null,
+    "acknowledgement_reference": null,
+    "acknowledged_at": null
+  }
+}
