@@ -140,3 +140,5 @@ The example in this article does not reach this step. It supplies a failed calcu
 - [Template instructions and JSON field definitions]({{ "/assets/downloads/engineering-change-control/template-guide.md" | relative_url }})
 
 Start with the Markdown assessment. The JSON is optional; if both are used, identify the authoritative record and keep the representations consistent. Blank templates contain no approval or measured result. Adapt the review scope to the actual risk and existing authority rules rather than creating a second approval system.
+
+After executing a controlled build, use the [Pilot Build Exit Review]({% post_url 2026-09-09-pilot-build-exit-review %}) to reconcile first-pass results, recovery and unresolved issues before deciding the next activity.
