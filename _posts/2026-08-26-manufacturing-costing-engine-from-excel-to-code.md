@@ -9,7 +9,7 @@ tags: [costing, bom, rfq, algorithms, python, typescript, manufacturing]
 
 ---
 
-![Deterministic manufacturing costing engine: translating complex spreadsheet models into precise TypeScript and Python calculation engines]({{ "/assets/img/2026-08-26/manufacturing-costing-engine-from-excel-to-code.svg" | relative_url }})
+![Deterministic manufacturing costing engine: translating complex spreadsheet models into precise TypeScript and Python calculation engines](/assets/img/2026-08-26/manufacturing-costing-engine-from-excel-to-code.svg)
 _From spreadsheets to software: converting geometry rules, compounding overheads, and financial gates into deterministic calculation pipelines._
 
 ## The Fragility of Spreadsheet-Driven Quotations

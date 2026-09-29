@@ -9,7 +9,7 @@ tags: [data-integrity, sync, reliability, snapshot, etl, idempotency]
 
 ---
 
-![An empty 200 response: the naive sync overwrites and blanks the dashboard; the guarded sync keeps the last good snapshot and alerts]({{ "/assets/img/2026-06-29/empty-sync-wipes-data.svg" | relative_url }})
+![An empty 200 response: the naive sync overwrites and blanks the dashboard; the guarded sync keeps the last good snapshot and alerts](/assets/img/2026-06-29/empty-sync-wipes-data.svg)
 _A 200 OK with zero rows isn't proof the truth is zero — the guarded path keeps the last good snapshot and alerts._
 
 ## The morning the dashboard was blank

@@ -7,7 +7,7 @@ tags: [ict, test-engineering, pcba, dft, fixture, bed-of-nails, flying-probe, jt
 
 > **TL;DR** — Select ICT from the faults the product needs to detect, physical access, lot size and the actual fixture/program quote. The numerical examples on this page are unverified planning inputs, not universal costs, coverage or acceptance thresholds.
 
-![Illustrative comparison of bed-of-nails and flying-probe ICT by fixture investment, test time and product-specific fault coverage]({{ "/assets/img/2026-05-29/ict-methodology-deep-dive.svg" | relative_url }})
+![Illustrative comparison of bed-of-nails and flying-probe ICT by fixture investment, test time and product-specific fault coverage](/assets/img/2026-05-29/ict-methodology-deep-dive.svg)
 _Bed-of-Nails or Flying Probe is a volume call — pay the fixture once, or pay per board in time._
 
 This is a companion to the [ICT Assessment Pattern]({% post_url 2026-05-27-ict-assessment-pattern %}) post — that post covers the *assessment workflow*; this post covers the *engineering knowledge* needed to make decisions inside that workflow.

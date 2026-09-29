@@ -9,7 +9,7 @@ tags: [security, postgres, secrets, rotation, docker, devops]
 
 ---
 
-![Zero-downtime rotation: update the secret, alter the role, roll the containers, verify — plus the env_file dollar-escape gotcha]({{ "/assets/img/2026-06-29/rotate-shared-db-password.svg" | relative_url }})
+![Zero-downtime rotation: update the secret, alter the role, roll the containers, verify — plus the env_file dollar-escape gotcha](/assets/img/2026-06-29/rotate-shared-db-password.svg)
 _Never let the database and the running apps disagree about the password — and watch the `env_file` `$` gotcha._
 
 ## The setup that makes rotation scary

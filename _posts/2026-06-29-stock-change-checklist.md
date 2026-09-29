@@ -9,7 +9,7 @@ tags: [inventory, data-integrity, operations, runbook, wms, checklist]
 
 ---
 
-![The stock-change checklist: capture before, change through one path, verify the delta, and apply counts as a delta]({{ "/assets/img/2026-06-29/stock-change-checklist.svg" | relative_url }})
+![The stock-change checklist: capture before, change through one path, verify the delta, and apply counts as a delta](/assets/img/2026-06-29/stock-change-checklist.svg)
 _Capture the before, change through one path, verify the delta — and post counts as an adjustment movement._
 
 ## Why a checklist, for something this routine

@@ -9,7 +9,7 @@ tags: [sop, iso, procedure, work-instruction, quality, manufacturing]
 
 ---
 
-![SOP hierarchy: a Procedure is for multiple people across departments and is outcome-focused; a Work Instruction is for one person doing one task, step by step. The boundary is one person versus several people doing handoffs]({{ "/assets/img/2026-06-29/sop-hierarchy.svg" | relative_url }})
+![SOP hierarchy: a Procedure is for multiple people across departments and is outcome-focused; a Work Instruction is for one person doing one task, step by step. The boundary is one person versus several people doing handoffs](/assets/img/2026-06-29/sop-hierarchy.svg)
 _One person, one task → Work Instruction; several people with handoffs → Procedure._
 
 ## The ISO Document Hierarchy

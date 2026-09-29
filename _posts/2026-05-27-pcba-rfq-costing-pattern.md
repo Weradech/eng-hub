@@ -9,7 +9,7 @@ tags: [pcba, costing, rfq, bom, npi, ems]
 
 ---
 
-![PCBA RFQ cost build-up: material plus assembly, times 1.15 overhead, divided by one minus margin, gives the unit price; NRE is a separate lump-sum line in the quotation]({{ "/assets/img/2026-05-27/pcba-rfq-costing-pattern.svg" | relative_url }})
+![PCBA RFQ cost build-up: material plus assembly, times 1.15 overhead, divided by one minus margin, gives the unit price; NRE is a separate lump-sum line in the quotation](/assets/img/2026-05-27/pcba-rfq-costing-pattern.svg)
 _Material plus assembly, times overhead, over one-minus-margin — and keep NRE a separate line._
 
 ## Why Accurate Costing Matters

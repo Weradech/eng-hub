@@ -7,7 +7,7 @@ tags: [fct, functional-test, test-engineering, pcba, firmware, calibration, burn
 
 > **TL;DR** — FCT checks specified functions under defined conditions. Plan its limits from the product requirements and retain configured results. The numerical examples below are unverified planning inputs, not universal costs or defect coverage.
 
-![Illustrative functional-test stages selected from product requirements; configured results remain separate from release authorization]({{ "/assets/img/2026-05-29/fct-methodology-deep-dive.svg" | relative_url }})
+![Illustrative functional-test stages selected from product requirements; configured results remain separate from release authorization](/assets/img/2026-05-29/fct-methodology-deep-dive.svg)
 _ICT asks “is it built right?”; FCT asks “does it work?” — a board needs both before it ships._
 
 This is a companion to the [ICT Methodology Deep Dive]({% post_url 2026-05-29-ict-methodology-deep-dive %}). ICT verifies components are present and correct; FCT verifies the board *works*.

@@ -9,7 +9,7 @@ tags: [docker, deployment, compose, safety, devops]
 
 ---
 
-![docker compose build overwrites the running image from disk; commit then build, verify, then up --no-build to deploy exactly what you verified]({{ "/assets/img/2026-06-29/docker-build-safety.svg" | relative_url }})
+![docker compose build overwrites the running image from disk; commit then build, verify, then up --no-build to deploy exactly what you verified](/assets/img/2026-06-29/docker-build-safety.svg)
 _Code that isn&#8217;t committed doesn&#8217;t exist: commit first, then build, verify the image, and `up --no-build`._
 
 ## The Trap

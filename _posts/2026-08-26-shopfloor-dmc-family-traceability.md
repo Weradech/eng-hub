@@ -9,7 +9,7 @@ tags: [mes, pcba, traceability, iot, mqtt, quality, zero-trust]
 
 ---
 
-![Zero-trust shop floor DMC traceability: hierarchical parent-child barcode binding across SMT, AOI, ICT, FCT, and Box Build with zero-trust station gates]({{ "/assets/img/2026-08-26/shopfloor-dmc-family-traceability.svg" | relative_url }})
+![Zero-trust shop floor DMC traceability: hierarchical parent-child barcode binding across SMT, AOI, ICT, FCT, and Box Build with zero-trust station gates](/assets/img/2026-08-26/shopfloor-dmc-family-traceability.svg)
 _Hierarchical genealogy: binding PCBA child barcodes to enclosure parent serials ensures instant root-cause analysis down to component reel lot numbers._
 
 ## Why Flat Serial Numbers Fail in Modern Electronics

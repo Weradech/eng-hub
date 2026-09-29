@@ -9,7 +9,7 @@ tags: [erp, architecture, rate-limiting, circuit-breaker, postgresql, microservi
 
 ---
 
-![Resilient ERP integration architecture: gentle polling, token-bucket rate limiting, circuit breaker, and multi-schema PostgreSQL isolation]({{ "/assets/img/2026-08-26/resilient-erp-integration-patterns.svg" | relative_url }})
+![Resilient ERP integration architecture: gentle polling, token-bucket rate limiting, circuit breaker, and multi-schema PostgreSQL isolation](/assets/img/2026-08-26/resilient-erp-integration-patterns.svg)
 _Surviving the ERP bottleneck: replacing aggressive burst polling with centralized rate limiting and multi-schema database isolation._
 
 ## The Legacy ERP Bottleneck

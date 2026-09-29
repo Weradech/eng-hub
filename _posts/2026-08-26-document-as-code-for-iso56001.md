@@ -9,7 +9,7 @@ tags: [iso56001, knowledge-management, architecture, web-performance, documentat
 
 ---
 
-![Document-as-Code architecture: modularizing 350+ ISO standard compliance documents into offline-first standalone HTML with sub-10ms fuzzy search indexing]({{ "/assets/img/2026-08-26/document-as-code-for-iso56001.svg" | relative_url }})
+![Document-as-Code architecture: modularizing 350+ ISO standard compliance documents into offline-first standalone HTML with sub-10ms fuzzy search indexing](/assets/img/2026-08-26/document-as-code-for-iso56001.svg)
 _From PDF graveyards to executable knowledge: version-controlled modular documentation with instant client-side retrieval._
 
 ## The Enterprise Documentation Dilemma

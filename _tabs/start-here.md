@@ -16,6 +16,8 @@ Read [RFQ intake and quote boundary]({% post_url 2026-09-29-rfq-intake-and-quote
 
 Use the [DFM checklist]({% post_url 2026-06-29-dfm-checklist-pcba %}) and [DFx finding evidence method]({% post_url 2026-09-29-dfx-finding-evidence %}), then reconcile the [engineering release package]({% post_url 2026-09-09-engineering-release-package %}). Capture analysis images for findings and use the [release records]({{ "/templates/" | relative_url }}).
 
+For a process limit the team cannot verify, request an answer from the selected manufacturer with the [supplier capability handoff]({% post_url 2026-09-29-supplier-capability-handoff %}).
+
 ## Change a released component or instruction
 
 Use [engineering change control]({% post_url 2026-09-09-engineering-change-control %}). Record impact, verification, material disposition and effectivity before implementation.
@@ -23,6 +25,10 @@ Use [engineering change control]({% post_url 2026-09-09-engineering-change-contr
 ## Plan ICT or FCT
 
 Start with [requirements-to-verification traceability]({% post_url 2026-09-29-requirements-to-verification-traceability %}), then select checks with the [ICT assessment]({% post_url 2026-05-27-ict-assessment-pattern %}) and [FCT method]({% post_url 2026-05-29-fct-methodology-deep-dive %}). Record what each method can detect and its coverage gaps.
+
+## Request a pre-compliance lab test
+
+Use the [test intake and evidence method]({% post_url 2026-09-29-precompliance-test-intake %}). Define the exact unit, method, conditions and report scope before testing; keep exploratory findings separate from formal certification claims.
 
 ## Decide what follows a pilot
 

@@ -1,134 +1,43 @@
 ---
-title: "ICT Assessment Pattern — Evaluate In-Circuit Test from NPI Stage"
+title: "ICT Assessment Pattern: Decide from Faults, Access and Actual Cost"
 date: 2026-05-27 12:00:00 +0700
 categories: [NPI, Test]
 tags: [ict, dft, test-engineering, npi, pcba, nre]
+description: "A board-specific ICT decision using required faults, physical probe access, supplier capability and current offers."
 ---
 
-> **TL;DR** — 5 steps: receive files → count TP/via → evaluate 9 DFT criteria → estimate NRE → generate SOP report with proposal for the customer.
+> **TL;DR** — Count physical test access, map the faults it can detect, and compare actual ICT, flying-probe and functional-test options. A test-point count or nine-item score cannot establish fault coverage or justify a fixture by itself.
 
----
+![ICT assessment sequence from requirements and board access to detectable faults and current cost comparison](/assets/img/2026-05-27/ict-assessment-pattern.svg)
+_Workflow illustration only; no actual board or test result is represented._
 
-![ICT assessment pipeline from NPI stage: review Gerber, count test points and coverage, score nine DFT criteria, then branch on the score to full ICT, limited ICT, or FVT/AOI instead]({{ "/assets/img/2026-05-27/ict-assessment-pattern.svg" | relative_url }})
-_Score the board for testability at NPI, then let the number choose full ICT, limited ICT, or FVT/AOI._
+This is a proposed assessment method for NPI. No universal test-point diameter, pitch, coverage percentage, score threshold, fixture price or break-even volume is supplied. Obtain the limits from the selected tester and board manufacturer, the expected build pattern and the product's requirements. See the [ICT method overview]({% post_url 2026-05-29-ict-methodology-deep-dive %}) for concepts; its historical numeric examples are not current quotes.
 
-## Why Assess ICT at NPI Stage?
+## 1. Define the fault question
 
-An ICT fixture is built once and used throughout production. If the layout doesn't support DFT:
-- Fixture redesign = additional NRE of ฿50,000–500,000
-- Layout ECR = 2–4 week delay
-- Low coverage = defects escaping to the customer
+Start with the controlled product and variant, intended build quantity, revision frequency, likely defect classes and customer test obligations. Use the [requirements-to-verification matrix]({% post_url 2026-09-29-requirements-to-verification-traceability %}) to name the condition and acceptance criterion for each relevant check. A requirement that needs firmware, timing or real load behavior may need FCT even if ICT access is excellent.
 
-**Golden rule: Assess ICT while layout changes are still free.**
+## 2. Inspect the actual board and test route
 
----
+Gather the schematic or netlist, native PCB or fabrication data, BOM, assembly drawing and placement file. Record source revisions. Mark accessible test pads, vias, connectors and rails on the exact assembly configuration. Check the chosen fixture side, component obstructions, board support, keep-outs, panel handling and electrical safety. Ask the test supplier to confirm probe geometry, instrument capability and program assumptions.
 
-## 5-Step ICT Assessment Process
+A via is not automatically a usable probe point. A labelled test point is not automatically accessible in a loaded fixture. Count **unique nodes and fault opportunities**, not just visible pads. Physical node access is a useful input; it is not the same as detection coverage for opens, shorts, wrong values, polarity or latent behavior.
 
-### Step 1 — Receive and Review Files
+## 3. Map detection and gaps
 
-Required files from customer or design team:
+| Fault or requirement | Candidate method | What must be confirmed |
+|---|---|---|
+| Short or open | ICT, flying probe or another electrical check | Accessible endpoints, safe stimulus and a program that distinguishes the fault. |
+| Missing or wrong component | Electrical measurement, AOI or combined method | Whether parallel paths or visual similarity make the result ambiguous. |
+| Polarity or orientation | AOI, ICT or FCT | Whether the selected method observes the error on this package and board. |
+| Firmware or system behavior | FCT or system test | Exact input, load, limits and configured result. |
 
-| File | Format | Purpose |
-|------|--------|---------|
-| Gerber / ODB++ | .gbr / .tgz | Count TP, via, pad |
-| BOM | Excel / CSV | Map components to testability |
-| Schematic | PDF / Altium | Understand net topology |
-| Assembly drawing | PDF | Check component side, keep-outs |
+Record `COVERED WITH EVIDENCE`, `PLANNED`, `GAP` or `N/A WITH REASON` per fault. Do not multiply an accessible-node ratio into a product-wide defect-detection percentage.
 
----
+## 4. Compare current offers and lifecycle cost
 
-### Step 2 — Count Test Points and Vias
+Ask suppliers for fixture and program NRE, per-board cycle and fee, setup, maintenance, revision changes, expected retests and lead time. Compare those against the customer's expected lot pattern and the detection value of each method. A flying-probe route still has programming and cycle costs. A bed-of-nails fixture may need changes after a PCB revision. Calculate break-even from these actual inputs; do not import an old threshold.
 
-**Count from Gerber layers:**
+## 5. Deliver a bounded recommendation
 
-```
-Top TPs    = Top Copper pads with drills
-Bottom TPs = Bottom Copper pads
-Accessible vias = Vias not obstructed by components (top view)
-```
-
-**Coverage estimate:**
-```
-Node count  = number of nets requiring measurement
-TP count    = number of physical test points
-Coverage (%) = (TP count / Node count) × 100
-```
-
-Target: **≥ 85% node coverage** for production boards.
-
----
-
-### Step 3 — DFT Checklist (9 Criteria)
-
-| # | DFT Criterion | Pass Condition |
-|---|--------------|----------------|
-| 1 | Test point diameter | ≥ 1.0 mm |
-| 2 | Test point pitch | ≥ 2.54 mm center-to-center |
-| 3 | TP clearance from components | ≥ 1.5 mm |
-| 4 | TP clearance from board edge | ≥ 3.0 mm |
-| 5 | Bottom-side TP ratio | ≥ 60% of all TPs (single-side fixture) |
-| 6 | Vias used as TPs | No tented vias |
-| 7 | Power / Ground access | TP on every main supply rail |
-| 8 | Crystal / Oscillator | Disable point or bypass available |
-| 9 | Programming header | JTAG/SWD/ISP pad accessible |
-
-**Scoring:**
-- 9/9 Pass → Full ICT capable
-- 6–8 Pass → ICT possible with limited coverage
-- < 6 Pass → Recommend FVT or AOI instead + raise ECR
-
----
-
-### Step 4 — NRE Estimation
-
-```
-Fixture NRE = Base cost + (TP count × rate) + Engineering hours
-
-Example:
-Base cost          = ฿25,000
-120 TPs × ฿200    = ฿24,000
-Engineering 16h    = ฿12,800
-──────────────────────────────
-Total NRE          = ฿61,800
-```
-
-**Lead time:** 4–6 weeks after final Gerber approval.
-
----
-
-### Step 5 — Assessment Report
-
-The report should include:
-1. **Board overview** — dimensions, layer count, component count
-2. **TP Summary** — top/bottom count, coverage %
-3. **DFT Score** — 9 criteria pass/fail with recommendations
-4. **NRE Estimate** — itemized
-5. **Recommendation** — ICT / FVT / AOI / combined strategy
-
----
-
-## Case Study — MIRA R3
-
-| Parameter | Value |
-|-----------|-------|
-| Board size | 120 × 80 mm, 4-layer |
-| Component count | 187 |
-| TP count (bottom) | 94 |
-| Accessible vias | 38 |
-| Node count | 118 |
-| Coverage | 112 / 118 = **94.9%** ✅ |
-| DFT Score | 8/9 (crystal disable point missing) |
-| Recommendation | ICT viable + add crystal bypass resistor DNI |
-| NRE Estimate | ฿68,500 |
-
----
-
-## Anti-patterns
-
-| ❌ Avoid | ✅ Instead |
-|---------|-----------|
-| Assess from BOM only | Always review actual Gerber |
-| Count only pads labeled "TP" | Include accessible vias |
-| Quote NRE as a lump sum | Itemize so customer can evaluate |
-| Ignore tented vias | Every tented via = unusable as TP |
+The assessment should state the selected configuration, accessible nodes, mapped fault coverage, untested requirements, supplier confirmation, cost basis and the recommended ICT/FCT/AOI combination. Attach board images and source identities for any DFx finding. If a layout change is proposed, use [the DFx evidence method]({% post_url 2026-09-29-dfx-finding-evidence %}) and route a released-baseline change through the applicable control process. A recommendation is not a customer approval or a passed production test.

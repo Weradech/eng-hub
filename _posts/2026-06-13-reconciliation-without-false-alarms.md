@@ -10,7 +10,7 @@ mermaid: true
 
 ---
 
-![Before calling it lost stock, rule out three cheaper explanations: a wrong reported number, a wrong derived view, and records that disagree while the stock is fine]({{ "/assets/img/2026-06-13/reconciliation.svg" | relative_url }})
+![Before calling it lost stock, rule out three cheaper explanations: a wrong reported number, a wrong derived view, and records that disagree while the stock is fine](/assets/img/2026-06-13/reconciliation.svg)
 _A reconciliation alert measures your records, not your reality — rule out three cheaper explanations before you panic._
 
 When two systems disagree about how much stock exists, the word "drift" gets thrown around as if it means one thing. It doesn't. Four different statements get collapsed into "the stock is wrong":

@@ -16,6 +16,10 @@ Use these files with the linked method. They are starting records, not approved 
 
 **Input:** inspected source, tool, location, applicable rule and an image from the actual analysis. **Output:** reproducible finding, owner, disposition and verification evidence. Copy the [blank DFx issue sheet]({{ "/assets/downloads/dfx-finding/issue-sheet.md" | relative_url }}) and follow the [method]({% post_url 2026-09-29-dfx-finding-evidence %}).
 
+## Supplier capability response
+
+**Input:** exact feature and design revision, process question, actual image and selected supplier. **Output:** dated capability answer, conditions and engineering disposition. Copy the [blank capability record]({{ "/assets/downloads/supplier-capability/capability-response.md" | relative_url }}) and follow the [handoff method]({% post_url 2026-09-29-supplier-capability-handoff %}).
+
 ## Engineering release package
 
 **Input:** product, variant, intended activity, source revisions, exports, supplier conventions and checks. **Output:** file inventory, discrepancies and scoped release decision. Use the [release checklist]({{ "/assets/downloads/engineering-release-package/release-checklist.md" | relative_url }}), [Markdown manifest]({{ "/assets/downloads/engineering-release-package/release-manifest.md" | relative_url }}) or [JSON alternative]({{ "/assets/downloads/engineering-release-package/release-manifest.json" | relative_url }}). Read the [guide]({{ "/assets/downloads/engineering-release-package/template-guide.md" | relative_url }}).
@@ -27,6 +31,10 @@ Use these files with the linked method. They are starting records, not approved 
 ## Requirements and verification
 
 **Input:** controlled requirements, limits, configuration, procedure and available evidence. **Output:** requirement-to-method map, results and visible coverage gaps. Copy the [blank verification matrix]({{ "/assets/downloads/verification/requirements-verification-matrix.md" | relative_url }}) and follow the [method]({% post_url 2026-09-29-requirements-to-verification-traceability %}).
+
+## Pre-compliance lab test
+
+**Input:** customer question, equipment under test, configuration, applicable source, method and conditions. **Output:** setup and raw-evidence index, scoped result and limitations. Copy the [blank intake/report record]({{ "/assets/downloads/precompliance-lab/test-intake-record.md" | relative_url }}) and follow the [lab method]({% post_url 2026-09-29-precompliance-test-intake %}).
 
 ## Pilot build exit review
 

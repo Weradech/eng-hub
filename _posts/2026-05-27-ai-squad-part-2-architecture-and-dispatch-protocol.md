@@ -10,7 +10,7 @@ mermaid: true
 
 ---
 
-![One orchestrator routes work to model-tiered specialist squads through a strict dispatch protocol: full-context brief, propose before risky, results back as status plus next action]({{ "/assets/img/2026-05-27/ai-squad-part-2-architecture-and-dispatch-protocol.svg" | relative_url }})
+![One orchestrator routes work to model-tiered specialist squads through a strict dispatch protocol: full-context brief, propose before risky, results back as status plus next action](/assets/img/2026-05-27/ai-squad-part-2-architecture-and-dispatch-protocol.svg)
 _One orchestrator, model-tiered squads, a strict protocol — context in, status plus next action out._
 
 The quality of your output is set by how you decompose and route work — not by how clever any single prompt is.

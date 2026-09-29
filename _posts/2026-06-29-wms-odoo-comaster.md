@@ -9,7 +9,7 @@ tags: [wms, odoo, erp, architecture, inventory, data-integrity]
 
 ---
 
-![Co-master split: WMS owns operational movements while Odoo owns financial and master data, with a scheduled sync mirroring each domain into the other instead of dual-writing]({{ "/assets/img/2026-06-29/wms-odoo-comaster.svg" | relative_url }})
+![Co-master split: WMS owns operational movements while Odoo owns financial and master data, with a scheduled sync mirroring each domain into the other instead of dual-writing](/assets/img/2026-06-29/wms-odoo-comaster.svg)
 _Give every data type one owner: WMS writes movement, Odoo writes money, and the sync mirrors &#8212; it never dual-writes._
 
 ## The Problem With Dual-Write
