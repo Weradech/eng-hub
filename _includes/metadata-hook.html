@@ -1,0 +1,4 @@
+{% if page.collection == 'tabs' and page.title != 'About' %}
+<!-- Chirpy 7.6 uses locale keys for tab document titles; custom tabs have none. -->
+<script>document.title = {{ page.title | jsonify }} + ' | ' + {{ site.title | jsonify }};</script>
+{% endif %}

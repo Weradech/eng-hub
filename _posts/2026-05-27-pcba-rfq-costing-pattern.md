@@ -5,7 +5,7 @@ categories: [NPI, RFQ]
 tags: [pcba, costing, rfq, bom, npi, ems]
 ---
 
-> **TL;DR** — 6-step PCBA costing from BOM to Quotation: Material → Assembly → OH → NRE → Margin → Final Price, with production-proven rules of thumb.
+> **TL;DR** — Build the quote from a defined BOM, assembly and test scope, current supplier prices and approved commercial rules. Separate recurring unit cost from one-time charges. The historical figures below are examples, not current supplier quotes or company pricing authority.
 
 ---
 
@@ -14,7 +14,7 @@ _Material plus assembly, times overhead, over one-minus-margin — and keep NRE 
 
 ## Why Accurate Costing Matters
 
-In PCBA manufacturing, a 5–10% error on material cost can wipe out an entire project margin. EMS/OEM margins typically sit at 15–25%, leaving almost no room for miscalculation.
+A material-cost error can change the quote materially, especially on a small lot. Check the current BOM, purchase quantity, supplier offer and currency before using a price. No universal margin or error threshold follows from this example.
 
 ---
 
@@ -41,7 +41,7 @@ Total Material Cost = Σ (Unit Price × Qty per board)
 Assembly Cost = (Placement Count × Rate per placement) + Machine Setup
 ```
 
-**Rate reference (Thai EMS, 2026):**
+**Illustrative historical planning inputs, not verified 2026 market rates:**
 
 | Type | Rate |
 |------|------|
@@ -54,7 +54,7 @@ Assembly Cost = (Placement Count × Rate per placement) + Machine Setup
 
 ### Step 3 — Overhead (OH)
 
-> **Rule: OH = 15% applied on manufacturing costs only**
+> **Example assumption:** OH = 15% of the stated manufacturing cost base. Replace this with the organization's approved cost model.
 
 ```
 OH = (Material Cost + Assembly Cost) × 15%
@@ -87,11 +87,11 @@ Laser per unit = ฿0.50 / unit
 ### Step 5 — Margin
 
 ```
-Selling Price = (Material + Assembly + OH) × (1 + Margin%)
-             + NRE (lump sum, separate line)
+Unit Selling Price = (Material + Assembly + OH) / (1 - Gross Margin%)
+One-Time Charges = approved NRE, shown separately in the quotation
 ```
 
-**Margin guideline:**
+**Illustrative margin scenarios, not a recommended company policy:**
 - Prototype / EVT: 25–35%
 - Mass production: 15–20%
 - Strategic account: negotiable
@@ -112,7 +112,9 @@ Validity   : 30 days
 
 ---
 
-## Case Study — CDH1131A / LDU M
+## Illustrative Costing Snapshot
+
+This is a historical example with no current supplier quote or approval record attached. Recalculate every input before use on an RFQ.
 
 | Item | Value |
 |------|-------|
@@ -143,7 +145,8 @@ unit_price = (material + assembly + oh) / (1 - margin)
 ## Summary Formula
 
 ```
-Final Price = [(Material + Assembly) × 1.15] / (1 − Margin%) + NRE/lot
+Example Unit Price = [(Material + Assembly) × 1.15] / (1 − Gross Margin%)
+One-Time NRE = separate quotation line
 ```
 
-This pattern scales from 5-piece prototypes to 10,000-piece production runs — adjust only the margin and MOQ-adjusted material price.
+For each new quantity and process scope, recalculate supplier prices, setup allocation, assembly and test effort, yield/rework assumptions where applicable, and one-time charges. The [RFQ intake method]({% post_url 2026-09-29-rfq-intake-and-quote-boundary %}) records the quote basis before this calculation.

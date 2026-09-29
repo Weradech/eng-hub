@@ -7,6 +7,8 @@ tags: [npi, templates, rca, stage-gate, sop, costing]
 
 > **TL;DR** — The *why* behind these is already on this site. This post is the *what to paste into your sheet*: an RFQ costing layout, an 8D/5-Why RCA form, a stage-gate checklist, and an SOP skeleton. Adapt the rates and rules to your own shop.
 
+**Editorial caution (2026-09-29):** The `15%` overhead and other fixed numbers in the RFQ snippet are historical example inputs. They are not current supplier rates or approved commercial policy. Define the quote scope with the [RFQ intake record]({% post_url 2026-09-29-rfq-intake-and-quote-boundary %}) and apply the organization's current cost model.
+
 ---
 
 ![Four copy-paste NPI engineering templates and the stage each one serves: RFQ costing, 8D/5-Why RCA, stage-gate checklist, and SOP skeleton]({{ "/assets/img/2026-05-27/npi-engineering-templates-toolkit.svg" | relative_url }})

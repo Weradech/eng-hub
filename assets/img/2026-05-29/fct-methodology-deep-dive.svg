@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="FCT is the final gate before Box Build: a board runs through power-on, communication, sensor read, actuator drive, firmware boot, and calibration; passing all six releases it. ICT checks parts are present, FCT checks the board functions, and together they reach 98 percent-plus defect coverage">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="Illustrative functional-test stages. Select applicable steps from the product requirements and keep test results separate from release approval.">
   <style>
     text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
     .title{font-size:23px;font-weight:700;fill:#1f2933}
@@ -14,7 +14,7 @@
   </style>
   <rect width="900" height="470" fill="#ffffff"/>
   <text x="30" y="40" class="title">FCT: Functional Test from Power-On to Calibration</text>
-  <text x="30" y="64" class="sub">FCT is the final gate before Box Build &#8212; it proves the board does its job, not just that the parts are present.</text>
+  <text x="30" y="64" class="sub">Select applicable checks from product requirements; this diagram is not a fixed test route.</text>
 
   <defs>
     <marker id="fa" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#5fa1de"/></marker>
@@ -60,21 +60,21 @@
 
   <!-- gate bar -->
   <rect x="24" y="200" width="850" height="44" rx="10" fill="#e6f4ea" stroke="#9ed6ad"/>
-  <text x="449" y="227" text-anchor="middle" class="gate">PASS all six &#8594; release to Box Build</text>
+  <text x="449" y="227" text-anchor="middle" class="gate">Record configured results, open gaps and the next scoped decision</text>
 
   <!-- coverage -->
   <rect x="24" y="266" width="412" height="132" rx="12" fill="#f4f5f7" stroke="#cbd2d9"/>
   <text x="44" y="293" class="ph" fill="#1f2933">Coverage</text>
   <text x="44" y="321" class="li">&#183;  ICT verifies parts are <tspan font-style="italic">present &amp; correct</tspan></text>
   <text x="44" y="345" class="li">&#183;  FCT verifies the board <tspan font-style="italic">functions</tspan></text>
-  <text x="44" y="375" class="li" font-weight="700" fill="#1c7a3f">&#183;  Together: 98%+ defect coverage</text>
+  <text x="44" y="375" class="li" font-weight="700" fill="#1c7a3f">&#183;  Map both methods to actual faults</text>
 
   <!-- cost -->
   <rect x="462" y="266" width="412" height="132" rx="12" fill="#fff7e6" stroke="#f0cf8a"/>
   <text x="482" y="293" class="ph" fill="#9e6b00">Cost &amp; throughput</text>
-  <text x="482" y="321" class="li">&#183;  NRE: &#3647;58K &#8211; &#3647;203K per fixture</text>
-  <text x="482" y="345" class="li">&#183;  ~&#3647;100 per test point</text>
-  <text x="482" y="369" class="li">&#183;  Time per board: seconds to minutes</text>
+  <text x="482" y="321" class="li">&#183;  Get a current fixture/program quote</text>
+  <text x="482" y="345" class="li">&#183;  Include setup, calibration and labor</text>
+  <text x="482" y="369" class="li">&#183;  Measure actual cycle and retest time</text>
 
-  <text x="30" y="436" class="foot">ICT asks &#8220;is it built right?&#8221; FCT asks &#8220;does it work?&#8221; &#8212; you need both before the board ships.</text>
+  <text x="30" y="436" class="foot">A passing FCT result covers the configured checks only. Shipment needs its own authorization.</text>
 </svg>

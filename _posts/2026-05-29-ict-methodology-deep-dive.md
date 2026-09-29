@@ -5,12 +5,14 @@ categories: [NPI, Test]
 tags: [ict, test-engineering, pcba, dft, fixture, bed-of-nails, flying-probe, jtag, boundary-scan]
 ---
 
-> **TL;DR** — ICT verifies *components are present and correct* (not function). Choose between Bed-of-Nails (HVLM, fast, expensive NRE) and Flying Probe (LVHM, slow, zero NRE). Typical fixture NRE ฿44.5K–66K; break-even ≥200 pcs/year. Coverage: 70–85% alone, 98%+ when combined with AOI and FCT.
+> **TL;DR** — Select ICT from the faults the product needs to detect, physical access, lot size and the actual fixture/program quote. The numerical examples on this page are unverified planning inputs, not universal costs, coverage or acceptance thresholds.
 
-![ICT verifies components are present and correct, not that the board functions. Bed-of-Nails has high fixture NRE but is fast and suits high-volume low-mix; Flying Probe has zero NRE but is slow and suits low-volume high-mix. ICT alone covers 70 to 85 percent, reaching 98 percent-plus combined with AOI and FCT]({{ "/assets/img/2026-05-29/ict-methodology-deep-dive.svg" | relative_url }})
+![Illustrative comparison of bed-of-nails and flying-probe ICT by fixture investment, test time and product-specific fault coverage]({{ "/assets/img/2026-05-29/ict-methodology-deep-dive.svg" | relative_url }})
 _Bed-of-Nails or Flying Probe is a volume call — pay the fixture once, or pay per board in time._
 
 This is a companion to the [ICT Assessment Pattern]({% post_url 2026-05-27-ict-assessment-pattern %}) post — that post covers the *assessment workflow*; this post covers the *engineering knowledge* needed to make decisions inside that workflow.
+
+**Editorial caution (2026-09-29):** The fixture prices, cycle times, geometric rules and volume thresholds below lack a linked current supplier quote or product-specific validation. Treat them only as prompts for questions, not as procurement, DFx or release limits. Establish product coverage with a [requirements-to-verification matrix]({% post_url 2026-09-29-requirements-to-verification-traceability %}) and actual test evidence.
 
 ---
 
@@ -150,14 +152,7 @@ Nodal Coverage (%) = (TPs probed / Total nets) × 100
 Fault Coverage (%) = (Detectable faults / Total possible faults) × 100
 ```
 
-Industry benchmarks:
-
-| Test stack | Defect coverage |
-|------------|-----------------|
-| ICT alone | 70–85% |
-| ICT + AOI | 90–95% |
-| ICT + AOI + FCT | 98%+ |
-| ICT + AOI + X-ray (BGA) + FCT | 99%+ |
+There is no product-independent percentage for ICT, AOI and FCT combined. List the relevant fault classes, test accessibility and detection method for the actual board. Report observed and planned coverage separately; do not add nominal percentages from different methods.
 
 ---
 
@@ -171,7 +166,7 @@ Industry benchmarks:
 | Documentation (test plan + SOP) | 1,500 – 3,000 | |
 | **Total** | **฿44,500 – ฿66,000** | Via-only probe can save 10–15% |
 
-**Break-even volume:** ≥ 200 pcs/year. Below this, Flying Probe or FCT-only is more economical.
+**Break-even volume:** calculate from current fixture/program cost, per-unit cost, test time, expected revisions and order pattern. The historical table above does not establish a universal 200-piece threshold.
 
 ---
 
@@ -203,11 +198,10 @@ Industry benchmarks:
 ## Decision Framework
 
 ```
-Volume per year?
-├─ < 200 pcs       → Flying Probe or FCT-only (ICT NRE not viable)
-├─ 200–1,000 pcs   → BoN single-side
-├─ 1,000–10,000 pcs → BoN single-side + spare fixture
-└─ > 10,000 pcs    → In-line ICT
+Volume and revision pattern?
+├─ Low or uncertain volume → compare flying-probe and targeted functional-test offers
+├─ Repeated stable builds → compare bed-of-nails fixture cost and per-unit saving
+└─ High throughput demand → assess in-line options against actual takt time
 
 Design lifespan?
 ├─ Prototype / one-off → Flying Probe
@@ -226,13 +220,13 @@ Access requirement?
 
 - **LED-only board** — V_f can be verified during FCT
 - **Single-IC simple board** — AOI + FCT provides adequate coverage
-- **Volume < 200 pcs/year** — NRE doesn't break even
+- **Low or uncertain volume** — calculate whether fixture NRE can be recovered
 - **Frequent design revisions** — Fixture sunk cost too high
 
-## When ICT is Mandatory
+## When ICT Deserves Explicit Assessment
 
 - **Mixed analog + digital** with high passive count
-- **Safety-critical applications** — medical, automotive (ISO 26262)
+- **Safety-related requirements** — use the applicable customer and regulatory requirements to decide the required test evidence
 - **High passive count** (>50 R/C/L) — manual probe verification impractical
 - **Customer audit requirement** — component-level traceability needed
 
@@ -240,16 +234,14 @@ Access requirement?
 
 ## Defects ICT Catches
 
-| Defect | % of total PCBA defects | ICT detects? |
-|--------|------------------------|--------------|
-| Solder bridge | 20–30% | ✅ |
-| Missing component | 10–15% | ✅ |
-| Wrong value | 10–15% | ✅ |
-| Wrong polarity | 5–10% | ✅ |
-| Lifted pin | 5–10% | ✅ |
-| Cold/dry joint | 10–15% | ✅ |
-| Damaged component | ~5% | ✅ (partial) |
-| Trace damage | < 5% | ✅ |
+| Defect | Detection question for this design |
+|--------|------------------------------------|
+| Solder bridge or open | Are both relevant nodes accessible, and will this program detect the fault? |
+| Missing or wrong-value component | Can the installed network be measured without an ambiguous parallel path? |
+| Wrong polarity | Does the chosen check distinguish polarity under safe conditions? |
+| Lifted pin or dry joint | Is the affected connection observable by probe or another method? |
+| Damaged component | Which electrical or functional symptom would the check detect? |
+| Trace damage | Are the affected endpoints included in the test? |
 
 ## Coverage Gap — What Only FCT Can Catch
 
@@ -267,8 +259,8 @@ These all require functional testing — see the [FCT Methodology Deep Dive]({% 
 
 ## Pricing in RFQ
 
-- **ICT NRE** as separate line item: ฿44.5K – ฿66K (template baseline)
-- **ICT per-board test fee**: ฿15–30/pc (contract testing)
+- **ICT NRE** as a separate line item: obtain a current fixture and program quotation for the actual board.
+- **ICT per-board test fee**: use the current cycle, labor, equipment and supplier basis.
 - **Do not bundle** ICT NRE into unit price — keep it visible so the customer can evaluate volume break-even themselves
 
 ---

@@ -5,12 +5,14 @@ categories: [NPI, Test]
 tags: [fct, functional-test, test-engineering, pcba, firmware, calibration, burn-in, ni-teststand, labview]
 ---
 
-> **TL;DR** — FCT is the *final gate before Box Build*. It verifies the board actually performs its intended function — power sequencing, communication, sensor read, actuator drive, firmware boot, calibration. NRE ฿58K–203K. Per-unit cost ฿100/test point. Combined with ICT, achieves 98%+ defect coverage.
+> **TL;DR** — FCT checks specified functions under defined conditions. Plan its limits from the product requirements and retain configured results. The numerical examples below are unverified planning inputs, not universal costs or defect coverage.
 
-![FCT is the final gate before Box Build: a board runs through power-on, communication, sensor read, actuator drive, firmware boot, and calibration; passing all six releases it. ICT checks parts are present, FCT checks the board functions, and together they reach 98 percent-plus defect coverage]({{ "/assets/img/2026-05-29/fct-methodology-deep-dive.svg" | relative_url }})
+![Illustrative functional-test stages selected from product requirements; configured results remain separate from release authorization]({{ "/assets/img/2026-05-29/fct-methodology-deep-dive.svg" | relative_url }})
 _ICT asks “is it built right?”; FCT asks “does it work?” — a board needs both before it ships._
 
 This is a companion to the [ICT Methodology Deep Dive]({% post_url 2026-05-29-ict-methodology-deep-dive %}). ICT verifies components are present and correct; FCT verifies the board *works*.
+
+**Editorial caution (2026-09-29):** Historical fixture prices, cycle times, per-unit charges, volume thresholds and coverage percentages on this page lack a linked current quote or product-specific validation. Do not use them as RFQ, test acceptance or release limits. Define the actual scope with a [requirements-to-verification matrix]({% post_url 2026-09-29-requirements-to-verification-traceability %}). The illustration is explanatory, not a test report.
 
 ---
 
@@ -34,7 +36,7 @@ SMT → AOI → ICT → [Firmware Flash] → FCT → Calibration → [Burn-in] �
                   Often part of FCT  Sometimes separate station
 ```
 
-**FCT is the final electrical gate before mechanical assembly.** Any board passing FCT should be ready to ship as-is.
+FCT may be the final electrical check before mechanical assembly for a particular route. A passed board still needs every applicable later check and an authorized decision before shipment.
 
 ---
 
@@ -246,9 +248,7 @@ HALT/HASS typically run in lab during NPI phase. Burn-in may live on the product
 
 ### Per-Unit FCT Cost
 
-- **Base rate: ฿100 per test point per unit**
-- Add ฿20–50/unit for calibration trim/burn
-- Add ฿10–20/unit for firmware flash + serial burn
+Build the rate from setup allocation, fixture and instrument cost, cycle time, operator effort, calibration, programming, consumables and expected retest or rework under the current cost model. The historical NRE table above is an example only; obtain a current quotation before pricing.
 
 ---
 
@@ -277,11 +277,10 @@ Product complexity?
 ├─ Analog precision → Parametric + Calibration
 └─ Wireless / safety-critical → Full param + cert + burn-in
 
-Volume?
-├─ < 100 pcs (proto) → Manual bench test (no fixture)
-├─ 100–1,000 pcs → Simple ZIF/connector fixture
-├─ 1,000–10,000 pcs → BoN FCT + automation
-└─ > 10,000 pcs → Multi-DUT cluster + in-line
+Volume and repeatability?
+├─ Trial or changing design → compare a documented bench method and simple fixture
+├─ Repeated stable builds → compare fixture cost against cycle-time and error reduction
+└─ Throughput constrained → assess automation against the actual takt time
 
 ICT done?
 ├─ Yes → FCT focuses on function (components already verified)
@@ -292,17 +291,17 @@ ICT done?
 
 ## When to Use FCT-Only (Skip ICT)
 
-- Volume < 200 pcs/year
+- Fixture cost does not recover under the actual volume and revision pattern
 - Simple Go/No-Go product
 - Customer accepts coverage gap
 - Prototype / NPI stage
 
-## When Both ICT and FCT are Mandatory
+## When to Assess Both ICT and FCT
 
-- Safety-critical (medical, automotive ISO 26262)
+- Safety-related obligations requiring distinct component and functional evidence under the applicable requirements
 - High-mix LED bar / driver products
 - Customer audit requires component-level traceability
-- Volume > 1,000 pcs (BoN ICT NRE pays back)
+- Repeated volume where a current quote shows that ICT adds justified detection or capacity value
 
 ---
 
