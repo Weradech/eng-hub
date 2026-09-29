@@ -18,9 +18,13 @@ Use the [DFM checklist]({% post_url 2026-06-29-dfm-checklist-pcba %}) and [DFx f
 
 For a process limit the team cannot verify, request an answer from the selected manufacturer with the [supplier capability handoff]({% post_url 2026-09-29-supplier-capability-handoff %}).
 
+See a [dated check of public supplier and lab capability pages]({% post_url 2026-09-29-public-provider-capability-check %}) for what those pages can establish before a project-specific response arrives.
+
 ## Change a released component or instruction
 
 Use [engineering change control]({% post_url 2026-09-09-engineering-change-control %}). Record impact, verification, material disposition and effectivity before implementation.
+
+The [public ESP32-PoE revision case]({% post_url 2026-09-29-public-revision-case-poe-class %}) shows how reported field feedback and a schematic change can be traced without inventing test or release evidence.
 
 ## Plan ICT or FCT
 

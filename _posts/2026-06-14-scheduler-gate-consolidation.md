@@ -98,4 +98,4 @@ When refactoring a monolithic scheduler into modules, carry the shared gate expl
 "Each job has a gate" ≠ "at most one ERP call at a time."
 
 ## Related Posts
-- [It Said "Connection Refused." The Server Was Fine.](/posts/it-said-connection-refused/)
+- [It Said "Connection Refused." The Server Was Fine.]({% post_url 2026-06-13-it-said-connection-refused %})

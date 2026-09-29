@@ -56,7 +56,7 @@ Pull ERP quantities fresh immediately before the overwrite. Do not use:
 
 The ERP may have processed receipts or manufacturing orders while you were preparing the overwrite. Stale data means you overwrite *to an already-stale state*, and you'll drift immediately again.
 
-If the ERP API has a connection-count limit (see [Four Gates That Became One](/posts/four-gates-that-became-one-serializing-background-jobs-that-share-a-connection-pool/)), paginate gently:
+If the ERP API has a connection-count limit (see [Four Gates That Became One]({% post_url 2026-06-14-scheduler-gate-consolidation %})), paginate gently:
 
 ```python
 def gentle_paginate(model, domain, fields, page_size=200):
@@ -118,5 +118,5 @@ If the overwrite produces unexpected results after verification, restore to the 
 After a clean overwrite, drift will return if the underlying causes are not addressed. The overwrite buys time and a clean baseline. The permanent fix is idempotent writes — every record written to either system carries a source key, and the receiving system skips duplicates by that key regardless of which path the record arrived through.
 
 ## Related Posts
-- [Is the Number Wrong, or Is the Stock Gone?](/posts/is-the-number-wrong-or-is-the-stock-gone-reconciliation-without-false-alarms/)
-- [Cross-Path Idempotency](/posts/cross-path-idempotency/)
+- [Is the Number Wrong, or Is the Stock Gone?]({% post_url 2026-06-13-reconciliation-without-false-alarms %})
+- [Cross-Path Idempotency]({% post_url 2026-06-13-cross-path-idempotency %})

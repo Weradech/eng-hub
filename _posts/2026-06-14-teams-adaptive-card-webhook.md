@@ -148,5 +148,5 @@ except ConnectionRefusedError:
 Throttle the outage alert — the watcher runs every few minutes, so an unthrottled alert would spam the channel every tick during an outage.
 
 ## Related Posts
-- [It Said "Connection Refused." The Server Was Fine.](/posts/it-said-connection-refused/)
-- [Four Gates That Became One](/posts/four-gates-that-became-one-serializing-background-jobs-that-share-a-connection-pool/)
+- [It Said "Connection Refused." The Server Was Fine.]({% post_url 2026-06-13-it-said-connection-refused %})
+- [Four Gates That Became One]({% post_url 2026-06-14-scheduler-gate-consolidation %})
