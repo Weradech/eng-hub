@@ -65,8 +65,8 @@
   <!-- coverage -->
   <rect x="24" y="266" width="412" height="132" rx="12" fill="#f4f5f7" stroke="#cbd2d9"/>
   <text x="44" y="293" class="ph" fill="#1f2933">Coverage</text>
-  <text x="44" y="321" class="li">&#183;  ICT verifies parts are <tspan font-style="italic">present &amp; correct</tspan></text>
-  <text x="44" y="345" class="li">&#183;  FCT verifies the board <tspan font-style="italic">functions</tspan></text>
+  <text x="44" y="321" class="li">&#183;  ICT probes selected electrical faults</text>
+  <text x="44" y="345" class="li">&#183;  FCT checks selected product functions</text>
   <text x="44" y="375" class="li" font-weight="700" fill="#1c7a3f">&#183;  Map both methods to actual faults</text>
 
   <!-- cost -->
