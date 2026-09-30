@@ -1,152 +1,35 @@
 ---
-title: "PCBA RFQ Costing Pattern — How to Price a PCBA Assembly Professionally"
+title: "PCBA RFQ Costing: Build a Traceable Quote Basis"
 date: 2026-05-27 09:00:00 +0700
 categories: [NPI, RFQ]
 tags: [pcba, costing, rfq, bom, npi, ems]
 ---
 
-> **TL;DR** — Build the quote from a defined BOM, assembly and test scope, current supplier prices and approved commercial rules. Separate recurring unit cost from one-time charges. The historical figures below are examples, not current supplier quotes or company pricing authority.
+> **TL;DR** — Price the exact product revision, quantity and manufacturing scope from current evidence. Separate recurring cost, setup/NRE, assumptions, commercial policy and customer-facing terms. A formula is only as sound as its inputs and authority.
 
----
+This is an RFQ method, not a Synergy price list or approved margin policy. The former article's placement rates, setup charges, margin bands and worked totals had no current supplier offer or approved cost-model source. They have been removed. Use [RFQ intake]({% post_url 2026-09-29-rfq-intake-and-quote-boundary %}) to close the scope before calculating.
 
-![PCBA RFQ cost build-up: material plus assembly, times 1.15 overhead, divided by one minus margin, gives the unit price; NRE is a separate lump-sum line in the quotation](/assets/img/2026-05-27/pcba-rfq-costing-pattern.svg)
-_Material plus assembly, times overhead, over one-minus-margin — and keep NRE a separate line._
+## Establish the priced configuration
 
-## Why Accurate Costing Matters
+Identify the customer request, product and revision, BOM and AVL, fitted options, drawing and fabrication package, order quantity and delivery schedule. Reconcile BOM quantities and DNP positions to assembly data. Record approved substitutions and any material that the customer supplies. A missing MPN, test definition or material specification is an RFQ question, not a price to invent.
 
-A material-cost error can change the quote materially, especially on a small lot. Check the current BOM, purchase quantity, supplier offer and currency before using a price. No universal margin or error threshold follows from this example.
+The quote basis should name the intended build route: PCB fabrication, procurement, SMT, through-hole, hand work, inspection, programming, ICT/FCT, calibration, coating, box build, packaging and shipping as applicable. For each operation record whether it is included, excluded, optional or awaiting a supplier answer. Confirm process capabilities with the selected supplier for the exact build rather than adopting a generic rate card.
 
----
+## Keep cost lines and units visible
 
-## 6-Step Costing Pattern
+| Cost group | Evidence needed |
+|---|---|
+| Material | Current supplier offer, order quantity/MOQ, yield or attrition basis, currency and validity. |
+| Bare PCB | Controlled stack-up and build spec, quantity and supplier quotation. |
+| Assembly | Routing, placements, special operations, setup and supplier or internal labor basis. |
+| Test | Test method, coverage, fixture/programming, cycle and retest basis. |
+| One-time work | Stencil, tooling, fixture, engineering and qualification scope, priced separately from recurring units. |
+| Commercial terms | Approved overhead, margin or markup method, taxes, freight, exchange-rate basis and validity. |
 
-### Step 1 — BOM Cost Roll-up
+Use one consistent unit basis: cost per ordered board, cost per good board or cost per lot. Show any assumed scrap or retest allowance explicitly so it is not counted twice. Keep source currency and date with each offer. Do not mix margin and markup: a gross-margin formula and a cost-markup formula produce different prices for the same cost.
 
-Sum all component costs from the BOM:
+## Reconcile the proposed quote
 
-```
-Total Material Cost = Σ (Unit Price × Qty per board)
-```
+Calculate the recurring unit cost from the current approved inputs, then apply the organization's approved commercial policy. Carry one-time charges as distinct lines unless the approved quote method explicitly amortizes them over a named quantity. Check quantity breaks, lead time, capacity, tooling ownership, customer-supplied material and quote validity. Finance or the designated commercial owner must decide how much cost detail the customer-facing offer shows; there is no universal “lump sum only” rule.
 
-**Watch out for:**
-- Use **MOQ-adjusted** pricing, not datasheet unit price
-- Remove **DNI (Do Not Install)** components before summing
-- PCB bare board should always be a separate line item
-
----
-
-### Step 2 — Assembly Cost
-
-```
-Assembly Cost = (Placement Count × Rate per placement) + Machine Setup
-```
-
-**Illustrative historical planning inputs, not verified 2026 market rates:**
-
-| Type | Rate |
-|------|------|
-| SMD 0402+ | ฿0.30–0.50 / placement |
-| SMD 0201 | ฿0.80–1.20 / placement |
-| Through-hole | ฿1.50–3.00 / placement |
-| Machine Setup | ฿17,500 / lot |
-
----
-
-### Step 3 — Overhead (OH)
-
-> **Example assumption:** OH = 15% of the stated manufacturing cost base. Replace this with the organization's approved cost model.
-
-```
-OH = (Material Cost + Assembly Cost) × 15%
-```
-
-⚠️ **Common mistake** — some engineers apply OH on the total including NRE. NRE is a one-time cost and must be separated before OH calculation.
-
----
-
-### Step 4 — NRE (Non-Recurring Engineering)
-
-NRE covers all one-time costs:
-
-| Item | Note |
-|------|------|
-| SMT Stencil | ฿3,500–8,000 each |
-| ICT / FCT Fixture | Depends on complexity |
-| Wave solder jig | |
-| RE Fee (Reverse Engineering) | Only when no source files available |
-| Engineering hours | Rate × hours |
-
-**For shared Laser assets:**
-```
-Laser NRE    = ฿0 (shared asset)
-Laser per unit = ฿0.50 / unit
-```
-
----
-
-### Step 5 — Margin
-
-```
-Unit Selling Price = (Material + Assembly + OH) / (1 - Gross Margin%)
-One-Time Charges = approved NRE, shown separately in the quotation
-```
-
-**Illustrative margin scenarios, not a recommended company policy:**
-- Prototype / EVT: 25–35%
-- Mass production: 15–20%
-- Strategic account: negotiable
-
----
-
-### Step 6 — Quotation Format
-
-> **Golden Rule: Customer quotation = Lump sum only. Never expose OH or Margin.**
-
-```
-Unit Price : ฿XXX.XX / board
-NRE        : ฿XX,XXX (one-time)
-MOQ        : XXX pcs
-Lead time  : X weeks
-Validity   : 30 days
-```
-
----
-
-## Illustrative Costing Snapshot
-
-This is a historical example with no current supplier quote or approval record attached. Recalculate every input before use on an RFQ.
-
-| Item | Value |
-|------|-------|
-| BOM lines | 21 components |
-| Total placements | 58 |
-| Material cost | ฿94.82 / board |
-| Assembly cost | ฿28.46 / board |
-| OH (15%) | ฿18.49 |
-| Unit price (25% margin) | ~฿190 / board |
-| NRE — stencil | ฿5,500 |
-
----
-
-## Python Quick Calculator
-
-```python
-import pandas as pd
-
-df = pd.read_excel("bom.xlsx")
-material  = (df["unit_price"] * df["qty"]).sum()
-assembly  = df["qty"].sum() * 0.40 + 17500 / qty_per_lot
-oh        = (material + assembly) * 0.15
-unit_price = (material + assembly + oh) / (1 - margin)
-```
-
----
-
-## Summary Formula
-
-```
-Example Unit Price = [(Material + Assembly) × 1.15] / (1 − Gross Margin%)
-One-Time NRE = separate quotation line
-```
-
-For each new quantity and process scope, recalculate supplier prices, setup allocation, assembly and test effort, yield/rework assumptions where applicable, and one-time charges. The [RFQ intake method]({% post_url 2026-09-29-rfq-intake-and-quote-boundary %}) records the quote basis before this calculation.
+Before release, compare the quotation against its own source list: every priced operation has an input, every exclusion is visible, and each unresolved assumption has an owner and a stated impact. An internal spreadsheet that balances mathematically is not proof that the customer scope or supplier capability is correct.

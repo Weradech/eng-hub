@@ -5,9 +5,9 @@ categories: [NPI, Process]
 tags: [npi, templates, rca, stage-gate, sop, costing]
 ---
 
-> **TL;DR** — The *why* behind these is already on this site. This post is the *what to paste into your sheet*: an RFQ costing layout, an 8D/5-Why RCA form, a stage-gate checklist, and an SOP skeleton. Adapt the rates and rules to your own shop.
+> **TL;DR** — This page contains starting layouts for an RFQ cost sheet, RCA record, stage-gate checklist and SOP. Fill in current source evidence and the authority for each decision before use.
 
-**Editorial caution (2026-09-29):** The `15%` overhead and other fixed numbers in the RFQ snippet are historical example inputs. They are not current supplier rates or approved commercial policy. Define the quote scope with the [RFQ intake record]({% post_url 2026-09-29-rfq-intake-and-quote-boundary %}) and apply the organization's current cost model.
+**Editorial update (2026-09-30):** The RFQ snippet has no default overhead, margin or selling-price rule. Define the scope with the [RFQ intake record]({% post_url 2026-09-29-rfq-intake-and-quote-boundary %}) and use current offers and the organization's approved cost and commercial policy.
 
 ---
 
@@ -25,7 +25,7 @@ This is a companion page, not a tutorial. Each template links back to the deep-d
 
 ## 1 — RFQ costing sheet (internal working copy)
 
-Copy into a spreadsheet. The customer sees only the bottom line — never the OH/Margin rows. (Rules + Thai EMS reference rates: see the [costing pattern post]({% post_url 2026-05-27-pcba-rfq-costing-pattern %}).)
+Copy into a spreadsheet as an internal working layout. The [costing method]({% post_url 2026-05-27-pcba-rfq-costing-pattern %}) explains how to establish each input and who decides what appears in the customer-facing quotation.
 
 ```csv
 Section,Line item,Qty,Unit cost,Ext cost,Notes
@@ -37,14 +37,14 @@ Assembly,Through-hole / hand,,,,
 Assembly,Test / inspection,,,,
 Assembly,Machine setup,,,,"per lot"
 ,Assembly subtotal,,,=SUM(Assembly),
-Overhead,OH 15% (mfg cost only),,,=0.15*(Material+Assembly),"NOT on NRE"
+Overhead,Approved basis and rate,,,,"record cost-model owner and source"
 NRE,Stencil / fixture / jig,,,,"one-time, separate line"
-,Cost subtotal,,,=Material+Assembly+OH,
-Margin,Margin (internal),,,,"NEVER shown to customer"
-,UNIT PRICE (lump sum),,,=(Cost subtotal)/(1-Margin%),"only number that leaves the building"
+,Cost subtotal,,,,"reconcile approved cost basis"
+Commercial,Approved pricing method,,,,"margin or markup; record authority"
+,Proposed unit price,,,,"review with commercial owner"
 ```
 
-> **Golden rule:** customer quotation = lump sum + NRE line + MOQ + lead time + validity. Expose nothing else.
+> Decide customer-facing cost detail, NRE, MOQ, lead time and validity under the approved commercial process. The internal layout is not an authorized quotation.
 {: .prompt-tip }
 
 ---
