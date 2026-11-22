@@ -86,7 +86,7 @@ We did not run a time study before and after the change, so this post makes no p
 
 ## Related Posts
 
-- {% post_url 2026-05-27-ai-squad-for-engineering-manager %} &#8212; Part 1, the original squad idea.
-- {% post_url 2026-05-27-ai-squad-part-2-architecture-and-dispatch-protocol %} &#8212; Part 2, the retired architecture.
-- {% post_url 2026-06-13-footguns-that-pass-ci %} &#8212; Why a green check is not the same as a correct result.
-- {% post_url 2026-05-27-rca-for-software-symptoms-before-hypothesis %} &#8212; Observations before hypotheses, applied to agent output too.
+- [AI Squad for Engineering Managers — One Person, Several Workstreams]({% post_url 2026-05-27-ai-squad-for-engineering-manager %}) &#8212; Part 1, the original squad idea.
+- [AI Squad, Part 2 — The Org Chart, Model Tiers, and the Dispatch Protocol]({% post_url 2026-05-27-ai-squad-part-2-architecture-and-dispatch-protocol %}) &#8212; Part 2, the retired architecture.
+- [Four Footguns That Pass CI and Fail in Production]({% post_url 2026-06-13-footguns-that-pass-ci %}) &#8212; Why a green check is not the same as a correct result.
+- [RCA for Software — Gather Symptoms Before You Touch the Keyboard]({% post_url 2026-05-27-rca-for-software-symptoms-before-hypothesis %}) &#8212; Observations before hypotheses, applied to agent output too.

@@ -141,8 +141,8 @@ An ERC/DRC/parity pass is a machine check, not engineering closure. A passed hol
 
 ## Related Posts
 
-- {% post_url 2026-05-27-npi-stage-gate %} &#8212; The project-level gates this board-level flow sits inside.
-- {% post_url 2026-09-09-engineering-release-package %} &#8212; What goes into the package after H8.
-- {% post_url 2026-09-29-dfx-finding-evidence %} &#8212; How to record a finding raised at a hold.
-- {% post_url 2026-09-09-engineering-change-control %} &#8212; What happens when a released board must change.
-- {% post_url 2026-06-29-dfm-checklist-pcba %} &#8212; Manufacturability checks to apply at H3 and H4.
+- [NPI Stage Gates: Record the Decision for the Next Activity]({% post_url 2026-05-27-npi-stage-gate %}) &#8212; The project-level gates this board-level flow sits inside.
+- [Engineering Release Package: Are These Files Ready to Build?]({% post_url 2026-09-09-engineering-release-package %}) &#8212; What goes into the package after H8.
+- [A DFx Finding That Someone Else Can Verify]({% post_url 2026-09-29-dfx-finding-evidence %}) &#8212; How to record a finding raised at a hold.
+- [Engineering Change Control: What Changes When One Component Changes?]({% post_url 2026-09-09-engineering-change-control %}) &#8212; What happens when a released board must change.
+- [DFM Checklist for PCBA: Check the Actual Build Route]({% post_url 2026-06-29-dfm-checklist-pcba %}) &#8212; Manufacturability checks to apply at H3 and H4.
