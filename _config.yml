@@ -4,10 +4,11 @@ lang: en
 timezone: Asia/Bangkok
 
 title: "Syntech Engineering Hub"
-tagline: "NPI & System Engineering Knowledge Base"
+tagline: "NPI, Engineering Operations & IMS Knowledge Base"
 description: >-
-  Practical knowledge in NPI, PCBA Engineering, Circuit Design,
-  and System Integration — from real EMS/OEM experience in Thailand.
+  Working methods for NPI, PCBA engineering, circuit design, operations,
+  system integration and an ISO 56001 innovation management system,
+  from real EMS/OEM work in Thailand.
 
 url: "https://weradech.github.io"
 baseurl: "/eng-hub"

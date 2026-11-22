@@ -42,6 +42,10 @@ Use the [pilot build exit review]({% post_url 2026-09-09-pilot-build-exit-review
 
 Start with [financial versus operational ownership]({% post_url 2026-05-27-financial-core-vs-operational-core %}), then [stock reconciliation]({% post_url 2026-06-13-reconciliation-without-false-alarms %}) and [resilient ERP integration]({% post_url 2026-08-26-resilient-erp-integration-patterns %}). Identify the authoritative source, transaction boundary and failure recovery before changing data.
 
+## Release a controlled document revision
+
+Use [document-as-code for an ISO 56001 document set]({% post_url 2026-08-26-document-as-code-for-iso56001 %}) and the [SOP hierarchy]({% post_url 2026-06-29-sop-hierarchy %}). Before release, confirm the change request, the closed review comments, the approver, the effective date and every form that refers to the procedure. Record which revision it replaces.
+
 ## Write a controlled procedure or investigate an incident
 
 Use the [SOP hierarchy]({% post_url 2026-06-29-sop-hierarchy %}) and [SOP revamp method]({% post_url 2026-05-27-sop-revamp-playbook %}) for documentation. For a software symptom, start with [observations before hypotheses]({% post_url 2026-05-27-rca-for-software-symptoms-before-hypothesis %}). Keep the controlled source, actual authority and evidence of effectiveness visible.
