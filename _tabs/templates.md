@@ -36,6 +36,10 @@ Use these files with the linked method. They are starting records, not approved 
 
 **Input:** customer question, equipment under test, configuration, applicable source, method and conditions. **Output:** setup and raw-evidence index, scoped result and limitations. Copy the [blank intake/report record]({{ "/assets/downloads/precompliance-lab/test-intake-record.md" | relative_url }}) and follow the [lab method]({% post_url 2026-09-29-precompliance-test-intake %}).
 
+## Traceability gap hold
+
+**Input:** observed gap, recorded attribute for the hold boundary, unit locations and available records. **Output:** held and released units with evidence, scope changes, reconciled count and pending decisions. Copy the [blank hold scope record]({{ "/assets/downloads/traceability-hold/hold-scope-record.md" | relative_url }}) and follow the [method]({% post_url 2026-11-22-traceability-gap-hold-scope %}).
+
 ## Pilot build exit review
 
 **Input:** actual configuration, unique unit histories, test boundary, deviations and open issues. **Output:** reconciled outcomes, action log and scoped next-build review. Use the [pilot review]({{ "/assets/downloads/pilot-build-exit-review/pilot-build-review.md" | relative_url }}), [open-issue log]({{ "/assets/downloads/pilot-build-exit-review/open-issue-log.md" | relative_url }}) and [guide]({{ "/assets/downloads/pilot-build-exit-review/template-guide.md" | relative_url }}). The [20-unit dataset]({{ "/assets/downloads/pilot-build-exit-review/demo-lot.json" | relative_url }}) is synthetic.

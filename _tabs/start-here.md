@@ -38,6 +38,10 @@ Start with [requirements-to-verification traceability]({% post_url 2026-09-29-re
 
 Use the [test intake and evidence method]({% post_url 2026-09-29-precompliance-test-intake %}). Define the exact unit, method, conditions and report scope before testing; keep exploratory findings separate from formal certification claims.
 
+## Respond to a traceability gap on the line
+
+Use the [traceability hold scope method]({% post_url 2026-11-22-traceability-gap-hold-scope %}) when a unit's record is missing or contradicts the physical product. Describe the gap without guessing its cause, hold what cannot yet be excluded, and release units only against criteria written before evaluating evidence for release. The [DMC traceability pattern]({% post_url 2026-08-26-shopfloor-dmc-family-traceability %}) shows how those records are created.
+
 ## Decide what follows a pilot
 
 Use the [pilot build exit review]({% post_url 2026-09-09-pilot-build-exit-review %}). Reconcile units and issues, then request a decision for a named next activity.

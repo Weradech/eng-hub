@@ -1,270 +1,359 @@
 ---
-title: "Shop Floor DMC Traceability: Parent-Child Barcode Binding and Zero-Trust Edge Station Gates"
+title: "Shop Floor DMC Traceability: Parent-Child Binding and Station Prerequisite Checks"
 date: 2026-08-26 11:30:00 +0700
+last_modified_at: 2026-11-22 12:00:00 +0700
 categories: [Manufacturing, Quality]
-tags: [mes, pcba, traceability, iot, mqtt, quality, zero-trust]
+tags: [mes, pcba, traceability, mqtt, quality, genealogy]
+description: "A proposed data model and station-check pattern for multi-board products, with the limits of what recorded genealogy can prove."
+mermaid: true
 ---
 
-> **TL;DR** — In high-mix electronics manufacturing, flat serial tracking fails the moment a product contains multiple circuit boards, sub-assemblies, or modular sensors. Implementing true zero-trust shop floor traceability requires hierarchical parent-child 2D Data Matrix Code (DMC) binding, state-enforced station gates (rejecting test execution if prerequisite stages are missing or stale), and resilient MQTT edge ingestion that handles data coercion and offline buffer fail-safes.
+> **TL;DR** — When a finished unit contains several serialized boards, a single outer serial cannot tell you which boards went into which unit. Record each parent-child binding with its history, check prerequisite results at each station before work starts, and keep every station record pending until the central system has stored or rejected it. Genealogy can only answer questions about relationships that were actually recorded.
 
 ---
 
-![Zero-trust shop floor DMC traceability: hierarchical parent-child barcode binding across SMT, AOI, ICT, FCT, and Box Build with zero-trust station gates](/assets/img/2026-08-26/shopfloor-dmc-family-traceability.svg)
-_Hierarchical genealogy: binding PCBA child barcodes to enclosure parent serials ensures instant root-cause analysis down to component reel lot numbers._
+![Shop floor DMC traceability: parent-child barcode binding from SMT and AOI through ICT/FCT and box build, with prerequisite checks at each station](/assets/img/2026-08-26/shopfloor-dmc-family-traceability.svg)
+_Parent-child binding links board DMCs to the finished-unit serial. Component lot links need separate recorded data._
 
-## Why Flat Serial Numbers Fail in Modern Electronics
+This is a proposed pattern, not a validated reference design. All identifiers, payload values and table names below are **fictional**. Set real limits, routes and release authority from the customer requirement, material specification and the organization's controlled process.
 
-In simple assembly lines, a single serial number sticker placed on an outer casing might suffice. However, in modern electronics (such as IoT gateways, automotive controllers, and industrial smart meters), a finished unit consists of:
+_Revised 2026-11-22: claims without published evidence were removed, and the schema, genealogy query and payload parser were corrected._
 
-1. **Main Processing Board (PCBA 1):** MCU, Flash, Power Management, Laser-etched DMC.
-2. **RF / Communications Daughterboard (PCBA 2):** Cellular/LoRa module, etched DMC.
-3. **Power & Sensor Interface Board (PCBA 3):** Relays, connectors, etched DMC.
-4. **Mechanical Enclosure:** Laser-marked or printed housing serial.
+## Why a single outer serial is not enough
 
-```
+A simple product may need only one serial on the enclosure. Many electronic products contain more than one board, each with its own laser-etched or printed Data Matrix Code (DMC):
+
+1. **Main processing board:** MCU, memory and power management.
+2. **Communications board:** radio module.
+3. **Power and interface board:** relays and connectors.
+4. **Enclosure:** printed or laser-marked finished-unit serial.
+
+```text
                            +-------------------------------------+
-                           |    PARENT: Finished Box Build Serial |
-                           |       [ SN-2026-BX-098842 ]         |
+                           |  PARENT: Finished unit (fictional)  |
+                           |         [ DEMO-FU-0001 ]            |
                            +------------------+------------------+
                                               |
                      +------------------------+------------------------+
                      |                        |                        |
                      v                        v                        v
           +--------------------+   +--------------------+   +--------------------+
-          | CHILD: Main Board  |   | CHILD: RF Board    |   | CHILD: Power Board |
-          | [ DMC-MB-881204 ]  |   | [ DMC-RF-441920 ]  |   | [ DMC-PWR-110293 ] |
+          | CHILD: Main board  |   | CHILD: RF board    |   | CHILD: Power board |
+          | [ DEMO-MB-0001 ]   |   | [ DEMO-RF-0001 ]   |   | [ DEMO-PW-0001 ]   |
           +----------+---------+   +----------+---------+   +----------+---------+
                      |                        |                        |
-           +---------+---------+              v                        v
-           |                   |         Reel Lots:               Reel Lots:
-           v                   v         [ R-LORA-90 ]            [ R-RELAY-12 ]
-      Reel Lots:          Reel Lots:
-      [ R-MCU-2026 ]      [ R-PMIC-04 ]
+                     v                        v                        v
+             Material lot links       Material lot links       Material lot links
+             (only if recorded)       (only if recorded)       (only if recorded)
 ```
 
-If a defect is discovered in a batch of microcontrollers three months after shipment, a flat-serial database cannot answer the critical recall question: **Which exact finished units contain the affected PCBA?**
+Suppose a problem is later suspected in one board revision or one material lot. Without a recorded binding between each board and its finished unit, the team cannot list which finished units contain the affected boards. It may then have to treat a whole date range or work order as suspect.
 
-Without hierarchical **Parent-Child DMC Binding**, the manufacturer is forced to recall entire date ranges rather than isolating the exact 340 affected serials.
+With bindings recorded, the team can list the candidate units. Those units are candidates for review, not confirmed defects. The size of the list depends on the evidence available: a lot recorded per placement gives a narrower set than a lot recorded only per work order.
 
 ---
 
-## The Hierarchical Traceability Data Model
+## A data model for binding history
 
-The core database design must support 1:N recursive parent-child associations, full event histories, and unbinding audit trails during rework.
+The model must support one parent with many children, a full binding history, and the reason for every unbind during rework. The example uses PostgreSQL.
 
 ```sql
--- 1. Immutable DMC Master Entity
+CREATE EXTENSION IF NOT EXISTS btree_gist;  -- for the exclusion constraint below
+
+-- 1. One row per physical marked item
 CREATE TABLE mes_unit (
     unit_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     barcode VARCHAR(128) NOT NULL UNIQUE,
     unit_type VARCHAR(32) NOT NULL, -- 'PCBA_CHILD', 'BOX_PARENT', 'CARTON_MASTER'
     product_sku VARCHAR(64) NOT NULL,
     work_order_id VARCHAR(64) NOT NULL,
-    current_status VARCHAR(32) NOT NULL DEFAULT 'CREATED', -- 'PASS', 'FAIL', 'SCRAP', 'REWORK'
+    current_status VARCHAR(32) NOT NULL DEFAULT 'CREATED', -- 'CREATED', 'PASS', 'FAIL', 'SCRAP', 'REWORK'
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. Hierarchical Association Tree (Binding Ledger)
+-- 2. Binding ledger: an unbind closes the row; the application never deletes rows
 CREATE TABLE mes_unit_binding (
     binding_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     parent_unit_id UUID NOT NULL REFERENCES mes_unit(unit_id),
     child_unit_id UUID NOT NULL REFERENCES mes_unit(unit_id),
     binding_station_id VARCHAR(64) NOT NULL,
     operator_badge_id VARCHAR(64) NOT NULL,
-    bound_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    unbound_at TIMESTAMP WITH TIME ZONE, -- NULL if actively bound
+    bound_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    unbound_at TIMESTAMP WITH TIME ZONE, -- NULL while the binding is active
     unbind_reason VARCHAR(255),
-    CONSTRAINT uq_active_child_binding UNIQUE (child_unit_id, unbound_at)
+    CHECK (parent_unit_id <> child_unit_id),
+    CHECK (unbound_at IS NULL OR unbound_at > bound_at),
+    CHECK (unbound_at IS NULL OR unbind_reason IS NOT NULL),
+    -- A child has at most one parent at any moment, past or present.
+    CONSTRAINT one_parent_at_a_time EXCLUDE USING gist (
+        child_unit_id WITH =,
+        tstzrange(bound_at, unbound_at, '[)') WITH &&
+    )
 );
 
-CREATE INDEX idx_binding_parent ON mes_unit_binding(parent_unit_id) WHERE unbound_at IS NULL;
-CREATE INDEX idx_binding_child ON mes_unit_binding(child_unit_id) WHERE unbound_at IS NULL;
+-- 3. Material lot links, only where the process records them
+CREATE TABLE mes_unit_material_lot (
+    unit_id UUID NOT NULL REFERENCES mes_unit(unit_id),
+    material_part VARCHAR(64) NOT NULL,
+    lot_id VARCHAR(64) NOT NULL,
+    link_basis VARCHAR(32) NOT NULL, -- 'PLACEMENT', 'FEEDER_SESSION', 'WORK_ORDER'
+    recorded_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (unit_id, material_part, lot_id, link_basis)
+);
 ```
 
-### Querying Complete Unit Genealogy in a Single Recursive CTE
+Notes on the constraints:
 
-When an engineer inspects a returned finished box build, a single SQL query recursively walks down the entire component tree to return every sub-assembly, test result, and component reel lot:
+- Do **not** use `UNIQUE (child_unit_id, unbound_at)` to mean "one active parent". PostgreSQL treats NULLs as distinct by default, so that constraint accepts several active rows for the same child.
+- The exclusion constraint stops two bindings of the same child from overlapping in time, including two active ones.
+- The schema does not stop longer loops, such as A inside B inside A. The station that binds should check for them, and the genealogy query below flags them.
+- "Never deleted or rewritten" is enforced by permissions, not by the table: do not grant `DELETE` or `TRUNCATE` on the ledger to the application role, and grant `UPDATE` only on `(unbound_at, unbind_reason)`, so the role can close a binding but cannot change who was bound to what, or when. A column grant still allows a closed row to be closed again with a different time; a trigger that lets `unbound_at` change only from NULL closes that gap.
+- Corrections take effect from the time they are recorded. The exclusion constraint rejects a backdated binding that overlaps an earlier one, so between a wrong scan and its correction, a point-in-time query returns the recorded (wrong) state. The reason on the closed row is what tells the reader the earlier record was wrong.
+
+### Walking the genealogy
+
+Two questions need different queries:
+
+- **What is in this unit now?** Follow active bindings only.
+- **What was in this unit when it shipped, or when the problem occurred?** Follow bindings that were active at that time, including ones unbound later by rework.
+
+The query below answers the second question for a fictional unit and time (PostgreSQL 14 or later for the `CYCLE` clause):
 
 ```sql
-WITH RECURSIVE UnitGenealogy AS (
-    -- Anchor member: The Parent Box Build
-    SELECT 
-        u.unit_id,
-        u.barcode,
-        u.unit_type,
-        u.product_sku,
-        1 AS tree_depth
+WITH RECURSIVE unit_genealogy AS (
+    SELECT u.unit_id, u.barcode, u.unit_type, 1 AS tree_depth
     FROM mes_unit u
-    WHERE u.barcode = 'SN-2026-BX-098842'
-    
+    WHERE u.barcode = 'DEMO-FU-0001'
+
     UNION ALL
-    
-    -- Recursive member: Find all active children
-    SELECT 
-        child.unit_id,
-        child.barcode,
-        child.unit_type,
-        child.product_sku,
-        ug.tree_depth + 1
+
+    SELECT child.unit_id, child.barcode, child.unit_type, ug.tree_depth + 1
     FROM mes_unit_binding b
-    JOIN mes_unit child ON b.child_unit_id = child.unit_id
-    JOIN UnitGenealogy ug ON b.parent_unit_id = ug.unit_id
-    WHERE b.unbound_at IS NULL
-)
-SELECT 
-    ug.tree_depth,
-    ug.unit_type,
-    ug.barcode,
-    ug.product_sku,
-    t.station_id,
-    t.test_result,
-    t.tested_at
-FROM UnitGenealogy ug
-LEFT JOIN mes_test_log t ON ug.unit_id = t.unit_id
-ORDER BY ug.tree_depth, ug.barcode;
+    JOIN mes_unit child ON child.unit_id = b.child_unit_id
+    JOIN unit_genealogy ug ON b.parent_unit_id = ug.unit_id
+    WHERE b.bound_at <= TIMESTAMPTZ '2026-08-20 17:00+07'
+      AND (b.unbound_at IS NULL OR b.unbound_at > TIMESTAMPTZ '2026-08-20 17:00+07')
+) CYCLE unit_id SET is_cycle USING path
+SELECT tree_depth, unit_type, barcode, is_cycle
+FROM unit_genealogy
+ORDER BY tree_depth, barcode;
 ```
+
+If any row has `is_cycle = true`, the recorded genealogy is inconsistent. Do not use it for a decision until the binding records are corrected.
+
+List material lot links in a separate step, for the units the query returned. Show `link_basis` and `recorded_at` with each link. `recorded_at` says when the link was recorded, not when the material was in the unit. A `WORK_ORDER` link says the lot was issued to the job. It does not prove the lot is on a particular board. A unit with no lot row means **lot link not recorded**, not "no affected material".
 
 ---
 
-## Zero-Trust Station Gates
+## Station prerequisite checks
 
-A major source of manufacturing scrap is **out-of-sequence production** &#8212; for example, an operator placing an untested PCBA into final mechanical assembly, or running a Functional Circuit Test (FCT) on a board that failed In-Circuit Testing (ICT).
-
-We implement **Zero-Trust Station Gates** at every physical test jig and assembly workbench.
+Out-of-sequence work is a risk wherever a route has manual handoffs: an untested board reaches final assembly, or FCT is run on a board whose ICT result failed. A station check confirms the unit's recorded state before work starts.
 
 ```mermaid
 flowchart TD
-    A[Scan DMC Barcode at Station] --> B{Gate Verification API}
-    B --> C{Pre-requisite Gate Passed?}
-    C -->|No: SMT/AOI Failed or Skipped| D[LOCK JIG: Reject Interlock Activated]
-    C -->|Yes| E{Test Age < TTL Window?}
-    E -->|No: Test > 72h Old| F[LOCK JIG: Require Re-Inspection]
-    E -->|Yes| G{Active Unresolved Rework?}
-    G -->|Yes: Flagged by QA| H[LOCK JIG: Direct to Rework Bench]
-    G -->|No| I[UNLOCK JIG: Execute Test Sequence]
-    I --> J[Push MQTT Telemetry to Core MES]
+    A[Scan DMC at station] --> B{Unit known and on this route?}
+    B -->|No| R[Reject: record reason, direct to supervisor]
+    B -->|Yes| C{Required previous step recorded as PASS?}
+    C -->|No| D[Hold: previous step missing or failed]
+    C -->|Yes| E{Within any time limit set for this material or process?}
+    E -->|No| F[Hold: re-inspection or other controlled action]
+    E -->|Yes| G{Open rework or hold flag?}
+    G -->|Yes| H[Hold: direct to rework or reviewer]
+    G -->|No| I[Allow: run the station step]
+    I --> J[Record result, pending until stored or rejected]
 ```
 
-### The Station Gate Verification Rules
+### Rules for the checks
 
-1. **Strict Dependency Graph:** Gate $N$ cannot execute unless Gate $N-1$ is in state `PASSED`.
-2. **Time-To-Live (TTL) Enforcement:** If an SMT board has been sitting on an inventory cart for more than 72 hours before conformal coating, solderability and moisture resistance may degrade. The gate flags `EXPIRED_STAGE_TTL` and requires bake-out or visual re-inspection.
-3. **Immutability of Failures:** A failed test cannot be overwritten by simply re-running the test until it passes. A failure locks the unit into `NEEDS_REWORK` status, requiring an authorized QA badge scan to clear or route to scrap.
+1. **Route dependency:** a step runs only when the steps the route marks as required are recorded as `PASS` for this unit.
+2. **Time limits come from a source:** if a board or component has a floor-life or exposure limit, take the limit from the material specification or the applicable handling standard (for moisture-sensitive devices, for example, IPC/JEDEC J-STD-033), and record which source the station uses. Do not copy a number from another product.
+3. **Failures stay visible:** a retest does not overwrite a failure. Keep first attempts and retests as separate records, and require an authorized person to route a failed unit to rework or scrap.
+4. **Every refusal leaves a record:** a scan can be refused in the station screen, in the station client or by the central system. Wherever the refusal happens, record the refused value, station, time and reason there, and forward it to a place an investigation can read. Otherwise nobody can later tell whether the scan happened.
+
+The last rule matters during a hold decision. "Not found in MES" may mean the unit never reached the station, or that it was scanned and refused before anything was sent. The [traceability hold scope method]({% post_url 2026-11-22-traceability-gap-hold-scope %}) shows how to handle that gap.
 
 ---
 
-## High-Throughput Edge Ingestion via MQTT
+## Station records: direct or through a broker
 
-Automated test fixtures (such as bed-of-nails ICT, RF chambers, and flash programmer jigs) produce rich telemetry: voltages, frequencies, RSSI, current draw, and execution durations.
+Test fixtures (ICT, FCT, RF and programming jigs) produce result summaries: pass or fail, measured values, duration and firmware version.
 
-Directly hammering a central REST API from 40 factory jigs during peak shift produces connection contention and deadlocks. Instead, all test stations publish JSON test summaries over MQTT to an edge broker:
+Stations can post results directly to a central API, or publish them to a message broker (for example MQTT) and let a worker write them to the database. A broker is one option. It can help when station networks are restricted or the central API is briefly unavailable. It also adds a component to operate and monitor. Choose it from measured load and network constraints, not by default.
 
-```
-Topic Schema: me_jig/{jig_id}/run/summary
-Payload:
+```text
+Topic: demo/jig/{jig_id}/run/summary
+Message (fictional values):
 {
-  "jig_id": "JIG-FCT-04",
-  "barcode": "DMC-MB-881204",
-  "test_profile": "REV_B_FULL_LOAD",
-  "result": "PASS",
-  "duration_s": 14.82,
-  "vcc_mv": 3302.5,
-  "current_ma": 142.1,
-  "mac_address": "70:B3:D5:E2:81:4A",
-  "firmware_ver": "v2.1.0-prod",
-  "step_failures": []
+  "record_id": "4f1c2b9e-0000-4000-8000-000000000001",
+  "payload": {
+    "jig_id": "DEMO-FCT-01",
+    "barcode": "DEMO-MB-0001",
+    "test_profile": "DEMO_PROFILE_A",
+    "result": "PASS",
+    "duration_s": 14.82,
+    "vcc_mv": 3302.5,
+    "current_ma": 142.1,
+    "firmware_ver": "demo-1.0.0",
+    "step_failures": []
+  }
 }
 ```
 
-### The Data Type Coercion Trap
+The station client assigns `record_id` when it queues the record, and puts it in the envelope, outside the payload. A malformed payload can then still be matched to its rejection. The central system stores the `record_id` with every accepted result and every rejected record, and returns the same answer when the same `record_id` arrives again. A message whose envelope has no usable `record_id` is stored as rejected under an identifier the central system assigns; it cannot be deduplicated, so a reviewer checks it against the station's queue.
+
+### Validate at the boundary; do not invent values
 
 {: .prompt-danger }
-> **Edge Gotcha:** Industrial test software written in LabVIEW, Python, or C# frequently serializes timestamps and integer metrics as floating-point numbers (e.g., `"duration_s": 14.82`, `"vcc_mv": 3302.0`, `"step_count": 12.0`). If a relational database schema defines `vcc_mv` or `duration_s` as `INTEGER`, strict ORMs (like SQLAlchemy or Prisma) will throw unhandled validation exceptions, silently dropping the test record and locking the unit at that station.
+> **Edge gotcha:** Test software may write integers as floating-point numbers (`"vcc_mv": 3302.0`) or numbers as strings. Inserting those into an `INTEGER` column can fail or can round silently, depending on the value and the database driver. If the worker does not handle a failure, the record can be lost while the station believes it was sent. Store measured values as `NUMERIC`, and parse the JSON with `json.loads(raw, parse_float=Decimal)` so a value such as `0.1` is not first turned into a binary float.
 
-The edge MQTT worker must implement explicit, safe type coercion before database persistence:
+Accept only formats that are clearly equivalent. Reject anything else with a reason. Never turn a missing value into `0`, or an unknown result into `FAIL`: both create a test record that did not happen.
 
 ```python
-def parse_and_coerce_jig_payload(raw_payload: dict) -> dict:
-    """
-    Safely coerces heterogeneous telemetry values from factory JIGs
-    preventing schema insertion rejections.
-    """
+import re
+from decimal import Decimal
+
+VALID_RESULTS = {"PASS", "FAIL"}
+PLAIN_DECIMAL = re.compile(r"-?[0-9]+(\.[0-9]+)?")   # ASCII digits only; no exponent, no separators
+
+# Known test profiles and their limits (fictional values).
+TEST_PROFILES = {
+    "DEMO_PROFILE_A": {"max_duration_s": Decimal("3600")},
+}
+
+
+class RejectedPayload(Exception):
+    """Store the raw payload and this reason as a rejected record."""
+
+
+def _text(payload: dict, key: str) -> str:
+    value = payload.get(key)
+    if not isinstance(value, str) or not value.strip():
+        raise RejectedPayload(f"{key} missing or not text")
+    return value.strip()
+
+
+def _number(payload: dict, key: str) -> Decimal:
+    value = payload.get(key)
+    if isinstance(value, bool) or not isinstance(value, (int, float, Decimal, str)):
+        raise RejectedPayload(f"{key} missing or not a number")
+    text = str(value).strip()
+    if not PLAIN_DECIMAL.fullmatch(text):
+        raise RejectedPayload(f"{key} is not a plain decimal: {value!r}")
+    return Decimal(text)
+
+
+def parse_jig_payload(payload) -> dict:
+    """Validate the payload only. The record_id travels in the envelope."""
+    if not isinstance(payload, dict):
+        raise RejectedPayload("payload is not an object")
+
+    test_profile = _text(payload, "test_profile")
+    if test_profile not in TEST_PROFILES:
+        raise RejectedPayload(f"unknown test_profile: {test_profile!r}")
+
+    result = _text(payload, "result").upper()
+    if result not in VALID_RESULTS:
+        raise RejectedPayload(f"unknown result: {payload['result']!r}")
+    step_failures = payload.get("step_failures")
+    if not isinstance(step_failures, list):
+        raise RejectedPayload("step_failures missing or not a list")
+    if not all(isinstance(s, str) and s.strip() for s in step_failures):
+        raise RejectedPayload("step_failures contains a non-text entry")
+    if result == "PASS" and step_failures:
+        raise RejectedPayload("PASS with step failures")
+
+    duration_s = _number(payload, "duration_s")
+    if not Decimal("0") < duration_s <= TEST_PROFILES[test_profile]["max_duration_s"]:
+        raise RejectedPayload(f"duration_s out of range: {duration_s}")
+
+    firmware = payload.get("firmware_ver")      # optional, but must be text if present
+    if firmware is not None and not isinstance(firmware, str):
+        raise RejectedPayload("firmware_ver is not text")
     return {
-        "jig_id": str(raw_payload.get("jig_id", "UNKNOWN")).strip(),
-        "barcode": str(raw_payload.get("barcode", "")).strip().upper(),
-        "result": "PASS" if str(raw_payload.get("result")).upper() == "PASS" else "FAIL",
-        # Coerce float/string numbers safely to integer milliseconds / millivolts
-        "duration_ms": int(float(raw_payload.get("duration_s", 0)) * 1000),
-        "vcc_mv": int(float(raw_payload.get("vcc_mv", 0))),
-        "current_ma": float(raw_payload.get("current_ma", 0.0)),
-        "firmware_version": str(raw_payload.get("firmware_ver", "N/A")),
-        "raw_json": raw_payload
+        "jig_id": _text(payload, "jig_id"),
+        "test_profile": test_profile,
+        "barcode": _text(payload, "barcode"),               # exact value; no case folding
+        "result": result,
+        "duration_s": duration_s,                         # NUMERIC
+        "vcc_mv": _number(payload, "vcc_mv"),             # NUMERIC
+        "current_ma": _number(payload, "current_ma"),     # NUMERIC
+        "firmware_version": (firmware or "").strip() or None,
+        "step_failures": step_failures,
+        "raw_json": payload,
     }
 ```
 
----
-
-## Edge Offline Buffer & Fail-Safe Operation
-
-What happens when the factory LAN switch hiccups or the core database server performs a scheduled failover?
-
-If a test station cannot reach the central API, stopping the entire production line costs thousands of dollars per minute. However, allowing boards to pass through without saving test records destroys ISO 9001 compliance.
-
-We deploy a **Local Edge Buffer** at each testing cluster:
-
-```
-[ Test Fixture ] 
-       |
-       v
-[ Edge JIG Client ] --- (Primary) ---> [ Core MES Central API ]
-       |                                       |
-  (Network Flap)                               v
-       |                              [ Production DB ]
-       v
-[ Local SQLite Buffer ] 
-  (Append-only WAL)
-       |
-  (Auto-Drain on Reconnect)
-       |
-       +-----------------------------> [ Core MES Ingest Queue ]
-```
-
-1. The test client writes all test executions to a local SQLite WAL file first.
-2. An asynchronous background thread pushes records to the core MES API.
-3. If the core API returns an error or times out, the local buffer retains the records and displays an amber indicator on the operator screen.
-4. When connectivity is restored, the daemon drains the buffer with **Idempotent UUID Deduplication**, ensuring zero record loss and zero duplicate records.
+A real worker would also check identifier formats against the data contract for the line. The worker stores accepted records in the result table, and stores rejected payloads, with the reason, as rejected records that someone reviews. A rejected record must not leave the unit looking tested.
 
 ---
 
-## Production Hardening Checklist
+## When the central system is unreachable
 
+Network interruptions and server maintenance happen. The station then has two bad choices: stop work, or let units move on without a confirmed record. Which one is acceptable is a process-owner decision, not a software default.
+
+A local queue makes the second choice safer, but only if every record's state stays visible:
+
+```text
+[ Test fixture ]
+       |
+       v
+[ Station client ] --- (normal) ---> [ Central MES API ] ---> [ Production DB ]
+       |                                     |
+  (no answer)                         ACCEPTED / REJECTED
+       |
+       v
+[ Local queue: PENDING ]
+       |
+  (retry until answered)
+       |
+       +-----------------------------> [ Central MES API ]
 ```
-[ ] 1. HIERARCHICAL SCHEMA OVER FLAT SERIALS
-       Ensure your database model supports recursive 1:N parent-child
-       binding and tracks unbinding reasons for rework history.
 
-[ ] 2. ZERO-TRUST GATE INTERLOCKS
-       Enforce digital or physical interlocks at test fixtures that verify
-       prerequisite station results before unlocking the testing bed.
+1. The station client writes each result to a local queue with its `record_id`, as **PENDING**, before sending it.
+2. The central system answers **ACCEPTED** only after the record is durably stored, or **REJECTED** with a reason after storing the rejected record.
+3. The client retries only PENDING records. A REJECTED record is not retried; it is shown to the operator and goes to review.
+4. While anything is pending, the operator screen shows the pending count and the oldest pending time.
+5. On retry, the central system recognizes a repeated `record_id` and returns the answer it gave before, instead of storing the record again.
 
-[ ] 3. STRICT TYPE COERCION ON JIG INGESTION
-       Never trust raw JIG telemetry payloads to match strict database types.
-       Coerce numeric formats at the ingestion boundary.
+These are the checks to verify after an outage, instead of a "zero loss" claim:
 
-[ ] 4. 72-HOUR TTL ON INTERMEDIATE BUFFERS
-       Flag and re-inspect sub-assemblies that exceed time-to-live thresholds
-       between SMT and final mechanical assembly.
+- Every `record_id` in the local queue appears exactly once in the central system, as an accepted result or a rejected record.
+- The pending count returned to zero, or each remaining record has an owner.
+- Units that moved on while their records were pending or rejected are listed, so a reviewer can decide whether they need a hold.
 
-[ ] 5. LOCAL BUFFERING FOR ZERO DOWNTIME
-       Equip station software with local SQLite/disk queues to survive network
-       drops without halting the physical production line.
+---
+
+## Checklist
+
+```text
+[ ] 1. BINDING HISTORY, NOT ONLY CURRENT STATE
+       At most one parent per child at any moment (exclusion constraint).
+       Unbinds are closed with a reason; the application cannot delete rows.
+       Genealogy queries flag loops.
+
+[ ] 2. LOT LINKS SAY HOW THEY WERE RECORDED
+       Placement, feeder session or work order. A missing link is reported
+       as "not recorded".
+
+[ ] 3. STATION CHECKS FROM THE CONTROLLED ROUTE
+       Required previous steps, time limits from a named source, open holds.
+       Every refused scan is recorded where an investigation can read it.
+
+[ ] 4. VALIDATE STATION RECORDS; NEVER INVENT VALUES
+       Only clearly equivalent formats are accepted. Missing, unknown or
+       out-of-range values are rejected with a reason and reviewed.
+
+[ ] 5. EVERY RECORD ENDS ACCEPTED OR REJECTED
+       Local queue, idempotent retry by record ID, and a post-outage check
+       that every record reached exactly one final state.
 ```
 
 ---
 
 ## Related Posts
 
-- {% post_url 2026-06-29-mes-live-production-report %} &#8212; Real-time production reporting and OEE calculation architecture.
-- {% post_url 2026-05-29-fct-methodology-deep-dive %} &#8212; Functional Circuit Testing design principles for embedded hardware.
-- {% post_url 2026-05-29-ict-methodology-deep-dive %} &#8212; In-Circuit Test bed-of-nails fixture design and failure isolation.
-- {% post_url 2026-08-26-dual-ledger-drift-and-snapshot-reconciler %} &#8212; Aligning operational physical counts with ERP financial books.
+- [A Traceability Gap on the Line: Which Units Should We Hold?]({% post_url 2026-11-22-traceability-gap-hold-scope %}) &#8212; deciding which units to hold when a traceability record is missing.
+- [Building a Production Report from MES Traceability Data]({% post_url 2026-06-29-mes-live-production-report %}) &#8212; production reporting from MES records.
+- [FCT Methodology: Turn Product Requirements into Repeatable Checks]({% post_url 2026-05-29-fct-methodology-deep-dive %}) &#8212; functional test design for embedded hardware.
+- [ICT Methodology: Select Access, Fault Checks and Evidence]({% post_url 2026-05-29-ict-methodology-deep-dive %}) &#8212; in-circuit test fixture design and failure isolation.
+- [One Pile of Goods, Five Doors — Cross-Path Idempotency in Data Integration]({% post_url 2026-06-13-cross-path-idempotency %}) &#8212; keeping a repeated record from being counted twice.

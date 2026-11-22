@@ -22,4 +22,4 @@ A practical knowledge base covering NPI, PCBA engineering, circuit design, engin
 Operations & IMS Manager  
 Synergy Technology Co., Ltd. · Thailand
 
-> All content comes from hands-on project experience, not textbooks.
+> The hub draws on engineering practice, documented public cases, and clearly labeled fictional examples.
