@@ -20,6 +20,10 @@ For a process limit the team cannot verify, request an answer from the selected 
 
 See a [dated check of public supplier and lab capability pages]({% post_url 2026-09-29-public-provider-capability-check %}) for what those pages can establish before a project-specific response arrives.
 
+## Release a PCB to fabrication
+
+Follow the [gated PCB build]({% post_url 2026-11-22-gated-pcb-build-to-fab-release %}). Open the customer's own design files before redesigning, record a reviewer decision after each step, and generate fabrication files only after an explicit release decision on the reviewed file set.
+
 ## Change a released component or instruction
 
 Use [engineering change control]({% post_url 2026-09-09-engineering-change-control %}). Record impact, verification, material disposition and effectivity before implementation.

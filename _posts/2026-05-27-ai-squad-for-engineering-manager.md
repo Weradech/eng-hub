@@ -5,7 +5,7 @@ categories: [Tools, AI]
 tags: [claude-code, ai, productivity, engineering-management, llm]
 ---
 
-> **Update 2026-11-22** — The named specialist squad described here was retired in July 2026. The team now works with one orchestrator that does most work itself, short-lived helper agents, and a review by a model from a different vendor for risky changes. Agent-reported results are re-checked before use. A follow-up post will describe that setup. This article is kept as the record of the earlier design.
+> **Update 2026-11-22** — The named specialist squad described here was retired in July 2026. The team now works with one orchestrator that does most work itself, short-lived helper agents, and a review by a model from a different vendor for risky changes. Agent-reported results are re-checked before use. [Part 3]({% post_url 2026-11-22-ai-squad-part-3-what-we-retired %}) describes that setup. This article is kept as the record of the earlier design.
 
 > **TL;DR** — A solo Engineering Manager can run NPI + RFQ + BOM + SOP + System Integration simultaneously by assigning specialized AI agents with clearly defined roles.
 
