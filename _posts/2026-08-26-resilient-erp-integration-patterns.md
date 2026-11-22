@@ -3,6 +3,7 @@ title: "Taming Legacy ERP Integrations: Surviving XML-RPC Burst Refusal and Mult
 date: 2026-08-26 16:00:00 +0700
 categories: [Infrastructure, Backend]
 tags: [erp, architecture, rate-limiting, circuit-breaker, postgresql, microservices]
+mermaid: true
 ---
 
 > **TL;DR** — Integrating modern microservices (WMS, MRP, MES, RFQ) with a legacy ERP backend frequently triggers chronic connection refusals and worker starvation. The root cause is almost never ERP database performance, but the synchronous burst pattern of uncoordinated cron jobs. Resilient integration requires a centralized ERP Gateway featuring token-bucket rate limiting, jittered exponential backoff, circuit-breaker fallbacks, and multi-schema PostgreSQL isolation that prevents cross-service database locks.
