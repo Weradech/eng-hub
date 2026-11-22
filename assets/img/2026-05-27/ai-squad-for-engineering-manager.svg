@@ -12,7 +12,7 @@
     .foot{font-size:13px;fill:#3e4c59}
   </style>
   <rect width="900" height="470" fill="#ffffff"/>
-  <text x="30" y="40" class="title">One person, ten-person output</text>
+  <text x="30" y="40" class="title">One person, several workstreams</text>
   <text x="30" y="64" class="sub">You keep the engineering judgment; an orchestrator fans the administrative work out to a squad of specialists.</text>
 
   <defs>
@@ -48,12 +48,12 @@
   <!-- BOM Agent -->
   <rect x="374" y="96" width="234" height="56" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>
   <text x="388" y="119" class="agent">BOM Agent</text>
-  <text x="388" y="138" class="agentsub">flag dupes &#183; no-vendor &#183; cost roll-up +15% OH</text>
+  <text x="388" y="138" class="agentsub">flag dupes &#183; no-vendor &#183; cost roll-up</text>
 
   <!-- RFQ Agent -->
   <rect x="374" y="158" width="234" height="56" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>
   <text x="388" y="181" class="agent">RFQ Agent</text>
-  <text x="388" y="200" class="agentsub">price from BOM &#183; +25% margin &#183; lump-sum quote</text>
+  <text x="388" y="200" class="agentsub">price from BOM &#183; approved rates &#183; lump-sum quote</text>
 
   <!-- DFM Agent -->
   <rect x="374" y="226" width="234" height="56" rx="10" fill="#f5f7fa" stroke="#cbd2d9"/>

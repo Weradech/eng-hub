@@ -67,7 +67,7 @@ One of the most common bottlenecks in ISO documentation programs is conflating t
 
 When both roles are assigned to the same person (common in small companies), the bottleneck is structural: every new or revised document requires that person to context-switch into both author mode and approver mode, sequentially. The result is a queue that drains slowly.
 
-The fix: separate the roles by naming a Procedure Author for each function (Receiving = SC02, QA = QA01, Production = PM03) even if the MR is still the final approver. Authors draft and maintain; MR reviews and signs. Review cycle drops from weeks to days.
+The fix: separate the roles by naming a Procedure Author for each function (for example, the receiving lead, the QA lead and the production lead) even if the MR is still the final approver. Authors draft and maintain; MR reviews and signs. Review cycle drops from weeks to days.
 
 ---
 
@@ -137,5 +137,5 @@ Keep a revision history table at the back of every controlled document:
 
 | Rev | Date | Author | Change Summary | Approved By |
 |-----|------|--------|---------------|-------------|
-| 00 | 2026-04-15 | SC02 | Initial issue | MR |
-| 01 | 2026-06-10 | SC02 | Updated scan step for WMS v2.3 | MR |
+| 00 | 2026-04-15 | Receiving Lead | Initial issue | MR |
+| 01 | 2026-06-10 | Receiving Lead | Updated scan step for WMS v2.3 | MR |

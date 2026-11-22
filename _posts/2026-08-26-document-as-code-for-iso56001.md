@@ -5,11 +5,11 @@ categories: [Process, System]
 tags: [iso56001, knowledge-management, architecture, web-performance, documentation]
 ---
 
-> **TL;DR** — Enterprise compliance systems (ISO 56001 Innovation Management, ISO 9001 Quality Management) typically collapse under the weight of fragmented Word documents, stale intranet PDFs, and broken links. By applying the "Document-as-Code" philosophy &#8212; treating every procedure as an immutable standalone HTML module, eliminating external CDN dependencies for air-gapped readiness, indexing metadata into a sub-10ms in-memory client search table, and enforcing governance linting in CI/CD &#8212; we turned 359 compliance documents into an instant, audit-proof knowledge system.
+> **TL;DR** — Enterprise compliance systems (ISO 56001 Innovation Management, ISO 9001 Quality Management) typically collapse under the weight of fragmented Word documents, stale intranet PDFs, and broken links. By applying the "Document-as-Code" philosophy &#8212; treating every procedure as an immutable standalone HTML module, eliminating external CDN dependencies for air-gapped readiness, indexing metadata into an in-memory client search table, and enforcing governance linting in CI/CD &#8212; we turned 359 compliance documents into a searchable knowledge system that an auditor can navigate from any clause.
 
 ---
 
-![Document-as-Code architecture: modularizing 350+ ISO standard compliance documents into offline-first standalone HTML with sub-10ms fuzzy search indexing](/assets/img/2026-08-26/document-as-code-for-iso56001.svg)
+![Document-as-Code architecture: modularizing 350+ ISO standard compliance documents into offline-first standalone HTML with in-memory client search indexing](/assets/img/2026-08-26/document-as-code-for-iso56001.svg)
 _From PDF graveyards to executable knowledge: version-controlled modular documentation with instant client-side retrieval._
 
 ## The Enterprise Documentation Dilemma
@@ -62,7 +62,7 @@ To solve these systemic failures, we re-architected the entire corporate complia
                                                v
                              +-----------------------------------+
                              |   OUTPUT: AIR-GAPPED STATIC HUB   |
-                             |  - quick-finder.html (<10ms)      |
+                             |  - quick-finder.html (in-memory)  |
                              |  - 100% Offline Standalone .html  |
                              +-----------------------------------+
 ```
@@ -84,7 +84,7 @@ Every document has its own explicit document number, revision level, effective d
 <!-- Canonical Document Header Pattern -->
 <div class="doc-header">
   <div class="header-left">
-    <div class="org-title">SYNERGY TECHNOLOGY CO., LTD.</div>
+    <div class="org-title">EXAMPLE CO., LTD.</div>
     <div class="doc-title-th">ทะเบียนสินทรัพย์ความรู้และโมดูลใช้ซ้ำ</div>
     <div class="doc-title-en">Reusable Knowledge &amp; Asset Register</div>
   </div>
@@ -111,7 +111,7 @@ To guarantee that documents open flawlessly from a USB drive or an isolated loca
 
 ---
 
-## 3. Sub-10ms In-Memory Client Search (`quick-finder.html`)
+## 3. In-Memory Client Search (`quick-finder.html`)
 
 Instead of deploying a heavy Elasticsearch cluster or server-side database for document search, we built an **Inverted Index Generator** that compiles the metadata of all 359 documents into a minified, compressed JSON lookup array embedded directly into `quick-finder.html`.
 
@@ -124,7 +124,7 @@ Entire 359-Document Metadata Payload: 44.8 KB (gzipped: 9.2 KB)
 const DOC_REGISTRY = [
   { id: "I-REG-009", title: "Reusable Knowledge & Asset Register", clause: "7.1.6, 7.1.8", role: "Knowledge Manager", path: "02-Registers-and-Plans/I-REG-009-Reusable-Asset-Register.dc.html" },
   { id: "I-WRK-013", title: "Knowledge Manager & PMO Guidebook", clause: "7.1.6, 7.4, 10.1", role: "PMO / KM Lead", path: "05-Guides/I-WRK-013-Knowledge-Manager-Guidebook.dc.html" },
-  { id: "SX-LL-001", title: "SynExta Lessons Learned Register", clause: "10.2", role: "Engineering Lead", path: "04-Project-SynExta/SX-LL-001-Lessons-Learned.dc.html" },
+  { id: "PRJ-LL-001", title: "Example Project Lessons Learned Register", clause: "10.2", role: "Engineering Lead", path: "04-Projects/PRJ-LL-001-Lessons-Learned.dc.html" },
   // ... 359 documents
 ];
 
@@ -142,11 +142,11 @@ function executeInstantSearch(query) {
   );
   
   const searchTimeMs = (performance.now() - t0).toFixed(2);
-  renderResults(matches, searchTimeMs); // Typically < 2.5ms!
+  renderResults(matches, searchTimeMs); // log the time; measure on your own register
 }
 ```
 
-During audit interviews, typing `"7.1.6"`, `"Knowledge"`, or `"I-REG-009"` instantly filters 359 documents in **under 3 milliseconds**, displaying direct links to open the standalone document in a modal or new tab.
+During audit interviews, typing `"7.1.6"`, `"Knowledge"`, or `"I-REG-009"` filters the full register in the browser without a server round trip, displaying direct links to open the standalone document in a modal or new tab.
 
 ---
 
@@ -165,7 +165,7 @@ import os
 import re
 import sys
 
-ALLOWED_PREFIXES = ("I-", "SX-", "IMSPR-", "SOP-")
+ALLOWED_PREFIXES = ("I-", "PRJ-", "IMSPR-", "SOP-")
 GOVERNANCE_ROLES = {
     "CEO": "Executive Sponsor",
     "CTO": "IMS Champion",
@@ -173,6 +173,7 @@ GOVERNANCE_ROLES = {
     "PM Asst. Manager": "Knowledge Manager / PMO",
     "QA Lead": "Quality Assurance Lead",
 }
+NAME_SPELLING = {"<common misspelling>": "<name as written in the appointment order>"}
 
 def lint_document_integrity(filepath: str) -> list[str]:
     errors = []
@@ -187,9 +188,11 @@ def lint_document_integrity(filepath: str) -> list[str]:
     if "../../../" in content and filepath.count(os.sep) <= 2:
         errors.append("Broken Asset Link: Over-extended relative path '../../../' detected.")
 
-    # Rule 3: Enforce standardized committee spelling
-    if "ภานุวัฒน์" in content:  # Common typo
-        errors.append("Spelling Non-Conformance: CTO name must be 'ภานุวัตร เกียรติเดชาวิทย์'.")
+    # Rule 3: Enforce the registered spelling of appointee names
+    # NAME_SPELLING maps known misspellings to the spelling in the appointment order
+    for wrong, registered in NAME_SPELLING.items():
+        if wrong in content:
+            errors.append(f"Spelling Non-Conformance: use the registered name '{registered}'.")
 
     return errors
 ```
@@ -216,7 +219,7 @@ def lint_document_integrity(filepath: str) -> list[str]:
        in air-gapped auditor cleanrooms.
 
 [ ] 3. EMBED CLIENT-SIDE IN-MEMORY SEARCH
-       Pre-compile metadata into a compressed client JSON registry for sub-10ms
+       Pre-compile metadata into a compressed client JSON registry for fast
        fuzzy discovery without database dependencies.
 
 [ ] 4. AUTOMATED GOVERNANCE LINTING IN CI

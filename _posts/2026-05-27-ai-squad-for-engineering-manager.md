@@ -1,9 +1,11 @@
 ---
-title: "AI Squad for Engineering Managers — One Person, Ten-Person Output"
+title: "AI Squad for Engineering Managers — One Person, Several Workstreams"
 date: 2026-05-27 11:00:00 +0700
 categories: [Tools, AI]
 tags: [claude-code, ai, productivity, engineering-management, llm]
 ---
+
+> **Update 2026-11-22** — The named specialist squad described here was retired in July 2026. The team now works with one orchestrator that does most work itself, short-lived helper agents, and a review by a model from a different vendor for risky changes. Agent-reported results are re-checked before use. A follow-up post will describe that setup. This article is kept as the record of the earlier design.
 
 > **TL;DR** — A solo Engineering Manager can run NPI + RFQ + BOM + SOP + System Integration simultaneously by assigning specialized AI agents with clearly defined roles.
 
@@ -52,7 +54,7 @@ Given the BOM below: [paste BOM]
 Please:
 1. Flag duplicate reference designators
 2. Flag components with no approved vendor
-3. Roll up material cost with 15% OH
+3. Roll up material cost with the overhead rate from your approved rate card
 Output: table + summary
 ```
 
@@ -69,8 +71,8 @@ Scope: [paste spec/drawing summary]
 Calculate price using:
 - Material: [from BOM]
 - Assembly: [placement count]
-- OH: 15% on mfg costs
-- Margin: 25%
+- OH: [rate from your approved rate card]
+- Margin: [rate set by the person who approves quotations]
 - NRE: [tooling list]
 Output: English quotation, lump sum format
 ```
@@ -155,14 +157,9 @@ Previously: 1–2 days → now: 30 minutes.
 
 ---
 
-## Observed ROI
+## What We Did Not Measure
 
-| Task | Before AI | With AI Squad |
-|------|-----------|---------------|
-| PCBA Quotation | 1–2 days | 30–60 min |
-| SOP from scratch | 3–5 days | 2–4 hours |
-| BOM Review | 2–3 hours | 15–30 min |
-| RCA Report | 1 day | 2–3 hours |
+No before-and-after time study was kept for these tasks, so this article does not claim a time saving. If you want one, record task start and finish times for a few weeks before and after, on comparable jobs, and keep the AI's mistakes that a reviewer caught in the same log.
 
 ---
 

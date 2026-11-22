@@ -6,6 +6,8 @@ tags: [claude-code, ai, engineering-management, ai-agents, workflow, automation]
 mermaid: true
 ---
 
+> **Update 2026-11-22** — The named specialist squad described here was retired in July 2026. The team now works with one orchestrator that does most work itself, short-lived helper agents, and a review by a model from a different vendor for risky changes. Agent-reported results are re-checked before use. A follow-up post will describe that setup. This article is kept as the record of the earlier design.
+
 > **TL;DR** — [Part 1]({% post_url 2026-05-27-ai-squad-for-engineering-manager %}) argued a solo manager can run a squad of AI agents. This is the wiring diagram: how the squad is structured, why agents run on different model tiers, and the protocol that keeps them from stepping on each other. The core idea: **an AI squad is an org-design problem, not a prompting problem.**
 
 ---
