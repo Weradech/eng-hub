@@ -21,7 +21,7 @@ The fastest-to-demo approach is to hand each PDF to a hosted vision-LLM and ask 
 - **Determinism.** The same invoice should extract the same fields every time. A model that can be silently updated upstream can change its output on a document that worked yesterday — with no diff to point at.
 - **Offline + latency.** A receiving-dock workflow shouldn't block on an external API being reachable and fast.
 
-None of this means "never use an LLM." It means **don't reach for the heaviest, least controllable tool first** when most of the documents are structured PDFs you can parse directly. (This is the same instinct behind [the co-master sunset vision]({% post_url 2026-06-29-wms-odoo-comaster %}) — don't hardwire a dependency you'd struggle to remove.)
+None of this means "never use an LLM." It means **don't reach for the heaviest, least controllable tool first** when most of the documents are structured PDFs you can parse directly. (This is the same instinct behind [the co-master sunset vision]({% post_url 2026-06-29-wms-erp-comaster %}) — don't hardwire a dependency you'd struggle to remove.)
 
 ---
 
@@ -99,4 +99,4 @@ Use the cheap, deterministic, on-prem path for the 90% it handles well, and esca
 
 - [Going Paperless on GR→IQC]({% post_url 2026-06-29-paperless-gr-iqc-3phase %}) — the workflow this extraction feeds
 - [AP Tracker: Automating the PO→GR→Payment Lifecycle]({% post_url 2026-06-29-ap-tracker-flow %}) — where the cross-referenced IDs land
-- [Co-Master Architecture]({% post_url 2026-06-29-wms-odoo-comaster %}) — don't hardwire a dependency you can't remove
+- [Co-Master Architecture]({% post_url 2026-06-29-wms-erp-comaster %}) — don't hardwire a dependency you can't remove

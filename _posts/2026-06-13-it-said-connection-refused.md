@@ -2,7 +2,7 @@
 title: "It Said 'Connection Refused' — Three Times the System Looked Dead, and the Cause Was Us"
 date: 2026-06-13 10:00:00 +0700
 categories: [System, Reliability]
-tags: [reliability, integration, networking, devops, rca, odoo]
+tags: [reliability, integration, networking, devops, rca, erp]
 mermaid: true
 ---
 

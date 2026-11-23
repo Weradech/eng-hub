@@ -17,13 +17,13 @@ _The webhook wants a JSON object; sending a JSON string fails silently as a 400 
 
 ```mermaid
 sequenceDiagram
-    participant Odoo as ERP (Odoo)
+    participant ERP as ERP
     participant Job as WMS Job #20<br/>(30-min poll)
     participant Notifier as NotificationService
     participant PA as Power Automate<br/>Workflows Webhook
     participant Teams as MS Teams<br/>Channel
 
-    Odoo->>Job: GR picking state=done
+    ERP->>Job: GR picking state=done
     Job->>Job: dedup check<br/>(receipt_email_log)
     Job->>Notifier: notify_gr_received(picking)
     Notifier->>PA: POST adaptive_card (dict)
@@ -140,7 +140,7 @@ The GR watcher polls the ERP. If the ERP is down, the original code returned sil
 try:
     receipts = erp_client.search_read(...)
 except ConnectionRefusedError:
-    metrics["odoo_unreachable"] += 1
+    metrics["erp_unreachable"] += 1
     maybe_alert_outage()   # throttled: max 1 alert per 30 min
     return
 ```

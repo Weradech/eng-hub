@@ -1,21 +1,21 @@
 ---
-title: "BOM Lifecycle — From RFQ Stage to Active Production in Odoo"
+title: "BOM Lifecycle — From RFQ Stage to Active Production in the ERP"
 date: 2026-05-27 15:00:00 +0700
 categories: [NPI, BOM]
-tags: [bom, odoo, mrp, npi, rfq, erp]
+tags: [bom, mrp, npi, rfq, erp]
 ---
 
 > **TL;DR** — RFQ BOM ≠ Production BOM. Each stage has a different owner and format. Uploading the wrong BOM stage into ERP is a leading cause of MRP errors.
 
 ---
 
-![A BOM moves through four stages — RFQ costing BOM, engineering eBOM, manufacturing mBOM, then the active BOM in Odoo — each with a different owner, store, and what gets locked](/assets/img/2026-05-27/bom-lifecycle.svg)
+![A BOM moves through four stages — RFQ costing BOM, engineering eBOM, manufacturing mBOM, then the active BOM in the ERP — each with a different owner, store, and what gets locked](/assets/img/2026-05-27/bom-lifecycle.svg)
 _The same BOM wears four hats; load the wrong stage into ERP and MRP inherits the error._
 
 ## BOM Stages and Their Roles
 
 ```
-RFQ BOM → Engineering BOM → Manufacturing BOM → Odoo Active BOM
+RFQ BOM → Engineering BOM → Manufacturing BOM → ERP Active BOM
 (costing)  (design intent)   (process-aware)     (MRP source)
 ```
 
@@ -63,7 +63,7 @@ Each stage has a distinct owner and should never be used as a substitute for ano
 ## Stage 3 — Manufacturing BOM (mBOM)
 
 **Owner:** Process / Manufacturing Engineer  
-**Stored in:** ERP / MES (Odoo mrp.bom)
+**Stored in:** ERP / MES (ERP BOM records)
 
 **Characteristics:**
 - Derived from eBOM, with added process information:
@@ -80,20 +80,20 @@ Each stage has a distinct owner and should never be used as a substitute for ano
 
 ---
 
-## Stage 4 — Active BOM in Odoo
+## Stage 4 — Active BOM in the ERP
 
 **Owner:** Production / MRP Team  
-**Stored in:** Odoo `mrp.bom` — only BOMs with an open PO and active status
+**Stored in:** ERP BOM records — only BOMs with an open PO and active status
 
 ```
-Odoo mrp.bom:
+ERP BOM:
   product_id    → Finished Good
   type          → manufacture
   bom_line_ids  → components (product + qty + uom)
 ```
 
 **Key rules:**
-- BOM in Odoo = **approved for production, with PO issued**
+- BOM in the ERP = **approved for production, with PO issued**
 - RFQ-stage BOMs stay in Excel until PO is approved
 - One Finished Good should have one Active BOM (multiple active BOMs confuse MRP)
 
@@ -113,7 +113,7 @@ When a production BOM component needs to change:
    - EVT or qualification test (for critical components)
    - DFM check (if layout affected)
 
-3. Update BOM in Odoo
+3. Update BOM in the ERP
    - Deactivate old BOM → create new revision
    - Set effective date / serial number range
 
@@ -126,9 +126,9 @@ When a production BOM component needs to change:
 
 | Mistake | Consequence |
 |---------|-------------|
-| Upload RFQ BOM directly to Odoo | MRP orders wrong specs, incorrect cost |
+| Upload RFQ BOM directly to the ERP | MRP orders wrong specs, incorrect cost |
 | Multiple active BOMs for same product | MRP doesn't know which to use |
-| Not updating Odoo BOM after ECR | Production uses obsolete components |
+| Not updating the ERP BOM after ECR | Production uses obsolete components |
 | Forgetting to remove DNIs from mBOM | Orders components that are never installed |
 | Reference designators don't match layout | ICT fixture probes wrong locations |
 
@@ -145,9 +145,9 @@ Design produces eBOM (Altium export)
     ↓
 Process Engineer creates mBOM + adds process info
     ↓
-PO approved → upload to Odoo mrp.bom
+PO approved → upload to ERP BOM
     ↓
-Production uses → MRP orders from Odoo
+Production uses → MRP orders from the ERP
 ```
 
 A clear BOM lifecycle = accurate MRP = correct purchasing = less waste.

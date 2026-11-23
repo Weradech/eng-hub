@@ -2,14 +2,14 @@
 title: "Financial Core vs Operational Core — A Mental Model for System Integration"
 date: 2026-05-27 16:00:00 +0700
 categories: [System, Architecture]
-tags: [erp, wms, mrp, odoo, system-integration, architecture]
+tags: [erp, wms, mrp, system-integration, architecture]
 ---
 
-> **TL;DR** — ERP (Odoo) = Book of Record for money. Operational systems (WMS/MRP/MES) = Systems of Engagement for work. Both must communicate, but must never be merged into one.
+> **TL;DR** — ERP = Book of Record for money. Operational systems (WMS/MRP/MES) = Systems of Engagement for work. Both must communicate, but must never be merged into one.
 
 ---
 
-![Two-panel mental model: Financial Core (Odoo) owns money and master data, Operational Core (WMS/MRP/MES) owns daily work, and the two sync via outbox without merging](/assets/img/2026-05-27/financial-core-vs-operational-core.svg)
+![Two-panel mental model: Financial Core (ERP) owns money and master data, Operational Core (WMS/MRP/MES) owns daily work, and the two sync via outbox without merging](/assets/img/2026-05-27/financial-core-vs-operational-core.svg)
 _Each core is authoritative for its own domain and reads &#8212; never writes &#8212; the other&#8217;s; they sync, they never merge._
 
 ## The Problem with "ERP Does Everything"
@@ -30,7 +30,7 @@ The result: **two systems with mismatched data — nobody knows which to trust.*
 ```
 ┌─────────────────────────────────────────┐
 │           FINANCIAL CORE (ERP)          │
-│  Odoo — Book of Record                  │
+│  ERP — Book of Record                   │
 │                                         │
 │  PO / Bill / Payment / GL / Invoice     │
 │  "Numbers used for tax and management   │
@@ -49,7 +49,7 @@ The result: **two systems with mismatched data — nobody knows which to trust.*
 
 ---
 
-## Financial Core — ERP (Odoo)
+## Financial Core — ERP
 
 **Authoritative on:**
 - Purchase Orders — supplier contracts
@@ -90,10 +90,10 @@ The result: **two systems with mismatched data — nobody knows which to trust.*
 
 ```
 Operational → Financial  (push summary)
-  WMS GR complete → Odoo stock.move + vendor bill matching
+  WMS GR complete → ERP stock movement + vendor bill matching
 
 Financial → Operational  (pull master data)
-  Odoo: Item master, Supplier, Customer, Analytic accounts
+  ERP: Item master, Supplier, Customer, Analytic accounts
   → pulled into WMS/MRP before use
 ```
 
@@ -104,11 +104,11 @@ A single transaction can carry two independent statuses:
 | Status Type | Owner | Example |
 |-------------|-------|---------|
 | Operational | WMS | `received` → `iqc_pass` → `in_stock` |
-| Financial | Odoo | `draft` → `posted` → `paid` |
+| Financial | ERP | `draft` → `posted` → `paid` |
 
 These are not required to be 1:1. For example:
 - WMS: `iqc_pass` (goods are in the warehouse)
-- Odoo Bill: still `draft` (Accounting hasn't posted yet)
+- ERP Bill: still `draft` (Accounting hasn't posted yet)
 
 ---
 
@@ -116,10 +116,10 @@ These are not required to be 1:1. For example:
 
 | Anti-pattern | Problem |
 |-------------|---------|
-| WMS reads Odoo stock directly on every transaction | High Odoo load, high latency |
-| WMS writes directly to Odoo GL | Bypasses accounting rules, fails audit |
-| Full real-time sync on every field | WMS goes down when Odoo is unavailable |
-| No sync log | No way to verify which transactions reached Odoo |
+| WMS reads ERP stock directly on every transaction | High ERP load, high latency |
+| WMS writes directly to the ERP GL | Bypasses accounting rules, fails audit |
+| Full real-time sync on every field | WMS goes down when the ERP is unavailable |
+| No sync log | No way to verify which transactions reached the ERP |
 
 ---
 
@@ -130,14 +130,14 @@ WMS transaction completes
     ↓
 Write to local outbox table
     ↓
-Background job pushes to Odoo every 15 minutes
+Background job pushes to the ERP every 15 minutes
     ↓
-Mark outbox record as sent after Odoo confirms
+Mark outbox record as sent after the ERP confirms
     ↓
 On failure → retry with exponential backoff
 ```
 
-**Benefit:** WMS operates independently of Odoo availability — continues working even when Odoo is down.
+**Benefit:** WMS operates independently of ERP availability — continues working even when the ERP is down.
 
 ---
 

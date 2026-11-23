@@ -58,7 +58,7 @@ Please:
 Output: table + summary
 ```
 
-**Works with:** Excel BOM, Altium export, Odoo mrp.bom
+**Works with:** Excel BOM, Altium export, ERP BOM records
 
 ---
 
@@ -135,7 +135,7 @@ Language: English
    ↓
 2. BOM Agent: extract component list    (5 min)
    ↓
-3. BOM Agent: query prices from Odoo   (5 min)
+3. BOM Agent: query prices from ERP    (5 min)
    ↓
 4. RFQ Agent: calculate + draft quote  (10 min)
    ↓

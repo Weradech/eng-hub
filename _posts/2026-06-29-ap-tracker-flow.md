@@ -7,7 +7,7 @@ tags: [ap-tracker, procurement, erp, wms, workflow]
 
 > **TL;DR** — A tracker can show which purchase-order lines have receipt and invoice evidence, and which exceptions need review. It must preserve source ownership and leave payment authorization and accounting status with the actual finance process.
 
-This article describes a **proposed integration pattern**, not a verified deployment or an achieved automation rate. The PO, goods receipt and invoice records must be inspected in the systems that own them. Access to Odoo for this pattern is read-only unless the owner explicitly authorizes a separate write workflow.
+This article describes a **proposed integration pattern**, not a verified deployment or an achieved automation rate. The PO, goods receipt and invoice records must be inspected in the systems that own them. Access to the ERP for this pattern is read-only unless the owner explicitly authorizes a separate write workflow.
 
 ## Reconcile lines, not just a PO number
 

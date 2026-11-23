@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="A BOM moves through four stages — RFQ costing BOM, engineering eBOM, manufacturing mBOM, then the active BOM in Odoo — each with a different owner, store, and what gets locked">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-label="A BOM moves through four stages — RFQ costing BOM, engineering eBOM, manufacturing mBOM, then the active BOM in the ERP — each with a different owner, store, and what gets locked">
   <style>
     text{font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
     .title{font-size:23px;font-weight:700;fill:#1f2933}
@@ -14,7 +14,7 @@
     .foot{font-size:13px;fill:#3e4c59}
   </style>
   <rect width="900" height="470" fill="#ffffff"/>
-  <text x="30" y="40" class="title">The BOM lifecycle &#8212; from RFQ stage to active in Odoo</text>
+  <text x="30" y="40" class="title">The BOM lifecycle &#8212; from RFQ stage to active in the ERP</text>
   <text x="30" y="64" class="sub">Each stage has a different owner and format. Loading the wrong stage into the ERP is a leading cause of MRP errors.</text>
 
   <defs>
@@ -58,21 +58,21 @@
   <text x="482" y="196" class="own">Process / Mfg Engineer</text>
   <text x="482" y="221" class="lbl">STORED IN</text>
   <text x="482" y="237" class="store">ERP / MES</text>
-  <text x="482" y="251" class="store">(Odoo mrp.bom)</text>
+  <text x="482" y="251" class="store">(ERP BOM records)</text>
   <rect x="482" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
   <text x="492" y="277" class="lbl" fill="#2f7a37">LOCKED</text>
   <text x="492" y="290" class="lock" fill="#2f7a37">side, solder, lot &#183; DNIs removed</text>
 
-  <!-- ===== Stage 4: Odoo Active (dark) ===== -->
+  <!-- ===== Stage 4: ERP Active (dark) ===== -->
   <rect x="684" y="92" width="196" height="216" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
   <path d="M684 104 a12 12 0 0 1 12 -12 h172 a12 12 0 0 1 12 12 v22 h-196 z" fill="#2b3a4a"/>
   <text x="700" y="114" class="num" fill="#ffffff">STAGE 4 &#183; SOURCE OF TRUTH</text>
-  <text x="700" y="146" class="stg">Active BOM in Odoo</text>
+  <text x="700" y="146" class="stg">Active BOM in the ERP</text>
   <text x="700" y="163" class="store" fill="#2f7a37">MRP source</text>
   <text x="700" y="190" class="lbl">OWNER</text>
   <text x="700" y="206" class="own">Production / MRP Team</text>
   <text x="700" y="229" class="lbl">STORED IN</text>
-  <text x="700" y="245" class="mono">mrp.bom &#183; type=manufacture</text>
+  <text x="700" y="245" class="mono">ERP BOM &#183; type=manufacture</text>
   <rect x="700" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
   <text x="710" y="277" class="lbl" fill="#2f7a37">LOCKED</text>
   <text x="710" y="290" class="lock" fill="#2f7a37">approved + PO issued &#183; 1 per FG</text>
@@ -84,7 +84,7 @@
 
   <!-- PO gate callout on the last arrow -->
   <rect x="600" y="318" width="262" height="30" rx="8" fill="#fff4e0" stroke="#f3c677"/>
-  <text x="616" y="338" class="lock" fill="#9a5b00">&#9888; PO approved is the gate into Odoo</text>
+  <text x="616" y="338" class="lock" fill="#9a5b00">&#9888; PO approved is the gate into the ERP</text>
 
   <!-- the never-do line -->
   <rect x="30" y="318" width="540" height="30" rx="8" fill="#fbeaea" stroke="#e3a3a3"/>

@@ -14,7 +14,7 @@ _It looks like a flaky ISP; it's an IPv6 ULA the OS prefers routing into a tunne
 
 ## The Symptom
 
-Everything looks fine. The server is reachable via SSH. Internal services talk to each other. But external API calls — Odoo cloud, package registries, webhook endpoints — start timing out. No error, no refusal, just silence until the TCP timeout fires.
+Everything looks fine. The server is reachable via SSH. Internal services talk to each other. But external API calls — a hosted ERP, package registries, webhook endpoints — start timing out. No error, no refusal, just silence until the TCP timeout fires.
 
 ```
 curl https://external-api.example.com

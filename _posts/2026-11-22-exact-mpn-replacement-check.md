@@ -128,7 +128,7 @@ A library name match is not a part match. A passed ERC/DRC/parity run does not c
 
 ## Related Posts
 
-- [BOM Lifecycle — From RFQ Stage to Active Production in Odoo]({% post_url 2026-05-27-bom-lifecycle %}) &#8212; How a BOM line moves from quote to production.
+- [BOM Lifecycle — From RFQ Stage to Active Production in the ERP]({% post_url 2026-05-27-bom-lifecycle %}) &#8212; How a BOM line moves from quote to production.
 - [Engineering Change Control: What Changes When One Component Changes?]({% post_url 2026-09-09-engineering-change-control %}) &#8212; Recording a substitution as a change with effectivity.
 - [Is This PCB Ready for Fabrication Release? A Gated Build With a Human Hold at Every Step]({% post_url 2026-11-22-gated-pcb-build-to-fab-release %}) &#8212; Where this check sits in the board build (H2).
 - [Supplier Capability Handoff: Turn a DFM Question into a Recorded Answer]({% post_url 2026-09-29-supplier-capability-handoff %}) &#8212; Asking the supplier when the datasheet does not answer.

@@ -78,7 +78,7 @@ The same principle defeats the reconciliation false-alarm in reverse: if every a
 
 ## When the source of truth is elsewhere
 
-Sometimes the correct value lives in another system — an ERP holding the financial book of record. The temptation is still a direct `UPDATE` to match it. Don't. An authoritative correction is still a *movement* in your system, posted through the service layer, with the other system's value as the intended target. The [authoritative-overwrite pattern]({% post_url 2026-06-14-authoritative-overwrite-pattern %}) is how you make one system match another *and* keep a trail of having done so — not by editing the balance in place. And per [co-master ownership]({% post_url 2026-06-29-wms-odoo-comaster %}), a direct DB edit is precisely the move that breaks the contract between systems.
+Sometimes the correct value lives in another system — an ERP holding the financial book of record. The temptation is still a direct `UPDATE` to match it. Don't. An authoritative correction is still a *movement* in your system, posted through the service layer, with the other system's value as the intended target. The [authoritative-overwrite pattern]({% post_url 2026-06-14-authoritative-overwrite-pattern %}) is how you make one system match another *and* keep a trail of having done so — not by editing the balance in place. And per [co-master ownership]({% post_url 2026-06-29-wms-erp-comaster %}), a direct DB edit is precisely the move that breaks the contract between systems.
 
 ---
 
@@ -98,4 +98,4 @@ Five boxes. Every one of them is something that, skipped, produces a number that
 
 - [Is the Number Wrong, or Is the Stock Gone?]({% post_url 2026-06-13-reconciliation-without-false-alarms %}) — what skipping these steps looks like at reconciliation time
 - [The Authoritative-Overwrite Pattern]({% post_url 2026-06-14-authoritative-overwrite-pattern %}) — matching another system without losing the trail
-- [Co-Master Architecture]({% post_url 2026-06-29-wms-odoo-comaster %}) — why a direct DB edit breaks the contract between systems
+- [Co-Master Architecture]({% post_url 2026-06-29-wms-erp-comaster %}) — why a direct DB edit breaks the contract between systems

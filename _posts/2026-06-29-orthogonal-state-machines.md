@@ -80,7 +80,7 @@ end
 
 Old consumers keep reading `status` and see exactly what they saw before. New consumers read the three axes directly. You migrate readers across at your own pace, and when the last one is gone you drop the mirror.
 
-> A derived mirror buys you a gradual migration. The rule that makes it safe: the mirror is **read-only**. The moment one code path writes to `status` directly, it can disagree with the three axes it's supposed to summarise, and you're back to two sources of truth. (See [Co-Master Architecture]({% post_url 2026-06-29-wms-odoo-comaster %}) — the same single-owner discipline, applied within one table.)
+> A derived mirror buys you a gradual migration. The rule that makes it safe: the mirror is **read-only**. The moment one code path writes to `status` directly, it can disagree with the three axes it's supposed to summarise, and you're back to two sources of truth. (See [Co-Master Architecture]({% post_url 2026-06-29-wms-erp-comaster %}) — the same single-owner discipline, applied within one table.)
 {: .prompt-tip }
 
 ---
@@ -132,6 +132,6 @@ The trigger to split is the smell at the top of this post: **new business rules 
 
 ## Related Posts
 
-- [Co-Master Architecture]({% post_url 2026-06-29-wms-odoo-comaster %}) — single-owner discipline across two systems; this is the same idea inside one table
+- [Co-Master Architecture]({% post_url 2026-06-29-wms-erp-comaster %}) — single-owner discipline across two systems; this is the same idea inside one table
 - [Is the Number Wrong, or Is the Stock Gone?]({% post_url 2026-06-13-reconciliation-without-false-alarms %}) — a derived mirror is a cache, and caches go stale
 - [Alembic: Treat Revisions as a Contract]({% post_url 2026-06-29-alembic-contract %}) — how to ship the schema change behind this split safely

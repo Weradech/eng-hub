@@ -33,7 +33,7 @@ A single Postgres instance can hold many [schemas](https://www.postgresql.org/do
 
 ```
 productiondb (one Postgres instance)
-├── public      → WMS tables + the Odoo mirror + supplier (SRM) tables
+├── public      → WMS tables + the ERP mirror + supplier (SRM) tables
 ├── mrp         → materials planning
 ├── bom         → bill-of-materials
 ├── mes_core    → manufacturing execution
@@ -61,7 +61,7 @@ For an internal platform, the right-hand column is almost always the better trad
 
 Schemas give you *namespaces*, not *walls*. The discipline that keeps this from rotting into a single tangled database:
 
-**Don't reach across schemas to write.** A service owns its schema and reads others through well-defined views or query paths — it does not `INSERT` into another domain's tables. This is [co-master ownership]({% post_url 2026-06-29-wms-odoo-comaster %}) applied to schemas: one writer per table, everyone else reads.
+**Don't reach across schemas to write.** A service owns its schema and reads others through well-defined views or query paths — it does not `INSERT` into another domain's tables. This is [co-master ownership]({% post_url 2026-06-29-wms-erp-comaster %}) applied to schemas: one writer per table, everyone else reads.
 
 **Set `search_path` explicitly.** Relying on the default `search_path` is how a query meant for `mrp.orders` silently hits `public.orders`. Qualify table names, or set the path per connection — don't let resolution be ambient.
 
@@ -94,6 +94,6 @@ Start with the boundaries you can afford to operate. Draw them as schemas with c
 
 ## Related Posts
 
-- [Co-Master Architecture]({% post_url 2026-06-29-wms-odoo-comaster %}) — single-owner discipline, the rule that keeps shared schemas honest
+- [Co-Master Architecture]({% post_url 2026-06-29-wms-erp-comaster %}) — single-owner discipline, the rule that keeps shared schemas honest
 - [Rotating a Shared Database Password]({% post_url 2026-06-29-rotate-shared-db-password %}) — the blast radius of the one shared role this design implies
 - [Alembic: Treat Revisions as a Contract]({% post_url 2026-06-29-alembic-contract %}) — migrating schemas that live in one instance
