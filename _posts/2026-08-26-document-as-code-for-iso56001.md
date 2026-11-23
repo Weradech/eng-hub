@@ -163,20 +163,36 @@ REPO = pathlib.Path(__file__).resolve().parent
 # srcset candidate lists, CSS url(...) and CSS @import "...".
 ATTR = re.compile(r"""\b(?:href|src)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+))""", re.IGNORECASE)
 SRCSET = re.compile(r"""\bsrcset\s*=\s*["']([^"']+)["']""", re.IGNORECASE)
-CSS_URL = re.compile(r"""url\(\s*["']?([^"')\s]+)""", re.IGNORECASE)
+CSS_URL = re.compile(r"""url\(\s*(?:"([^"]*)"|'([^']*)'|([^)\s]+))""", re.IGNORECASE)
 CSS_IMPORT = re.compile(r"""@import\s+["']([^"']+)["']""", re.IGNORECASE)
 
 # Role names as written in the appointment order (fictional examples).
-REGISTERED_ROLES = {"IMS Manager", "Knowledge Manager", "Quality Assurance Lead"}
+REGISTERED_ROLES = {"IMS Manager", "Knowledge Manager", "Engineering Lead", "Quality Assurance Lead"}
 ROLE_FIELD = re.compile(r'data-role="([^"]+)"')
+
+
+def srcset_urls(value: str) -> list[str]:
+    # A candidate is a URL (no whitespace, so a data: URI keeps its commas), then an
+    # optional descriptor such as "2x", up to the next comma.
+    urls, rest = [], value
+    while rest.strip(" ,\t\n"):
+        rest = rest.lstrip(" ,\t\n")
+        url = re.match(r"\S+", rest).group()
+        rest = rest[len(url):]
+        if url.endswith(","):
+            url = url.rstrip(",")
+        else:
+            rest = rest.partition(",")[2]
+        urls.append(url)
+    return urls
 
 
 def references(content: str) -> list[str]:
     refs = ["".join(groups) for groups in ATTR.findall(content)]
-    refs += CSS_URL.findall(content) + CSS_IMPORT.findall(content)
-    for candidates in SRCSET.findall(content):
-        if not candidates.lstrip().startswith("data:"):
-            refs += [c.split()[0] for c in candidates.split(",") if c.strip()]
+    refs += ["".join(groups) for groups in CSS_URL.findall(content)]
+    refs += CSS_IMPORT.findall(content)
+    for value in SRCSET.findall(content):
+        refs += srcset_urls(value)
     return refs
 
 
@@ -214,7 +230,7 @@ if __name__ == "__main__":
     sys.exit(1 if failed else 0)
 ```
 
-The check stops the commit with a reason for each problem. It reads `href` and `src` attributes, `srcset` lists, and CSS `url(...)` and `@import` in HTML and CSS files. It does not run scripts, so a URL that JavaScript builds at runtime is not caught; review scripts for that. It confirms that links resolve and names match. Whether the content is correct and approved is decided in review.
+The check stops the commit with a reason for each problem. It reads `href` and `src` attributes, `srcset` lists, and CSS `url(...)` and `@import` in HTML and CSS files. Anything else is not read: for example a URL that JavaScript builds at runtime, `poster` or `<object data>` attributes, or links inside SVG files. Review those by hand or extend the patterns. It confirms that links resolve and names match. Whether the content is correct and approved is decided in review.
 
 ---
 
