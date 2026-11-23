@@ -22,7 +22,7 @@
   </defs>
 
   <!-- ===== Stage 1: RFQ BOM (blue) ===== -->
-  <rect x="30" y="92" width="196" height="216" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <rect x="30" y="92" width="196" height="226" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
   <text x="46" y="116" class="num" fill="#1c5fa8">STAGE 1</text>
   <text x="46" y="136" class="stg">RFQ BOM</text>
   <text x="46" y="153" class="store" fill="#1c5fa8">costing</text>
@@ -31,12 +31,13 @@
   <text x="46" y="221" class="lbl">STORED IN</text>
   <text x="46" y="237" class="store">Excel in project folder</text>
   <text x="46" y="251" class="store">(not in ERP yet)</text>
-  <rect x="46" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#9ec5f0"/>
+  <rect x="46" y="262" width="164" height="48" rx="8" fill="#ffffff" stroke="#9ec5f0"/>
   <text x="56" y="277" class="lbl" fill="#1c5fa8">LOCKED</text>
-  <text x="56" y="290" class="lock" fill="#1c5fa8">nothing &#8212; prices, alt parts open</text>
+  <text x="56" y="290" class="lock" fill="#1c5fa8">nothing &#8212;</text>
+  <text x="56" y="304" class="lock" fill="#1c5fa8">prices, alt parts open</text>
 
   <!-- ===== Stage 2: eBOM (blue) ===== -->
-  <rect x="248" y="92" width="196" height="216" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
+  <rect x="248" y="92" width="196" height="226" rx="12" fill="#e7f1fb" stroke="#9ec5f0"/>
   <text x="264" y="116" class="num" fill="#1c5fa8">STAGE 2</text>
   <text x="264" y="136" class="stg">Engineering eBOM</text>
   <text x="264" y="153" class="store" fill="#1c5fa8">design intent</text>
@@ -45,12 +46,13 @@
   <text x="264" y="221" class="lbl">STORED IN</text>
   <text x="264" y="237" class="store">Altium / KiCad export,</text>
   <text x="264" y="251" class="store">or PDM system</text>
-  <rect x="264" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#9ec5f0"/>
+  <rect x="264" y="262" width="164" height="48" rx="8" fill="#ffffff" stroke="#9ec5f0"/>
   <text x="274" y="277" class="lbl" fill="#1c5fa8">LOCKED</text>
-  <text x="274" y="290" class="lock" fill="#1c5fa8">ref-des + mfr PN (no process)</text>
+  <text x="274" y="290" class="lock" fill="#1c5fa8">ref-des + mfr PN</text>
+  <text x="274" y="304" class="lock" fill="#1c5fa8">(no process)</text>
 
   <!-- ===== Stage 3: mBOM (green) ===== -->
-  <rect x="466" y="92" width="196" height="216" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
+  <rect x="466" y="92" width="196" height="226" rx="12" fill="#e9f7ee" stroke="#a6dcb8"/>
   <text x="482" y="116" class="num" fill="#2f7a37">STAGE 3</text>
   <text x="482" y="136" class="stg">Manufacturing mBOM</text>
   <text x="482" y="153" class="store" fill="#2f7a37">process-aware</text>
@@ -59,12 +61,13 @@
   <text x="482" y="221" class="lbl">STORED IN</text>
   <text x="482" y="237" class="store">ERP / MES</text>
   <text x="482" y="251" class="store">(ERP BOM records)</text>
-  <rect x="482" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
+  <rect x="482" y="262" width="164" height="48" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
   <text x="492" y="277" class="lbl" fill="#2f7a37">LOCKED</text>
-  <text x="492" y="290" class="lock" fill="#2f7a37">side, solder, lot &#183; DNIs removed</text>
+  <text x="492" y="290" class="lock" fill="#2f7a37">side, solder, lot &#183;</text>
+  <text x="492" y="304" class="lock" fill="#2f7a37">DNIs removed</text>
 
   <!-- ===== Stage 4: ERP Active (dark) ===== -->
-  <rect x="684" y="92" width="196" height="216" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
+  <rect x="684" y="92" width="196" height="226" rx="12" fill="#f5f7fa" stroke="#cbd2d9"/>
   <path d="M684 104 a12 12 0 0 1 12 -12 h172 a12 12 0 0 1 12 12 v22 h-196 z" fill="#2b3a4a"/>
   <text x="700" y="114" class="num" fill="#ffffff">STAGE 4 &#183; SOURCE OF TRUTH</text>
   <text x="700" y="146" class="stg">Active BOM in the ERP</text>
@@ -73,9 +76,10 @@
   <text x="700" y="206" class="own">Production / MRP Team</text>
   <text x="700" y="229" class="lbl">STORED IN</text>
   <text x="700" y="245" class="mono">ERP BOM &#183; for production</text>
-  <rect x="700" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
+  <rect x="700" y="262" width="164" height="48" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
   <text x="710" y="277" class="lbl" fill="#2f7a37">LOCKED</text>
-  <text x="710" y="290" class="lock" fill="#2f7a37">approved + PO issued &#183; 1 per FG</text>
+  <text x="710" y="290" class="lock" fill="#2f7a37">approved + PO issued &#183;</text>
+  <text x="710" y="304" class="lock" fill="#2f7a37">1 per FG</text>
 
   <!-- arrows between stages -->
   <path d="M226 200 L246 200" fill="none" stroke="#7b8794" stroke-width="2.5" marker-end="url(#ag)"/>
@@ -83,12 +87,12 @@
   <path d="M662 200 L682 200" fill="none" stroke="#7b8794" stroke-width="2.5" marker-end="url(#ag)"/>
 
   <!-- PO gate callout on the last arrow -->
-  <rect x="600" y="318" width="262" height="30" rx="8" fill="#fff4e0" stroke="#f3c677"/>
-  <text x="616" y="338" class="lock" fill="#9a5b00">&#9888; PO approved is the gate into the ERP</text>
+  <rect x="600" y="330" width="262" height="30" rx="8" fill="#fff4e0" stroke="#f3c677"/>
+  <text x="616" y="350" class="lock" fill="#9a5b00">&#9888; PO approved is the gate into the ERP</text>
 
   <!-- the never-do line -->
-  <rect x="30" y="318" width="540" height="30" rx="8" fill="#fbeaea" stroke="#e3a3a3"/>
-  <text x="46" y="338" class="never">&#10007; Never source a production order from an RFQ-stage Excel BOM</text>
+  <rect x="30" y="330" width="540" height="30" rx="8" fill="#fbeaea" stroke="#e3a3a3"/>
+  <text x="46" y="350" class="never">&#10007; Never source a production order from an RFQ-stage Excel BOM</text>
 
   <!-- footer band -->
   <rect x="30" y="392" width="840" height="34" rx="8" fill="#e7f1fb" stroke="#9ec5f0"/>
