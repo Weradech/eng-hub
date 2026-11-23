@@ -4,6 +4,7 @@ date: 2026-08-26 14:00:00 +0700
 last_modified_at: 2026-11-23 12:00:00 +0700
 categories: [Engineering, Software]
 tags: [costing, bom, rfq, algorithms, python, typescript, manufacturing]
+math: true
 ---
 
 > **TL;DR** — EMS quotations are often built in spreadsheets that mix packaging geometry, inspection sampling, material overheads and margin rules. Moving those rules into code makes them repeatable only if each rule has a stated source, the edge cases fail loudly, money is computed in decimal arithmetic, and the price, commission and margin formulas agree with each other.
@@ -29,7 +30,7 @@ In electronics manufacturing services (EMS) and New Product Introduction (NPI), 
 Estimators often keep these rules in a workbook with macros and hidden cells. That is flexible, but it carries risks:
 
 - **Formula drift:** copies of the workbook diverge, so two estimators can price the same PCBA differently.
-- **Markup vs. margin confusion:** an additive markup ($C \times 1.30$) gives a lower margin than a gross-up ($C / (1 - 0.30)$).
+- **Markup vs. margin confusion:** an additive markup ($$C \times 1.30$$) gives a lower margin than a gross-up ($$C / (1 - 0.30)$$).
 - **No revision history:** it is unclear why a quote changed between Revision A and Revision B.
 
 ---
@@ -58,11 +59,11 @@ Carton capacity depends on board dimensions, component height, and the packing m
 
 ### The Clearance and Capacity Calculation
 
-Let the raw PCB dimensions be Length ($L$), Width ($W$), and Thickness ($T$), with the tallest component height on top ($H_{\text{top}}$) and bottom ($H_{\text{bot}}$).
+Let the raw PCB dimensions be Length ($$L$$), Width ($$W$$), and Thickness ($$T$$), with the tallest component height on top ($$H_{\text{top}}$$) and bottom ($$H_{\text{bot}}$$).
 
 1. **Effective dimensions with clearances** (example values; take real ones from the packaging specification):
-   - X/Y clearance allowance: $c_{xy} = 2.0\%$
-   - Z clearance allowance (bag, cushion or divider): $c_z = 20.0\%$
+   - X/Y clearance allowance: $$c_{xy} = 2.0\%$$
+   - Z clearance allowance (bag, cushion or divider): $$c_z = 20.0\%$$
 
 $$L_{\text{eff}} = L \times (1 + c_{xy})$$
 
@@ -70,13 +71,13 @@ $$W_{\text{eff}} = W \times (1 + c_{xy})$$
 
 $$H_{\text{eff}} = (T + H_{\text{top}} + H_{\text{bot}}) \times (1 + c_z)$$
 
-2. **Grid capacity within the master box ($B_L, B_W, B_H$):**
+2. **Grid capacity within the master box ($$B_L, B_W, B_H$$):**
 
 $$N_x = \left\lfloor \frac{B_L}{L_{\text{eff}}} \right\rfloor, \quad N_y = \left\lfloor \frac{B_W}{W_{\text{eff}}} \right\rfloor, \quad N_z = \left\lfloor \frac{B_H}{H_{\text{eff}}} \right\rfloor$$
 
 $$\text{Total Units Per Box } (N_{\text{box}}) = N_x \times N_y \times N_z$$
 
-3. **Packaging cost per finished unit** (defined only when $N_{\text{box}} \ge 1$):
+3. **Packaging cost per finished unit** (defined only when $$N_{\text{box}} \ge 1$$):
 
 $$\text{Cost}_{\text{packaging}} = \frac{\text{Cost}_{\text{carton}} + \text{Cost}_{\text{divider}} + (\text{Cost}_{\text{bag}} \times N_{\text{box}})}{N_{\text{box}}}$$
 
@@ -160,17 +161,17 @@ A common pricing error in custom manufacturing software is confusing **markup** 
 
 ### Price, Commission and Margin
 
-Let direct material cost be $M$, material overhead rate $r_{\text{moh}}$, direct labor $L$, manufacturing overhead $O$, sales commission rate $r_{\text{comm}}$ (a share of the selling price), and target margin $r_{\text{margin}}$.
+Let direct material cost be $$M$$, material overhead rate $$r_{\text{moh}}$$, direct labor $$L$$, manufacturing overhead $$O$$, sales commission rate $$r_{\text{comm}}$$ (a share of the selling price), and target margin $$r_{\text{margin}}$$.
 
-1. **Direct cost base ($C_{\text{direct}}$):**
+1. **Direct cost base ($$C_{\text{direct}}$$):**
 
 $$C_{\text{direct}} = \left( M \times (1 + r_{\text{moh}}) \right) + L + O$$
 
-2. **Base selling price ($P_{\text{base}}$):**
+2. **Base selling price ($$P_{\text{base}}$$):**
 
 $$P_{\text{base}} = \frac{C_{\text{direct}}}{1 - r_{\text{margin}}}$$
 
-3. **Commission-inclusive final selling price ($P_{\text{final}}$):**
+3. **Commission-inclusive final selling price ($$P_{\text{final}}$$):**
 
 $$P_{\text{final}} = \frac{P_{\text{base}}}{1 - r_{\text{comm}}}$$
 
@@ -178,7 +179,7 @@ $$P_{\text{final}} = \frac{P_{\text{base}}}{1 - r_{\text{comm}}}$$
 
 $$\text{Margin after commission} = \frac{P_{\text{final}} - r_{\text{comm}} \times P_{\text{final}} - C_{\text{direct}}}{P_{\text{final}}} = r_{\text{margin}} \times (1 - r_{\text{comm}})$$
 
-With $C_{\text{direct}} = 100$, $r_{\text{margin}} = 30\%$ and $r_{\text{comm}} = 5\%$: $P_{\text{final}} = 150.38$ and the margin after commission is $28.5\%$, not $30\%$. A gate that leaves out the commission reports $33.5\%$ and can pass a quote that the policy should stop. Note also that $C_{\text{direct}}$ here includes manufacturing overhead, so this is a gross margin. Call it a contribution margin only if the cost base contains variable costs alone.
+With $$C_{\text{direct}} = 100$$, $$r_{\text{margin}} = 30\%$$ and $$r_{\text{comm}} = 5\%$$: $$P_{\text{final}} = 150.38$$ and the margin after commission is $$28.5\%$$, not $$30\%$$. A gate that leaves out the commission reports $$33.5\%$$ and can pass a quote that the policy should stop. Note also that $$C_{\text{direct}}$$ here includes manufacturing overhead, so this is a gross margin. Call it a contribution margin only if the cost base contains variable costs alone.
 
 {: .prompt-info }
 > **Policy gate:** the minimum margin is a pricing-policy value, not a constant in the code. Store it as configuration with its owner and effective date. When a quote falls below it, the engine blocks release and routes the quote to the approver the policy names.

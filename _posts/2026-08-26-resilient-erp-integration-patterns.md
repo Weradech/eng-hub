@@ -5,6 +5,7 @@ last_modified_at: 2026-11-23 12:00:00 +0700
 categories: [Infrastructure, Backend]
 tags: [erp, architecture, rate-limiting, circuit-breaker, postgresql, microservices]
 mermaid: true
+math: true
 ---
 
 > **TL;DR** — When several services poll one ERP on the same schedule, their requests can arrive together and exhaust its small worker pool. Simple retries make that worse. Put one gateway in front of the ERP that limits request rate and requests in flight, retries with jittered backoff, and stops calling while the ERP is unavailable. Give each service its own database schema so that one service's migration does not lock another's tables.
