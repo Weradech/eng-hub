@@ -105,7 +105,7 @@ It does not make the content right. Review is still people reading the document 
 
 ## Related Posts
 
-- [Document-as-Code: Transforming 350+ ISO Standard Documents into an Offline-First Enterprise Knowledge Base]({% post_url 2026-08-26-document-as-code-for-iso56001 %}) &#8212; The earlier static-file document set this workflow now controls.
+- [Document-as-Code: An Offline-First Controlled Document Set for ISO 56001]({% post_url 2026-08-26-document-as-code-for-iso56001 %}) &#8212; The earlier static-file document set this workflow now controls.
 - [SOP Hierarchy: When to Write a Procedure vs. a Work Instruction]({% post_url 2026-06-29-sop-hierarchy %}) &#8212; How procedures, work instructions and forms relate.
 - [SOP Revamp Playbook — 13 Principles for SOPs That Actually Get Used]({% post_url 2026-05-27-sop-revamp-playbook %}) &#8212; Rewriting procedures so people can follow them.
 - [Engineering Change Control: What Changes When One Component Changes?]({% post_url 2026-09-09-engineering-change-control %}) &#8212; The same request-review-approve logic for engineering changes.

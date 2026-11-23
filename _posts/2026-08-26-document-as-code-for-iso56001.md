@@ -1,39 +1,44 @@
 ---
-title: "Document-as-Code: Transforming 350+ ISO Standard Documents into an Offline-First Enterprise Knowledge Base"
+title: "Document-as-Code: An Offline-First Controlled Document Set for ISO 56001"
 date: 2026-08-26 17:30:00 +0700
+last_modified_at: 2026-11-23 12:00:00 +0700
 categories: [Process, System]
 tags: [iso56001, knowledge-management, architecture, web-performance, documentation]
 ---
 
-> **TL;DR** — Enterprise compliance systems (ISO 56001 Innovation Management, ISO 9001 Quality Management) typically collapse under the weight of fragmented Word documents, stale intranet PDFs, and broken links. By applying the "Document-as-Code" philosophy &#8212; treating every procedure as an immutable standalone HTML module, eliminating external CDN dependencies for air-gapped readiness, indexing metadata into an in-memory client search table, and enforcing governance linting in CI/CD &#8212; we turned 359 compliance documents into a searchable knowledge system that an auditor can navigate from any clause.
+> **TL;DR** — A management-system document set (ISO 56001 innovation management, ISO 9001 quality) becomes hard to use when it is spread across Word files, PDFs and links that break. The "Document-as-Code" approach keeps each controlled document as one standalone HTML file under version control, with no external dependencies, a small in-browser search over the document register, and automated checks on every commit for links, assets and role names.
 
 ---
 
-![Document-as-Code architecture: modularizing 350+ ISO standard compliance documents into offline-first standalone HTML with in-memory client search indexing](/assets/img/2026-08-26/document-as-code-for-iso56001.svg)
-_From PDF graveyards to executable knowledge: version-controlled modular documentation with instant client-side retrieval._
+![Document-as-Code architecture: a controlled document set as offline-first standalone HTML files with in-browser search](/assets/img/2026-08-26/document-as-code-for-iso56001.svg)
+_Version-controlled, one-file-per-document records with an in-browser register search._
 
-## The Enterprise Documentation Dilemma
+All document numbers, titles, paths and role names below are **fictional**. Clause references are left out of the examples: take them from the organization's own clause map for the edition of the standard it applies.
 
-In certified engineering organizations (ISO 9001 QMS, ISO 14001 EMS, and ISO 56001 Innovation Management System), regulatory compliance requires maintaining hundreds of controlled documents:
+_Revised 2026-11-23: document counts, timings and internal document details were removed; the search description and the lint example were corrected._
 
-- Policies, Strategy Statements, and Context Manuals (Clauses 4, 5)
-- Risk Registers, Opportunity Portfolios, and KPIs (Clause 6)
-- Competence Matrices, Training Plans, and Reusable Knowledge Registers (Clause 7)
-- 10-Stage Innovation Gate Charters and R&D Design Records (Clause 8)
-- Internal Audit Checklists, Non-Conformance Reports, and Lessons Learned (Clauses 9, 10)
-- Departmental Standard Operating Procedures (SOPs) and Process Flowcharts
+## The Documentation Problem
 
-The conventional corporate approach is storing `.docx` or `.pdf` files on shared network folders (SharePoint, Google Drive, or local file servers). During high-stakes external audits, this approach fails predictably:
+Organizations that run a management system (ISO 9001 quality, ISO 14001 environment, ISO 56001 innovation management) maintain many controlled documents, typically following the standards' common clause structure:
 
-1. **Slow Discovery:** When an auditor asks, *"Show me your Stage-Gate 4 risk evaluation form and who signed it,"* navigating deep folder trees takes 2–5 minutes.
-2. **Broken Internal Cross-References:** Documents reference outdated document IDs or superseded organizational charts.
-3. **Network Isolation Failures:** Auditors frequently conduct evaluations in air-gapped security cleanrooms or conference rooms with restricted external internet access. Web-based portals relying on external CDNs (Google Fonts, Tailwind CDN, FontAwesome) render as unstyled, broken pages.
+- Policies, context and leadership records (Clauses 4 and 5)
+- Risk and opportunity registers, objectives and plans (Clause 6)
+- Competence records, training plans and knowledge registers (Clause 7)
+- Innovation initiative and project records (Clause 8)
+- Internal audit checklists, nonconformity reports and lessons learned (Clauses 9 and 10)
+- Departmental procedures and process flowcharts
+
+A common approach is to keep `.docx` or `.pdf` files in shared folders. During an audit this causes predictable problems:
+
+1. **Slow discovery:** finding the record an auditor asks for, and who approved it, means searching through folder trees.
+2. **Broken cross-references:** documents refer to superseded document numbers or organization charts.
+3. **Restricted networks:** some audit rooms or sites have limited internet access, so a portal that loads fonts or scripts from external CDNs can render without styles or fail.
 
 ---
 
 ## The Document-as-Code Architecture
 
-To solve these systemic failures, we re-architected the entire corporate compliance system under the **Document-as-Code** pattern:
+The document set becomes a repository of standalone files, checked on every commit and published as a static site that also works from a local folder:
 
 ```
                             +-------------------------------------+
@@ -44,198 +49,195 @@ To solve these systemic failures, we re-architected the entire corporate complia
              |                |                |                |                |
              v                v                v                v                v
       +--------------+ +--------------+ +--------------+ +--------------+ +--------------+
-      | 01-System/   | | 02-Registers/| | 03-Forms/    | | 04-Projects/ | | 08-Dept-IMS/ |
-      | 42 Standalone| | 38 Controlled| | 52 Single-   | | 72 Gate Docs | | 131 SOPs &   |
-      | Procedures   | | Registers    | | Form Files   | | & Charters   | | Flowcharts   |
+      | 01-System/   | | 02-Registers/| | 03-Forms/    | | 04-Projects/ | | 05-Depts/    |
+      | Procedures   | | Controlled   | | One form     | | Project and  | | SOPs and     |
+      |              | | registers    | | per file     | | gate records | | flowcharts   |
       +-------+------+ +-------+------+ +-------+------+ +-------+------+ +-------+------+
               |                |                |                |                |
               +----------------+----------------+----------------+----------------+
                                                |
                                                v
                              +-----------------------------------+
-                             |     CI/CD GOVERNANCE PIPELINE     |
-                             | - Lint Committee Appointments     |
-                             | - Validate Depth-2 Relative Paths |
-                             | - Build 45KB Compressed Index     |
+                             |       CHECKS ON EVERY COMMIT      |
+                             | - Links and asset paths resolve   |
+                             | - No external dependencies        |
+                             | - Role names match appointments   |
+                             | - Register index rebuilt          |
                              +-----------------+-----------------+
                                                |
                                                v
                              +-----------------------------------+
-                             |   OUTPUT: AIR-GAPPED STATIC HUB   |
-                             |  - quick-finder.html (in-memory)  |
-                             |  - 100% Offline Standalone .html  |
+                             |        OUTPUT: STATIC SITE        |
+                             |  - register search page           |
+                             |  - standalone .html documents     |
                              +-----------------------------------+
 ```
 
 ---
 
-## 1. The "1 Document = 1 File" Modular Invariant
+## 1. One Document, One File
 
-A common documentation anti-pattern is creating "Packs" or "Toolkits" &#8212; a single 80-page document containing five different procedures, three checklists, and ten forms. When an auditor asks for form `I-FM-014-A`, presenting an 80-page bundle creates confusion over version control and specific approval dates.
+A common anti-pattern is the "pack" or "toolkit": one long document containing several procedures, checklists and forms. When an auditor asks for one form, a bundle makes it unclear which revision and approval apply to that form.
 
-We enforced a strict **1 Document = 1 Standalone File** rule:
+The rule is **one controlled document per file**:
 
-- **Forms (`03-Forms`):** Split into standalone `.dc.html` files (`I-FM-011`, `I-FM-012-A`, `I-FM-013-A`, `I-FM-014-A`, `I-FM-015-W01` through `W07`).
-- **Procedures (`01-System`):** Monolithic multi-part procedures like `I-PRO-003` were separated into discrete files covering specific operational scopes (Design Verification, Non-Conformance Control, Management Review).
+- **Forms:** each form is its own file with its own number, for example `DEMO-FM-101` and `DEMO-FM-102`.
+- **Procedures:** a procedure that covered several scopes (for example design verification, nonconformity control and management review) is split into separate procedures, each with its own owner and revision.
 
-Every document has its own explicit document number, revision level, effective date, and digital approval block:
+Every document carries its number, revision, effective date and approval in a standard header:
 
 ```html
-<!-- Canonical Document Header Pattern -->
+<!-- Document header pattern (fictional values) -->
 <div class="doc-header">
   <div class="header-left">
     <div class="org-title">EXAMPLE CO., LTD.</div>
-    <div class="doc-title-th">ทะเบียนสินทรัพย์ความรู้และโมดูลใช้ซ้ำ</div>
     <div class="doc-title-en">Reusable Knowledge &amp; Asset Register</div>
   </div>
   <div class="header-right">
     <table class="meta-table">
-      <tr><td>Doc No:</td><td><strong>I-REG-009</strong></td></tr>
-      <tr><td>Rev:</td><td><strong>1.0</strong></td></tr>
-      <tr><td>Date:</td><td><strong>2026-08-21</strong></td></tr>
-      <tr><td>Clause:</td><td><strong>ISO 56001: 7.1.6, 7.1.8</strong></td></tr>
+      <tr><td>Doc No:</td><td><strong>DEMO-REG-001</strong></td></tr>
+      <tr><td>Rev:</td><td><strong>B</strong></td></tr>
+      <tr><td>Effective:</td><td><strong>YYYY-MM-DD</strong></td></tr>
+      <tr><td>Clause:</td><td><strong>(from the clause map)</strong></td></tr>
     </table>
   </div>
 </div>
 ```
 
----
-
-## 2. Air-Gapped Offline-First Rendering
-
-To guarantee that documents open flawlessly from a USB drive or an isolated local file server without internet connectivity:
-
-1. **Zero External CDN Dependencies:** All styling and typography are self-contained in local CSS (`_ds/app.css`) using system font fallbacks (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, `Roboto`, `Tahoma`).
-2. **Strict Depth-2 Relative Asset Paths:** All assets, design tokens, and shared scripts are linked via exact relative paths matching folder depth (`../../_ds/app.css`, `../../assets/logo.png`).
-3. **No Dynamic Client Routing:** Every document can be opened directly via `file:///` protocol in any modern browser without requiring a Node.js runtime or local web server.
+The header shows the release record; it does not replace it. Approval and release still follow the [document release workflow]({% post_url 2026-11-22-release-a-controlled-document-revision %}).
 
 ---
 
-## 3. In-Memory Client Search (`quick-finder.html`)
+## 2. Offline-First Rendering
 
-Instead of deploying a heavy Elasticsearch cluster or server-side database for document search, we built an **Inverted Index Generator** that compiles the metadata of all 359 documents into a minified, compressed JSON lookup array embedded directly into `quick-finder.html`.
+So that documents open from a local folder or an isolated file server without internet access:
 
-```
-Entire 359-Document Metadata Payload: 44.8 KB (gzipped: 9.2 KB)
-```
+1. **No external dependencies:** styles live in a local stylesheet, and fonts use system font stacks (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI`, `Roboto`, `Tahoma`).
+2. **Relative paths that resolve:** shared assets are linked with relative paths (`../../_ds/app.css`), and a check confirms that every path resolves to a file in the repository.
+3. **No client-side routing:** each document opens directly from `file:///` in a current browser, without a local web server.
+
+---
+
+## 3. In-Browser Register Search
+
+The register of documents (number, title, role, path) is embedded in the search page as a JSON array. For a register of a few hundred entries, a simple linear filter in the browser is enough; no search server or database is needed.
 
 ```javascript
-// quick-finder.html: High-Speed Client-Side Search Engine
+// Register search page: the register is embedded, so it also works from file:///
 const DOC_REGISTRY = [
-  { id: "I-REG-009", title: "Reusable Knowledge & Asset Register", clause: "7.1.6, 7.1.8", role: "Knowledge Manager", path: "02-Registers-and-Plans/I-REG-009-Reusable-Asset-Register.dc.html" },
-  { id: "I-WRK-013", title: "Knowledge Manager & PMO Guidebook", clause: "7.1.6, 7.4, 10.1", role: "PMO / KM Lead", path: "05-Guides/I-WRK-013-Knowledge-Manager-Guidebook.dc.html" },
-  { id: "PRJ-LL-001", title: "Example Project Lessons Learned Register", clause: "10.2", role: "Engineering Lead", path: "04-Projects/PRJ-LL-001-Lessons-Learned.dc.html" },
-  // ... 359 documents
+  { id: "DEMO-REG-001", title: "Reusable Knowledge & Asset Register", role: "Knowledge Manager", path: "02-Registers/DEMO-REG-001.html" },
+  { id: "DEMO-GDE-002", title: "Knowledge Management Guide", role: "Knowledge Manager", path: "05-Depts/DEMO-GDE-002.html" },
+  { id: "DEMO-PRJ-003", title: "Example Project Lessons Learned Register", role: "Engineering Lead", path: "04-Projects/DEMO-PRJ-003.html" },
+  // ... one entry per controlled document
 ];
 
-function executeInstantSearch(query) {
-  const t0 = performance.now();
-  const cleanQ = query.trim().toLowerCase();
-  
-  if (!cleanQ) return renderGrid(DOC_REGISTRY);
-  
-  const matches = DOC_REGISTRY.filter(doc => 
-    doc.id.toLowerCase().includes(cleanQ) ||
-    doc.title.toLowerCase().includes(cleanQ) ||
-    doc.clause.toLowerCase().includes(cleanQ) ||
-    doc.role.toLowerCase().includes(cleanQ)
+function searchRegister(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return DOC_REGISTRY;
+  return DOC_REGISTRY.filter(doc =>
+    [doc.id, doc.title, doc.role].some(field => field.toLowerCase().includes(q))
   );
-  
-  const searchTimeMs = (performance.now() - t0).toFixed(2);
-  renderResults(matches, searchTimeMs); // log the time; measure on your own register
 }
 ```
 
-During audit interviews, typing `"7.1.6"`, `"Knowledge"`, or `"I-REG-009"` filters the full register in the browser without a server round trip, displaying direct links to open the standalone document in a modal or new tab.
+This is a substring match, not fuzzy search or an inverted index. Measure the response on your own register before claiming a speed. Typing a document number, a word from a title or a role name narrows the list and links straight to the standalone document.
 
 ---
 
-## 4. Automated CI/CD Governance Linting
+## 4. Automated Governance Checks
 
-To prevent human error from slipping into compliance documents, we created an automated governance validation script (`validate_governance.py`) executed before every Git commit:
+A check script runs as a pre-commit hook and again in CI. Three useful rules:
 
 ```python
 #!/usr/bin/env python3
-"""
-Governance CI Lint Script:
-Validates appointment orders, role nomenclature, relative asset paths,
-and link integrity across all standalone HTML compliance documents.
-"""
-import os
+"""Check standalone HTML documents for external dependencies, broken links and role names."""
+import pathlib
 import re
 import sys
+from urllib.parse import unquote, urlsplit
 
-ALLOWED_PREFIXES = ("I-", "PRJ-", "IMSPR-", "SOP-")
-GOVERNANCE_ROLES = {
-    "CEO": "Executive Sponsor",
-    "CTO": "IMS Champion",
-    "NPI & SE Manager": "IMS Manager",
-    "PM Asst. Manager": "Knowledge Manager / PMO",
-    "QA Lead": "Quality Assurance Lead",
-}
-NAME_SPELLING = {"<common misspelling>": "<name as written in the appointment order>"}
+REPO = pathlib.Path(__file__).resolve().parent
+REF = re.compile(r"""(?:href|src)\s*=\s*["']([^"'#?]+)""", re.IGNORECASE)
 
-def lint_document_integrity(filepath: str) -> list[str]:
+# Role names as written in the appointment order (fictional examples).
+REGISTERED_ROLES = {"IMS Manager", "Knowledge Manager", "Quality Assurance Lead"}
+ROLE_FIELD = re.compile(r'data-role="([^"]+)"')
+
+
+def check_document(path: pathlib.Path) -> list[str]:
     errors = []
-    with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
+    content = path.read_text(encoding="utf-8")
 
-    # Rule 1: Check for obsolete CDN references
-    if "cdn.jsdelivr.net" in content or "fonts.googleapis.com" in content:
-        errors.append("Violates Offline-First: External CDN found in header.")
+    for ref in REF.findall(content):
+        parts = urlsplit(ref)
+        # Rule 1: no external dependencies (http, https or protocol-relative URLs)
+        if parts.scheme in ("http", "https") or ref.startswith("//"):
+            errors.append(f"external reference: {ref}")
+            continue
+        if parts.scheme:          # mailto:, data: and similar are not files
+            continue
+        # Rule 2: every relative link or asset resolves to a file in the repository
+        target = (path.parent / unquote(parts.path)).resolve()
+        if REPO not in target.parents or not target.exists():
+            errors.append(f"broken link or asset: {ref}")
 
-    # Rule 2: Validate relative script/asset depth
-    if "../../../" in content and filepath.count(os.sep) <= 2:
-        errors.append("Broken Asset Link: Over-extended relative path '../../../' detected.")
-
-    # Rule 3: Enforce the registered spelling of appointee names
-    # NAME_SPELLING maps known misspellings to the spelling in the appointment order
-    for wrong, registered in NAME_SPELLING.items():
-        if wrong in content:
-            errors.append(f"Spelling Non-Conformance: use the registered name '{registered}'.")
+    # Rule 3: role names in signature blocks match the appointment order
+    for role in ROLE_FIELD.findall(content):
+        if role not in REGISTERED_ROLES:
+            errors.append(f"role not in the appointment order: {role}")
 
     return errors
+
+
+if __name__ == "__main__":
+    failed = False
+    for doc in sorted(REPO.rglob("*.html")):
+        for error in check_document(doc):
+            print(f"{doc.relative_to(REPO)}: {error}")
+            failed = True
+    sys.exit(1 if failed else 0)
 ```
+
+The check stops the commit with a reason for each problem. It confirms that links resolve and names match. Whether the content is correct and approved is decided in review.
 
 ---
 
-## Key Governance Principles Learned
+## Governance Principles
 
-1. **Decouple Organizational Titles from ISO Standard Roles:** Never assume an HR title (e.g., "Engineering Manager") automatically equates to an ISO standard role (e.g., "Innovation Management System Champion"). Always map real employees to explicit governance roles via an official Executive Appointment Order.
-2. **Never Fabricate Numbers for Placeholders:** Avoid inserting fictitious approval budgets or mock revenue numbers into controlled templates. If a field depends on live corporate policy, mark it as `[Controlled by Corporate Authorization Matrix]` rather than hard-coding imaginary sums.
-3. **Keep the Audit Trail Executable:** A quality system is not a dead folder of PDF printouts. When every standard procedure is modular, searchable in 0.1 seconds, and backed by automated linters, the compliance platform becomes the daily operating system of the engineering team.
+1. **Separate job titles from management-system roles:** a job title such as "Engineering Manager" does not by itself make someone the IMS Manager. Record each appointment in an appointment order, and show both the job title and the appointed role in signature blocks.
+2. **Do not invent numbers for placeholders:** leave approval limits or budgets that depend on live company policy as a reference to the controlling document, for example `[See authorization matrix]`, rather than typing an example figure that could be read as policy.
+3. **Keep the checks executable:** when every document is a separate file, checked on every commit and findable from the register, the document set stays usable between audits as well as during them.
 
 ---
 
 ## Production Hardening Checklist
 
 ```
-[ ] 1. ENFORCE 1 DOCUMENT = 1 FILE
-       Decompose bundled toolkits and multi-procedure manuals into standalone,
-       individually versioned HTML files.
+[ ] 1. ONE DOCUMENT PER FILE
+       Split bundled toolkits and multi-procedure manuals into standalone,
+       individually numbered and revised files.
 
-[ ] 2. STRIP ALL EXTERNAL CDN / FONT CALLS
-       Package design systems and fonts locally to ensure 100% rendering fidelity
-       in air-gapped auditor cleanrooms.
+[ ] 2. NO EXTERNAL DEPENDENCIES
+       Keep styles and fonts local so documents render on isolated networks
+       and from a local folder.
 
-[ ] 3. EMBED CLIENT-SIDE IN-MEMORY SEARCH
-       Pre-compile metadata into a compressed client JSON registry for fast
-       fuzzy discovery without database dependencies.
+[ ] 3. EMBEDDED REGISTER SEARCH
+       Embed the register as JSON in the search page; measure response time
+       on the real register before stating it.
 
-[ ] 4. AUTOMATED GOVERNANCE LINTING IN CI
-       Verify committee names, role nomenclature, relative asset paths, and
-       cross-document links on every commit.
+[ ] 4. CHECKS ON EVERY COMMIT
+       Links and asset paths resolve, no external references, and role names
+       match the appointment order.
 
-[ ] 5. DUAL-TITLE APPOINTMENT MAPPING
-       Explicitly document both the employee's HR corporate title and their
-       appointed governance responsibility across all signature blocks.
+[ ] 5. JOB TITLE AND APPOINTED ROLE
+       Show both in every signature block.
 ```
 
 ---
 
 ## Related Posts
 
-- {% post_url 2026-05-27-sop-revamp-playbook %} &#8212; Standard operating procedure revamping and departmental alignment.
-- {% post_url 2026-06-29-sop-hierarchy %} &#8212; Structuring multi-tiered standard operating procedures across engineering teams.
-- {% post_url 2026-06-29-kaizen-report-pattern %} &#8212; Continuous improvement logging and Lessons Learned architectures.
-- {% post_url 2026-08-26-dual-ledger-drift-and-snapshot-reconciler %} &#8212; Aligning operational data with financial and compliance baselines.
+- [Can We Release This Procedure Revision? Document Control as a Workflow, Not a Folder]({% post_url 2026-11-22-release-a-controlled-document-revision %}) &#8212; the release decision this document set supports.
+- [SOP Hierarchy: When to Write a Procedure vs. a Work Instruction]({% post_url 2026-06-29-sop-hierarchy %}) &#8212; deciding which level a document belongs at.
+- [SOP Revamp Playbook — 13 Principles for SOPs That Actually Get Used]({% post_url 2026-05-27-sop-revamp-playbook %}) &#8212; rewriting procedures people follow.
+- [A Five-Section Kaizen Report for an Evidence-Based Decision]({% post_url 2026-06-29-kaizen-report-pattern %}) &#8212; recording an improvement with its evidence.
