@@ -1,83 +1,85 @@
 ---
 title: "Taming Legacy ERP Integrations: Surviving XML-RPC Burst Refusal and Multi-Schema Isolation"
 date: 2026-08-26 16:00:00 +0700
+last_modified_at: 2026-11-23 12:00:00 +0700
 categories: [Infrastructure, Backend]
 tags: [erp, architecture, rate-limiting, circuit-breaker, postgresql, microservices]
 mermaid: true
 ---
 
-> **TL;DR** — Integrating modern microservices (WMS, MRP, MES, RFQ) with a legacy ERP backend frequently triggers chronic connection refusals and worker starvation. The root cause is almost never ERP database performance, but the synchronous burst pattern of uncoordinated cron jobs. Resilient integration requires a centralized ERP Gateway featuring token-bucket rate limiting, jittered exponential backoff, circuit-breaker fallbacks, and multi-schema PostgreSQL isolation that prevents cross-service database locks.
+> **TL;DR** — When several services poll one ERP on the same schedule, their requests can arrive together and exhaust its small worker pool. Simple retries make that worse. Put one gateway in front of the ERP that limits request rate and requests in flight, retries with jittered backoff, and stops calling while the ERP is unavailable. Give each service its own database schema so that one service's migration does not lock another's tables.
 
 ---
 
 ![Resilient ERP integration architecture: gentle polling, token-bucket rate limiting, circuit breaker, and multi-schema PostgreSQL isolation](/assets/img/2026-08-26/resilient-erp-integration-patterns.svg)
-_Surviving the ERP bottleneck: replacing aggressive burst polling with centralized rate limiting and multi-schema database isolation._
+_Replacing synchronized burst polling with one gateway that limits load, and isolating service schemas._
+
+The timings, limits and counts in this post are **illustrative**. Set real limits from the ERP owner's guidance and from measurements on the system involved.
+
+_Revised 2026-11-23: unmeasured figures were removed, rate and concurrency limits are now separated, and the backoff and database-role examples were corrected._
 
 ## The Legacy ERP Bottleneck
 
-Modern web architectures favor decomposing business functions into focused, independent services: a WMS for barcode scanning, an MRP engine for material scheduling, a CRM for opportunity tracking, and an AP Tracker for three-way invoice matching.
+Modern architectures often split business functions into separate services: a WMS for barcode scanning, an MRP engine for material scheduling, a CRM for opportunities, and an AP tracker for three-way invoice matching.
 
-However, all of these services must ultimately exchange data with a central monolithic ERP (such as Odoo 12, SAP R/3, or legacy AS400 systems). These monolithic ERPs typically expose synchronous RPC endpoints (XML-RPC, JSON-RPC, or SOAP) designed in an era when user workstations submitted transactions one form at a time.
+These services still exchange data with a central ERP (for example Odoo, SAP or an AS/400-based system). Many such ERPs expose synchronous RPC endpoints (XML-RPC, JSON-RPC or SOAP) served by a limited pool of workers, designed for users submitting one form at a time.
 
-When four microservices each run scheduled synchronization jobs, they subject the legacy ERP to a traffic pattern it was never designed to handle:
+When several services run scheduled synchronization at the same moment, the ERP receives a burst it was not sized for:
 
 ```
-[ WMS Sync Cron ] --- (50 concurrent RPCs at 00:00) ---> +-----------------------+
-[ MRP Plan Cron ] --- (40 concurrent RPCs at 00:00) ---> |   LEGACY ERP ENGINE   |
-[ AP Match Cron ] --- (20 concurrent RPCs at 00:00) ---> | (4 XML-RPC Workers)   |
-[ MES Hook Sync ] --- (15 concurrent RPCs at 00:00) ---> +-----------+-----------+
-                                                                     |
-                                                           [ WORKER STARVATION ]
-                                                           [ HTTP 502 / REFUSE ]
+[ WMS Sync Cron ] --- (many RPCs at 00:00) ---> +-----------------------+
+[ MRP Plan Cron ] --- (many RPCs at 00:00) ---> |   LEGACY ERP ENGINE   |
+[ AP Match Cron ] --- (many RPCs at 00:00) ---> | (small worker pool)   |
+[ MES Hook Sync ] --- (many RPCs at 00:00) ---> +-----------+-----------+
+                                                            |
+                                                  [ WORKER STARVATION ]
+                                                  [ 502 / 503 / TIMEOUT ]
 ```
 
-The symptom reported by developers is invariably: *"The ERP server crashed or refused connection randomly."*
-
-In reality, the ERP server did not crash. Its small pool of single-threaded worker processes was completely exhausted within 200 milliseconds, causing incoming TCP connections to queue up and exceed the operating system's `backlog` limit, triggering immediate `ECONNREFUSED` failures.
+Developers often report this as *"the ERP crashed or refused the connection."* Usually the ERP is still running: its workers are busy and new requests wait in a queue. What the client then sees depends on the components in between. A reverse proxy may return 502 or 503, a client may time out, and a connection may be refused if a listener is down or a queue overflows. Read the exact error and where it came from before choosing a fix.
 
 ---
 
-## The Burst Refusal Phenomenon
+## The Burst Refusal Pattern
 
-To understand why simple retry loops make this problem worse, examine the timeline of a typical burst refusal:
+An illustrative sequence shows why simple retry loops make this worse:
 
 ```
-Time (ms)  Event
+Step  Event (illustrative)
 -------------------------------------------------------------------------------
-T + 000    Cron fires at the top of the hour across 4 containers simultaneously.
-T + 050    120 XML-RPC requests hit the ERP reverse proxy within 50ms.
-T + 100    All 4 ERP worker threads become occupied executing heavy SQL queries.
-T + 150    Proxy request queue fills up. New incoming connections are refused.
-T + 200    WMS and MRP catch ECONNREFUSED and immediately fire naive retry loops.
-T + 250    Retry wave hits while workers are still 80% through original queries.
-T + 500    Total cascading failure: 100% of sync jobs fail with timeout errors.
+1     Scheduled jobs in several services start at the same minute.
+2     Their requests reach the ERP together; every worker becomes busy.
+3     New requests queue at the proxy or the ERP; some time out or are refused.
+4     Each service retries at once, adding a second wave while the first is
+      still being processed.
+5     Queues grow, more requests time out, and the retries repeat.
 ```
 
-Adding naive `try/except: retry()` blocks creates a self-inflicted Distributed Denial of Service (DDoS) attack against your own ERP core.
+Retrying immediately turns a short overload into a retry storm generated by your own services.
 
 ---
 
 ## The Gentle Polling Architecture
 
-The solution is to decouple microservices from direct ERP communication using a **Centralized Gateway Daemon** equipped with three resilience mechanisms:
+Route ERP calls from all services through **one gateway** that applies three controls:
 
 ```mermaid
 flowchart LR
-    subgraph Microservices
+    subgraph Services
         A[WMS Service]
         B[MRP Service]
         C[AP Service]
     end
 
-    subgraph Centralized Gateway
-        D[Multiplexed Ingestion Queue]
-        E[Token-Bucket Rate Limiter<br/>Cap: 5 req/sec]
-        F[Circuit Breaker Engine]
+    subgraph Gateway
+        D[Request Queue]
+        E[Rate and In-Flight Limits]
+        F[Circuit Breaker]
     end
 
     subgraph Legacy ERP
-        G[XML-RPC Worker Pool]
-        H[ERP PostgreSQL Core]
+        G[RPC Worker Pool]
+        H[ERP Database]
     end
 
     A --> D
@@ -89,17 +91,27 @@ flowchart LR
     G --> H
 ```
 
-### 1. Token-Bucket Rate Limiter
+### 1. Limit Rate and Requests in Flight Separately
 
-Regardless of how many microservices request ERP data simultaneously, outbound calls to the legacy XML-RPC endpoint are strictly rate-limited through a token bucket capped at safe operational concurrency (e.g., 5 requests per second):
+Two limits answer different questions:
+
+- **Rate** (requests per second, with a burst allowance) controls how fast new requests start. A token bucket implements it.
+- **Requests in flight** (concurrency) controls how many requests are open at once. A semaphore implements it.
+
+A rate limit alone does not cap concurrency. At 5 requests per second, slow calls of 4 seconds each can still leave 20 requests open at once, more than a small worker pool can serve. Set both limits from the ERP owner's guidance and from measured response times.
 
 ```python
-import time
 import threading
-from typing import Callable, Any
+import time
+from contextlib import contextmanager
+
 
 class TokenBucketRateLimiter:
-    def __init__(self, rate_per_second: float = 5.0, capacity: float = 10.0):
+    """Rate limit: tokens refill at `rate_per_second`, up to `capacity` (the burst)."""
+
+    def __init__(self, rate_per_second: float, capacity: float):
+        if rate_per_second <= 0 or capacity < 1:
+            raise ValueError("rate must be positive and capacity at least 1")
         self.rate = rate_per_second
         self.capacity = capacity
         self.tokens = capacity
@@ -107,95 +119,110 @@ class TokenBucketRateLimiter:
         self.lock = threading.Lock()
 
     def acquire(self, tokens_needed: float = 1.0) -> None:
+        if tokens_needed > self.capacity:
+            raise ValueError("tokens_needed exceeds bucket capacity; it would wait forever")
         while True:
             with self.lock:
                 now = time.monotonic()
-                elapsed = now - self.last_update
+                self.tokens = min(self.capacity, self.tokens + (now - self.last_update) * self.rate)
                 self.last_update = now
-                
-                # Replenish tokens based on elapsed time
-                self.tokens = min(self.capacity, self.tokens + elapsed * self.rate)
-                
                 if self.tokens >= tokens_needed:
                     self.tokens -= tokens_needed
                     return
-                
-                # Calculate sleep duration until next token is available
                 wait_time = (tokens_needed - self.tokens) / self.rate
-                
             time.sleep(wait_time)
+
+
+class ErpGate:
+    """Every ERP call passes the rate limit, then waits for a free in-flight slot."""
+
+    def __init__(self, rate_per_second: float, burst: float, max_in_flight: int):
+        self.rate_limiter = TokenBucketRateLimiter(rate_per_second, burst)
+        self.in_flight = threading.BoundedSemaphore(max_in_flight)
+
+    @contextmanager
+    def slot(self):
+        self.rate_limiter.acquire()
+        with self.in_flight:
+            yield
 ```
 
-### 2. Jittered Exponential Backoff
+### 2. Exponential Backoff with Full Jitter
 
-When transient network hiccups or ERP database locks occur, retries must incorporate full random jitter to prevent synchronous harmonic waves:
+When a call fails for a transient reason (timeout, refused connection, 502/503), wait before retrying, and spread the waits randomly so that clients do not retry in step. With full jitter, the wait is a random value between zero and the exponential ceiling:
 
-$$T_{\text{wait}} = \min\left(T_{\max}, \; T_{\text{base}} \times 2^{\text{retry}}\right) \times \left(0.5 + \text{random}(0.0, 0.5)\right)$$
+$$T_{\text{wait}} = \text{random}\left(0,\; \min\left(T_{\max},\; T_{\text{base}} \times 2^{\text{attempt}}\right)\right)$$
 
 ```python
 import random
+import time
+from typing import Any, Callable
+
+RETRYABLE = (ConnectionRefusedError, TimeoutError)  # add the client library's 502/503 error
+
 
 def execute_with_jittered_backoff(
     rpc_func: Callable[[], Any],
-    max_retries: int = 5,
+    max_attempts: int = 5,
     base_delay: float = 1.0,
-    max_delay: float = 30.0
+    max_delay: float = 30.0,
 ) -> Any:
-    for attempt in range(max_retries):
+    for attempt in range(max_attempts):
         try:
             return rpc_func()
-        except (ConnectionRefusedError, TimeoutError) as err:
-            if attempt == max_retries - 1:
-                raise err
-            
-            # Calculate exponential delay with randomized jitter
-            backoff = min(max_delay, base_delay * (2 ** attempt))
-            jittered_sleep = backoff * random.uniform(0.5, 1.5)
-            time.sleep(jittered_sleep)
+        except RETRYABLE:
+            if attempt == max_attempts - 1:
+                raise
+            ceiling = min(max_delay, base_delay * (2 ** attempt))
+            time.sleep(random.uniform(0, ceiling))
 ```
+
+Retry only calls that are safe to repeat. A write that may have been applied before the timeout needs an idempotency key or a check of the ERP state before it is sent again.
 
 ### 3. Fast-Fail Circuit Breakers
 
-If the ERP server is genuinely undergoing maintenance or offline backup, downstream microservices should not hang indefinitely. The Circuit Breaker transitions between three states:
+If the ERP is down for maintenance or backup, services should stop sending requests and fail quickly instead of hanging. A circuit breaker has three states (the thresholds are examples):
 
-- **CLOSED (Normal):** Requests pass through to ERP.
-- **OPEN (Tripped):** After 3 consecutive timeouts, immediately fail fast without sending requests to ERP. Serve cached or read-only replica data.
-- **HALF-OPEN (Probe):** After a 60-second cooldown, allow a single probe request. If successful, reset to CLOSED; if failed, remain OPEN.
+- **CLOSED (normal):** requests pass to the ERP.
+- **OPEN (tripped):** after, for example, 3 consecutive timeouts, fail immediately without calling the ERP. Serve cached data where the caller accepts it, labeled with its age.
+- **HALF-OPEN (probe):** after a cooldown, for example 60 seconds, allow one probe request. If it succeeds, return to CLOSED; if it fails, stay OPEN.
 
 ---
 
-## Safe Read/Write Segregation (Direct SQL vs. XML-RPC)
-
-A fundamental architectural rule when integrating with legacy ERPs is **Segregation of Access Methods**:
+## Choose the Access Method by Operation
 
 ```
 +-----------------------------------------------------------------------------+
-|                     ACCESS METHOD SEGREGATION RULE                          |
+|                     ACCESS METHOD BY OPERATION                              |
 |                                                                             |
-|   1. READ-ONLY DATA (Heavy Analytics, Stock Snapshots, Reports):            |
-|      --> DIRECT SQL (Read Replica)                                          |
-|      Bypasses slow XML-RPC serialization; executes in 5ms instead of 4000ms.  |
+|   1. READ-HEAVY DATA (analytics, stock snapshots, reports):                 |
+|      --> a read-only replica or export, ONLY if the ERP owner supports      |
+|          and allows it; otherwise the official API at a limited rate.       |
+|      Replica data can lag the live system: show its timestamp.              |
 |                                                                             |
-|   2. WRITE / MUTATION DATA (Confirming Pickings, Posting Invoices, MOs):    |
-|      --> OFFICIAL XML-RPC API                                               |
-|      Ensures ERP ORM triggers, fiscal validations, and journal entries run.  |
+|   2. WRITES (confirming pickings, posting invoices, manufacturing orders):  |
+|      --> only an integration that is authorized to write, and only          |
+|          through the ERP's official API, so its validations and             |
+|          accounting entries run.                                            |
 +-----------------------------------------------------------------------------+
 ```
+
+Many integrations should not write to the ERP at all. Decide first whether the integration is allowed to write. Some hosted ERPs do not offer database or replica access, so the read path may be limited to the official API.
 
 {: .prompt-danger }
-> **The Anti-Pattern:** Never write directly to the ERP database with SQL `INSERT` or `UPDATE` statements to bypass slow RPC endpoints. Doing so bypasses accounting ledgers, sequences, and computed fields, permanently corrupting the corporate financial audit trail.
+> **The Anti-Pattern:** Never write directly to the ERP database with SQL `INSERT` or `UPDATE` statements to bypass slow RPC endpoints. Doing so bypasses the ERP's validations, sequences, computed fields and accounting entries, and can leave records that its own logic would never have produced.
 
 ---
 
 ## PostgreSQL Multi-Schema Isolation Architecture
 
-When running multiple microservices on a shared PostgreSQL server, placing all tables into the default `public` schema creates high organizational coupling and dangerous migration locks.
+When several services share one PostgreSQL server, putting every table in the default `public` schema couples them: any service can touch any table, and one migration can block another service.
 
-We implement a **Multi-Schema Segregation Pattern**:
+Give each service its own schema:
 
 ```
                            +-------------------------------------+
-                           |      PRODUCTION POSTGRESQL DB       |
+                           |      SHARED POSTGRESQL DATABASE     |
                            +------------------+------------------+
                                               |
             +---------------+-----------------+---------------+---------------+
@@ -213,55 +240,62 @@ We implement a **Multi-Schema Segregation Pattern**:
 
 ### Decoupling Schema Migrations (Alembic)
 
-By assigning each service its own PostgreSQL schema and separate `alembic_version` table:
+With one schema and its own `alembic_version` table per service:
 
-1. **Independent Deployments:** The WMS team can deploy migration `014` without locking tables used by MRP.
-2. **Zero Cross-Schema Foreign Keys:** Services reference each other via logical IDs (e.g., `product_sku VARCHAR(64)`), preventing `ALTER TABLE` locks from cascading across services.
-3. **Isolated User Permissions:** Service credentials are restricted via `GRANT USAGE ON SCHEMA` and `REVOKE ALL ON ALL TABLES IN SCHEMA public`, preventing accidental cross-database writes.
+1. **Independent deployments:** one service's migration changes only its own schema. A migration that rewrites a large table still locks that table, so schedule it as you would on a dedicated database.
+2. **No cross-schema foreign keys:** services refer to each other's records by logical IDs (e.g., `product_sku VARCHAR(64)`). A foreign key across schemas would make one service's DDL take locks on another service's tables.
+3. **Separate roles:** each service connects as a role that owns its schema and has no rights in the others.
 
 ```sql
--- PostgreSQL Multi-Schema Role Hardening
-CREATE SCHEMA wms;
-CREATE SCHEMA mrp;
-CREATE SCHEMA sync;
+-- One role per service; set its password from the secret store, not in this script.
+CREATE ROLE wms_service LOGIN;
 
-CREATE USER wms_service_user WITH PASSWORD 'redacted_vault_secret';
-GRANT USAGE ON SCHEMA wms TO wms_service_user;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA wms TO wms_service_user;
-REVOKE ALL PRIVILEGES ON SCHEMA public FROM wms_service_user;
+-- The service owns its schema, so the tables its migrations create are its own.
+CREATE SCHEMA wms AUTHORIZATION wms_service;
+ALTER ROLE wms_service SET search_path = wms;
+
+-- Close the shared public schema to object creation (already the default on PostgreSQL 15+).
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+
+-- Database access only for roles that are granted it.
+REVOKE CONNECT ON DATABASE appdb FROM PUBLIC;
+GRANT CONNECT ON DATABASE appdb TO wms_service;
 ```
+
+Revoking rights from one role does not remove rights granted to `PUBLIC`, which every role inherits. Revoke from `PUBLIC`, then grant what each role needs. If another service must read WMS data, grant `USAGE` on the schema and `SELECT` on specific views to that service's role.
 
 ---
 
 ## Production Hardening Checklist
 
 ```
-[ ] 1. NEVER ALLOW UNLIMITED CONCURRENT RPC POLLING
-       Funnel all ERP requests through a centralized rate-limiting gateway
-       capped at maximum safe worker concurrency (3–5 req/sec).
+[ ] 1. ONE GATEWAY WITH TWO LIMITS
+       Route every ERP call through one gateway that limits both request
+       rate (with a burst) and requests in flight. Set both from the ERP
+       owner's guidance and measured response times.
 
-[ ] 2. JITTER EVERY CRON AND RETRY SCHEDULE
-       Add random offset (+/- 30 seconds) to hourly synchronization crons
-       to prevent simultaneous harmonic request bursts.
+[ ] 2. JITTER EVERY SCHEDULE AND RETRY
+       Offset scheduled jobs by a random amount, and retry with exponential
+       backoff and full jitter, only for calls that are safe to repeat.
 
-[ ] 3. STRICT READ/WRITE METHOD SEPARATION
-       Read heavy analytics via SQL Read Replica; execute mutations strictly
-       through official ERP XML-RPC endpoints.
+[ ] 3. ACCESS METHOD BY OPERATION
+       Read from a replica only where the ERP owner allows it; write only
+       from integrations authorized to write, through the official API.
 
-[ ] 4. FAST-FAIL CIRCUIT BREAKERS
-       Prevent cascading microservice timeouts by failing fast when the ERP
-       fails three consecutive health probes.
+[ ] 4. FAST-FAIL CIRCUIT BREAKER
+       Stop calling the ERP after repeated timeouts, and probe before
+       resuming. Label cached data with its age.
 
-[ ] 5. ISOLATE MICROSERVICE DATABASE SCHEMAS
-       Use distinct PostgreSQL schemas with independent migration tables
-       to eliminate DDL locking cascades across service boundaries.
+[ ] 5. ONE SCHEMA AND ONE ROLE PER SERVICE
+       Separate schemas and migration tables, no cross-schema foreign keys,
+       and privileges revoked from PUBLIC before granting per role.
 ```
 
 ---
 
 ## Related Posts
 
-- {% post_url 2026-06-13-it-said-connection-refused %} &#8212; Diagnosing socket backlog saturation and ECONNREFUSED on edge services.
-- {% post_url 2026-06-29-one-postgres-many-schemas %} &#8212; Schema-based isolation patterns for multi-tenant microservices.
-- {% post_url 2026-06-14-scheduler-gate-consolidation %} &#8212; Consolidating distributed cron tasks into unified pipeline gates.
-- {% post_url 2026-08-26-dual-ledger-drift-and-snapshot-reconciler %} &#8212; Snapshot-driven reconciliation between operational WMS and ERP.
+- [It Said 'Connection Refused' — Three Times the System Looked Dead, and the Cause Was Us]({% post_url 2026-06-13-it-said-connection-refused %}) &#8212; reading the error before blaming the server.
+- [One Postgres, Many Schemas: Why We Didn't Do Database-Per-Service]({% post_url 2026-06-29-one-postgres-many-schemas %}) &#8212; the trade-offs behind schema-per-service.
+- [Four Gates That Became One: Serializing Background Jobs That Share a Connection Pool]({% post_url 2026-06-14-scheduler-gate-consolidation %}) &#8212; consolidating scheduled jobs behind one gate.
+- [Dual-Ledger Reconciliation: Explain Stock Differences Before Correcting Them]({% post_url 2026-08-26-dual-ledger-drift-and-snapshot-reconciler %}) &#8212; comparing operational and ERP records without overwriting either.
