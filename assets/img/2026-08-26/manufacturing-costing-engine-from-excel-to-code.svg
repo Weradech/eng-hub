@@ -23,20 +23,20 @@
   <!-- 3 COLUMNS -->
   <!-- Col 1: Packaging & Physical Geometry -->
   <rect x="24" y="80" width="268" height="230" rx="10" fill="#e7f1fb" stroke="#9ec5f0" stroke-width="1.5"/>
-  <text x="40" y="106" class="ph" fill="#1c5fa8">1. Physical &amp; Packaging Geometry</text>
+  <text x="40" y="106" class="ph" fill="#1c5fa8">1. Packaging Geometry</text>
   <rect x="206" y="92" width="74" height="20" rx="10" fill="#ffffff" stroke="#1c7ed6"/>
   <text x="243" y="106" text-anchor="middle" class="badge" fill="#1c7ed6">GEOMETRY</text>
   
   <rect x="38" y="122" width="240" height="42" rx="5" fill="#ffffff" stroke="#9ec5f0"/>
   <text x="48" y="140" class="row" font-weight="bold">PCB Clearance Rules</text>
-  <text x="48" y="154" class="row" font-size="10.5px" fill="#52606d">X/Y Axis: +2.0% &#183; Z Axis (Height): +20.0%</text>
+  <text x="48" y="154" class="row" font-size="10.5px" fill="#52606d">X/Y and Z clearances from packaging spec</text>
 
   <rect x="38" y="170" width="240" height="42" rx="5" fill="#ffffff" stroke="#9ec5f0"/>
   <text x="48" y="188" class="row" font-weight="bold">Master Carton Grid Capacity</text>
   <text x="48" y="202" class="row" font-size="10.5px" fill="#52606d">N = floor(Box_L/L_eff) &#215; floor(Box_W/W_eff) &#215; ...</text>
 
   <rect x="38" y="218" width="240" height="42" rx="5" fill="#ffffff" stroke="#9ec5f0"/>
-  <text x="48" y="236" class="row" font-weight="bold">AQL 0.65 Normal Sampling</text>
+  <text x="48" y="236" class="row" font-weight="bold">AQL Plan from Contract</text>
   <text x="48" y="250" class="row" font-size="10.5px" fill="#52606d">Batch size mapped to inspection sample size</text>
 
   <rect x="38" y="266" width="240" height="32" rx="5" fill="#d0ebff" stroke="#74c0fc"/>
@@ -47,7 +47,7 @@
 
   <!-- Col 2: Compounding Overhead & Labor -->
   <rect x="318" y="80" width="264" height="230" rx="10" fill="#1864ab" stroke="#15aabf" stroke-width="1.5"/>
-  <text x="334" y="106" class="ph" fill="#ffffff">2. Labor &amp; Compounding Rates</text>
+  <text x="334" y="106" class="ph" fill="#ffffff">2. Labor &amp; Overheads</text>
   <rect x="494" y="92" width="76" height="20" rx="10" fill="#e7f5ff" stroke="#339af0"/>
   <text x="532" y="106" text-anchor="middle" class="badge" fill="#1864ab">CALCULATOR</text>
 
@@ -71,7 +71,7 @@
 
   <!-- Col 3: Gross-up Pricing & Gate -->
   <rect x="608" y="80" width="268" height="230" rx="10" fill="#e6f4ea" stroke="#9ed6ad" stroke-width="1.5"/>
-  <text x="624" y="106" class="ph" fill="#1c7a3f">3. Gross-up Pricing &amp; Gates</text>
+  <text x="624" y="106" class="ph" fill="#1c7a3f">3. Pricing &amp; Gates</text>
   <rect x="792" y="92" width="72" height="20" rx="10" fill="#ffffff" stroke="#2b8a3e"/>
   <text x="828" y="106" text-anchor="middle" class="badge" fill="#2b8a3e">MARGIN GATE</text>
 
@@ -80,15 +80,15 @@
   <text x="632" y="154" class="row" font-size="10.5px" fill="#2b8a3e">P = DirectCost / (1 - TargetMargin%)</text>
 
   <rect x="622" y="170" width="240" height="42" rx="5" fill="#ffffff" stroke="#9ed6ad"/>
-  <text x="632" y="188" class="row" font-weight="bold">Commission &amp; Contribution Gate</text>
-  <text x="632" y="202" class="row" font-size="10.5px" fill="#2b8a3e">CM% = (Revenue - VariableCost) / Revenue</text>
+  <text x="632" y="188" class="row" font-weight="bold">Commission &amp; Margin Gate</text>
+  <text x="632" y="202" class="row" font-size="10.5px" fill="#2b8a3e">Margin = (P - Commission - Cost) / P</text>
 
   <rect x="622" y="218" width="240" height="42" rx="5" fill="#ffffff" stroke="#9ed6ad"/>
   <text x="632" y="236" class="row" font-weight="bold">Dual-Language Parity</text>
   <text x="632" y="250" class="row" font-size="10.5px" fill="#2b8a3e">TypeScript (UI) == Python (Backend)</text>
 
   <rect x="622" y="266" width="240" height="32" rx="5" fill="#d3f9d8" stroke="#69db7c"/>
-  <text x="632" y="286" class="row" font-weight="bold" fill="#2b8a3e">Gate &gt;= 35% CM: APPROVED</text>
+  <text x="632" y="286" class="row" font-weight="bold" fill="#2b8a3e">Policy margin gate: PASS</text>
 
   <!-- BOTTOM PANEL: Traps in Translating Excel to Code -->
   <rect x="24" y="322" width="852" height="132" rx="10" fill="#fdecea" stroke="#e8a79c" stroke-width="1.2"/>
@@ -97,7 +97,7 @@
   <rect x="38" y="352" width="262" height="90" rx="6" fill="#ffffff" stroke="#f5c6cb"/>
   <text x="50" y="370" class="trap-title">1. Floating-Point Epsilon Drift</text>
   <text x="50" y="388" class="trap-desc">JS (0.1 + 0.2 != 0.3) vs Python Decimal.</text>
-  <text x="50" y="402" class="trap-desc">Causes 1-cent quotation mismatches.</text>
+  <text x="50" y="402" class="trap-desc">Can cause cent-level mismatches.</text>
   <text x="50" y="424" class="trap-desc" font-weight="bold" fill="#c92a2a">Fix: Fixed-point arithmetic &amp; shared tests</text>
 
   <rect x="318" y="352" width="264" height="90" rx="6" fill="#ffffff" stroke="#f5c6cb"/>
