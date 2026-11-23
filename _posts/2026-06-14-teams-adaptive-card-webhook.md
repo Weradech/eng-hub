@@ -17,15 +17,15 @@ _The webhook wants a JSON object; sending a JSON string fails silently as a 400 
 
 ```mermaid
 sequenceDiagram
-    participant ERP as ERP
+    participant ERP
     participant Job as WMS Job #20<br/>(30-min poll)
     participant Notifier as NotificationService
     participant PA as Power Automate<br/>Workflows Webhook
     participant Teams as MS Teams<br/>Channel
 
-    ERP->>Job: GR picking state=done
+    ERP->>Job: goods receipt done
     Job->>Job: dedup check<br/>(receipt_email_log)
-    Job->>Notifier: notify_gr_received(picking)
+    Job->>Notifier: notify_gr_received(receipt)
     Notifier->>PA: POST adaptive_card (dict)
     PA->>Teams: Adaptive Card
     Note over Teams: Card shows PO / Supplier<br/>/ Items / Analytic
@@ -138,7 +138,7 @@ The GR watcher polls the ERP. If the ERP is down, the original code returned sil
 
 ```python
 try:
-    receipts = erp_client.search_read(...)
+    receipts = erp_client.fetch_receipts(...)
 except ConnectionRefusedError:
     metrics["erp_unreachable"] += 1
     maybe_alert_outage()   # throttled: max 1 alert per 30 min

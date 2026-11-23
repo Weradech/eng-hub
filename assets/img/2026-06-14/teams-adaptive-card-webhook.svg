@@ -22,7 +22,7 @@
 
   <!-- STEP 1: GR event -->
   <rect x="30" y="104" width="190" height="76" rx="10" fill="#2b3a4a"/>
-  <text x="125" y="132" text-anchor="middle" class="wh">GR picking = done</text>
+  <text x="125" y="132" text-anchor="middle" class="wh">GR receipt = done</text>
   <text x="125" y="150" text-anchor="middle" class="whs">30-min ERP poll, not webhook</text>
   <text x="125" y="167" text-anchor="middle" class="whs">dedup via receipt_email_log</text>
   <path d="M220 142 L250 142" fill="none" stroke="#7b8794" stroke-width="2" marker-end="url(#ga)"/>

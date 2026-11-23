@@ -87,9 +87,9 @@ Each stage has a distinct owner and should never be used as a substitute for ano
 
 ```
 ERP BOM:
-  product_id    → Finished Good
-  type          → manufacture
-  bom_line_ids  → components (product + qty + uom)
+  product       → Finished Good
+  purpose       → production
+  lines         → components (part + qty + uom)
 ```
 
 **Key rules:**

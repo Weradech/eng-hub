@@ -31,7 +31,7 @@ The ERP ran on a small VPS with a finite worker/connection pool. One light reque
 Two fixes, both on our side:
 
 - **Consolidate the bursts.** Four independent schedulers were each opening their own window. We put them behind a single shared gate (one semaphore) so total concurrency against the ERP never exceeded what the box could serve.
-- **Pull gently.** A fresh client per window, a bounded window size, a `search_count` up front so paging is deterministic, offset stepping by the window width, and retry-with-backoff on a refused connection. And crucially: a **partial read is not a smaller truth** — treat the pull as all-or-nothing, because a half-finished read looks exactly like real data loss to everything downstream.
+- **Pull gently.** A fresh client per window, a bounded window size, a record count up front so paging is deterministic, offset stepping by the window width, and retry-with-backoff on a refused connection. And crucially: a **partial read is not a smaller truth** — treat the pull as all-or-nothing, because a half-finished read looks exactly like real data loss to everything downstream.
 
 **Diagnostic tell:** light probe passes, burst fails, fails at roughly the *same offset* every time → that's a **limit**, not an **outage**.
 

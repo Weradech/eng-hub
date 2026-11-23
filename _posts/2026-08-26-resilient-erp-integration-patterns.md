@@ -201,7 +201,7 @@ If the ERP is down for maintenance or backup, services should stop sending reque
 |          and allows it; otherwise the official API at a limited rate.       |
 |      Replica data can lag the live system: show its timestamp.              |
 |                                                                             |
-|   2. WRITES (confirming pickings, posting invoices, manufacturing orders):  |
+|   2. WRITES (confirming receipts, posting invoices, manufacturing orders):  |
 |      --> only an integration that is authorized to write, and only          |
 |          through the ERP's official API, so its validations and             |
 |          accounting entries run.                                            |

@@ -72,7 +72,7 @@
   <text x="700" y="190" class="lbl">OWNER</text>
   <text x="700" y="206" class="own">Production / MRP Team</text>
   <text x="700" y="229" class="lbl">STORED IN</text>
-  <text x="700" y="245" class="mono">ERP BOM &#183; type=manufacture</text>
+  <text x="700" y="245" class="mono">ERP BOM &#183; for production</text>
   <rect x="700" y="262" width="164" height="34" rx="8" fill="#ffffff" stroke="#a6dcb8"/>
   <text x="710" y="277" class="lbl" fill="#2f7a37">LOCKED</text>
   <text x="710" y="290" class="lock" fill="#2f7a37">approved + PO issued &#183; 1 per FG</text>

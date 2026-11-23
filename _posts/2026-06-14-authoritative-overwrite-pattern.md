@@ -59,12 +59,12 @@ The ERP may have processed receipts or manufacturing orders while you were prepa
 If the ERP API has a connection-count limit (see [Four Gates That Became One]({% post_url 2026-06-14-scheduler-gate-consolidation %})), paginate gently:
 
 ```python
-def gentle_paginate(model, domain, fields, page_size=200):
+def gentle_paginate(record_type, filters, fields, page_size=200):
     offset = 0
-    total = client.execute(model, 'search_count', domain)
+    total = client.count(record_type, filters)
     while offset < total:
-        batch = client.execute(model, 'search_read', domain,
-                               fields, offset=offset, limit=page_size)
+        batch = client.fetch(record_type, filters,
+                             fields, offset=offset, limit=page_size)
         if not batch:
             break
         yield from batch
