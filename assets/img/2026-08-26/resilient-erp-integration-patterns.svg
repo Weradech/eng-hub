@@ -75,9 +75,9 @@
   <rect x="668" y="122" width="196" height="34" rx="5" fill="#ffffff" stroke="#9ed6ad"/>
   <text x="678" y="144" class="row" font-weight="bold">Limited RPC Worker Pool</text>
   <rect x="668" y="162" width="196" height="34" rx="5" fill="#ffffff" stroke="#9ed6ad"/>
-  <text x="678" y="184" class="row" font-weight="bold">Heavy ORM Relational Joins</text>
+  <text x="678" y="184" class="row" font-weight="bold">Synchronous RPC Calls</text>
   <rect x="668" y="202" width="196" height="34" rx="5" fill="#ffffff" stroke="#9ed6ad"/>
-  <text x="678" y="224" class="row" font-weight="bold">Long-lived DB Locks</text>
+  <text x="678" y="224" class="row" font-weight="bold">Built for One Form at a Time</text>
   <rect x="668" y="242" width="196" height="34" rx="5" fill="#d3f9d8" stroke="#69db7c"/>
   <text x="678" y="264" class="row" font-weight="bold" fill="#2b8a3e">Smooth, Gentle Polling Load</text>
   <text x="670" y="298" class="row" font-size="10.5px" fill="#1c7a3f">Load within the ERP's limits</text>
@@ -89,7 +89,7 @@
   <rect x="38" y="352" width="262" height="90" rx="6" fill="#ffffff" stroke="#f5c6cb"/>
   <text x="50" y="370" class="trap-title">1. The Synchronous Burst Trap</text>
   <text x="50" y="388" class="trap-desc">Several services poll at 00:00.</text>
-  <text x="50" y="402" class="trap-desc">Workers exhausted: 502, timeout, refusal.</text>
+  <text x="50" y="402" class="trap-desc">Workers busy: 502/503/504 or timeout.</text>
   <text x="50" y="424" class="trap-desc" font-weight="bold" fill="#c92a2a">Fix: Single-gate multiplexer with jitter</text>
 
   <rect x="318" y="352" width="264" height="90" rx="6" fill="#ffffff" stroke="#f5c6cb"/>

@@ -87,7 +87,7 @@ from decimal import Decimal
 
 
 class PackagingError(ValueError):
-    """The board does not fit the carton; a person must choose another carton or method."""
+    """No valid capacity: bad dimensions, or the board does not fit; a person must decide."""
 
 
 def compute_master_carton_capacity(
@@ -102,9 +102,14 @@ def compute_master_carton_capacity(
 ) -> int:
     """Grid estimate for one orientation. Never returns 0 silently."""
     for name, value in (("pcb_length_mm", pcb_length_mm), ("pcb_width_mm", pcb_width_mm),
+                        ("box_length_mm", box_length_mm), ("box_width_mm", box_width_mm),
+                        ("box_height_mm", box_height_mm),
                         ("pcb_total_height_mm", pcb_total_height_mm)):
         if value <= 0:
             raise PackagingError(f"{name} must be positive: {value}")
+    for name, value in (("clearance_xy", clearance_xy), ("clearance_z", clearance_z)):
+        if value < 0:
+            raise PackagingError(f"{name} cannot be negative: {value}")
 
     l_eff = pcb_length_mm * (1 + clearance_xy)
     w_eff = pcb_width_mm * (1 + clearance_xy)
@@ -179,7 +184,7 @@ $$P_{\text{final}} = \frac{P_{\text{base}}}{1 - r_{\text{comm}}}$$
 
 $$\text{Margin after commission} = \frac{P_{\text{final}} - r_{\text{comm}} \times P_{\text{final}} - C_{\text{direct}}}{P_{\text{final}}} = r_{\text{margin}} \times (1 - r_{\text{comm}})$$
 
-With $$C_{\text{direct}} = 100$$, $$r_{\text{margin}} = 30\%$$ and $$r_{\text{comm}} = 5\%$$: $$P_{\text{final}} = 150.38$$ and the margin after commission is $$28.5\%$$, not $$30\%$$. A gate that leaves out the commission reports $$33.5\%$$ and can pass a quote that the policy should stop. Note also that $$C_{\text{direct}}$$ here includes manufacturing overhead, so this is a gross margin. Call it a contribution margin only if the cost base contains variable costs alone.
+With $$C_{\text{direct}} = 100$$, $$r_{\text{margin}} = 30\%$$ and $$r_{\text{comm}} = 5\%$$: $$P_{\text{final}} = 150.38$$ and the margin after commission is $$28.5\%$$, not $$30\%$$. A gate that leaves out the commission reports $$33.5\%$$ and can pass a quote that the policy should stop. Because $$C_{\text{direct}}$$ here includes manufacturing overhead, the $$33.5\%$$ is the gross margin. The $$28.5\%$$ is lower because commission is a selling expense, which sits below gross profit. If the policy target is a margin after commission, solve for it directly: $$P = C_{\text{direct}} / (1 - r_{\text{margin}} - r_{\text{comm}})$$.
 
 {: .prompt-info }
 > **Policy gate:** the minimum margin is a pricing-policy value, not a constant in the code. Store it as configuration with its owner and effective date. When a quote falls below it, the engine blocks release and routes the quote to the approver the policy names.
@@ -195,7 +200,7 @@ Web applications often compute pricing in two places:
 
 ### The Floating-Point Trap
 
-JavaScript numbers are IEEE-754 binary doubles. Python's `decimal.Decimal` stores decimal digits exactly.
+JavaScript numbers are IEEE-754 binary doubles. Python's `decimal.Decimal` stores decimal digits exactly when it is built from a string, such as `Decimal("1.005")`; `Decimal(1.005)` keeps the binary error of the float.
 
 ```javascript
 // JavaScript
@@ -252,7 +257,8 @@ export function computeGrossUpPrice(
        and database (NUMERIC with an agreed scale).
 
 [ ] 2. GROSS-UP DIVISION, NOT ADDITIVE MARKUP
-       Price = Cost / (1 - Margin), never Cost * (1 + Margin).
+       When the policy states a margin, Price = Cost / (1 - Margin),
+       not Cost * (1 + Margin).
 
 [ ] 3. MARGIN GATE AFTER COMMISSION
        The gate checks margin after commission against a configured policy

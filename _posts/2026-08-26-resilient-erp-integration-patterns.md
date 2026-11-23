@@ -34,10 +34,10 @@ When several services run scheduled synchronization at the same moment, the ERP 
 [ MES Hook Sync ] --- (many RPCs at 00:00) ---> +-----------+-----------+
                                                             |
                                                   [ WORKER STARVATION ]
-                                                  [ 502 / 503 / TIMEOUT ]
+                                                  [ 502 / 503 / 504 / TIMEOUT ]
 ```
 
-Developers often report this as *"the ERP crashed or refused the connection."* Usually the ERP is still running: its workers are busy and new requests wait in a queue. What the client then sees depends on the components in between. A reverse proxy may return 502 or 503, a client may time out, and a connection may be refused if a listener is down or a queue overflows. Read the exact error and where it came from before choosing a fix.
+Developers often report this as *"the ERP crashed or refused the connection."* Usually the ERP is still running: its workers are busy and new requests wait in a queue. What the client then sees depends on the components in between. A reverse proxy may return 502, 503 or 504, and a client may time out. A refused connection usually means nothing is listening on that port; when a server's accept queue is full, Linux by default drops the new connection, and the client sees a connect timeout rather than a refusal. Read the exact error and where it came from before choosing a fix.
 
 ---
 
@@ -135,7 +135,7 @@ class TokenBucketRateLimiter:
 
 
 class ErpGate:
-    """Every ERP call passes the rate limit, then waits for a free in-flight slot."""
+    """Every ERP call first takes a free in-flight slot, then waits for the rate limit."""
 
     def __init__(self, rate_per_second: float, burst: float, max_in_flight: int):
         self.rate_limiter = TokenBucketRateLimiter(rate_per_second, burst)
@@ -143,14 +143,14 @@ class ErpGate:
 
     @contextmanager
     def slot(self):
-        self.rate_limiter.acquire()
         with self.in_flight:
+            self.rate_limiter.acquire()
             yield
 ```
 
 ### 2. Exponential Backoff with Full Jitter
 
-When a call fails for a transient reason (timeout, refused connection, 502/503), wait before retrying, and spread the waits randomly so that clients do not retry in step. With full jitter, the wait is a random value between zero and the exponential ceiling:
+When a call fails for a transient reason (timeout, refused connection, 502/503/504), wait before retrying, and spread the waits randomly so that clients do not retry in step. With full jitter, the wait is a random value between zero and the exponential ceiling:
 
 $$T_{\text{wait}} = \text{random}\left(0,\; \min\left(T_{\max},\; T_{\text{base}} \times 2^{\text{attempt}}\right)\right)$$
 
@@ -159,7 +159,7 @@ import random
 import time
 from typing import Any, Callable
 
-RETRYABLE = (ConnectionRefusedError, TimeoutError)  # add the client library's 502/503 error
+RETRYABLE = (ConnectionRefusedError, TimeoutError)  # add the client library's 502/503/504 errors
 
 
 def execute_with_jittered_backoff(
@@ -255,7 +255,9 @@ CREATE ROLE wms_service LOGIN;
 CREATE SCHEMA wms AUTHORIZATION wms_service;
 ALTER ROLE wms_service SET search_path = wms;
 
--- Close the shared public schema to object creation (already the default on PostgreSQL 15+).
+-- Run while connected to appdb: schema and REVOKE statements apply to the current database.
+-- Close the shared public schema to object creation (the default for databases created on
+-- PostgreSQL 15+; a cluster upgraded from an older version keeps the old permission).
 REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 
 -- Database access only for roles that are granted it.

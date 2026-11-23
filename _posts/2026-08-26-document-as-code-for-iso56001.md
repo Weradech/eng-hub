@@ -150,31 +150,47 @@ A check script runs as a pre-commit hook and again in CI. Three useful rules:
 
 ```python
 #!/usr/bin/env python3
-"""Check standalone HTML documents for external dependencies, broken links and role names."""
+"""Check standalone HTML documents and their stylesheets for external dependencies,
+broken links and role names. Place this script at the repository root."""
 import pathlib
 import re
 import sys
 from urllib.parse import unquote, urlsplit
 
 REPO = pathlib.Path(__file__).resolve().parent
-REF = re.compile(r"""(?:href|src)\s*=\s*["']([^"'#?]+)""", re.IGNORECASE)
+
+# Places a document can load or link a file from: href/src attributes (quoted or not),
+# srcset candidate lists, CSS url(...) and CSS @import "...".
+ATTR = re.compile(r"""\b(?:href|src)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+))""", re.IGNORECASE)
+SRCSET = re.compile(r"""\bsrcset\s*=\s*["']([^"']+)["']""", re.IGNORECASE)
+CSS_URL = re.compile(r"""url\(\s*["']?([^"')\s]+)""", re.IGNORECASE)
+CSS_IMPORT = re.compile(r"""@import\s+["']([^"']+)["']""", re.IGNORECASE)
 
 # Role names as written in the appointment order (fictional examples).
 REGISTERED_ROLES = {"IMS Manager", "Knowledge Manager", "Quality Assurance Lead"}
 ROLE_FIELD = re.compile(r'data-role="([^"]+)"')
 
 
+def references(content: str) -> list[str]:
+    refs = ["".join(groups) for groups in ATTR.findall(content)]
+    refs += CSS_URL.findall(content) + CSS_IMPORT.findall(content)
+    for candidates in SRCSET.findall(content):
+        if not candidates.lstrip().startswith("data:"):
+            refs += [c.split()[0] for c in candidates.split(",") if c.strip()]
+    return refs
+
+
 def check_document(path: pathlib.Path) -> list[str]:
     errors = []
     content = path.read_text(encoding="utf-8")
 
-    for ref in REF.findall(content):
+    for ref in references(content):
         parts = urlsplit(ref)
         # Rule 1: no external dependencies (http, https or protocol-relative URLs)
         if parts.scheme in ("http", "https") or ref.startswith("//"):
             errors.append(f"external reference: {ref}")
             continue
-        if parts.scheme:          # mailto:, data: and similar are not files
+        if parts.scheme or not parts.path:   # mailto:, data:, or a "#section" link in the same file
             continue
         # Rule 2: every relative link or asset resolves to a file in the repository
         target = (path.parent / unquote(parts.path)).resolve()
@@ -191,14 +207,14 @@ def check_document(path: pathlib.Path) -> list[str]:
 
 if __name__ == "__main__":
     failed = False
-    for doc in sorted(REPO.rglob("*.html")):
+    for doc in sorted([*REPO.rglob("*.html"), *REPO.rglob("*.css")]):
         for error in check_document(doc):
             print(f"{doc.relative_to(REPO)}: {error}")
             failed = True
     sys.exit(1 if failed else 0)
 ```
 
-The check stops the commit with a reason for each problem. It confirms that links resolve and names match. Whether the content is correct and approved is decided in review.
+The check stops the commit with a reason for each problem. It reads `href` and `src` attributes, `srcset` lists, and CSS `url(...)` and `@import` in HTML and CSS files. It does not run scripts, so a URL that JavaScript builds at runtime is not caught; review scripts for that. It confirms that links resolve and names match. Whether the content is correct and approved is decided in review.
 
 ---
 

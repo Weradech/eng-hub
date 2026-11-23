@@ -98,7 +98,7 @@
   <text x="50" y="370" class="trap-title">1. Floating-Point Epsilon Drift</text>
   <text x="50" y="388" class="trap-desc">JS (0.1 + 0.2 != 0.3) vs Python Decimal.</text>
   <text x="50" y="402" class="trap-desc">Can cause cent-level mismatches.</text>
-  <text x="50" y="424" class="trap-desc" font-weight="bold" fill="#c92a2a">Fix: Fixed-point arithmetic &amp; shared tests</text>
+  <text x="50" y="424" class="trap-desc" font-weight="bold" fill="#c92a2a">Fix: Decimal arithmetic &amp; shared tests</text>
 
   <rect x="318" y="352" width="264" height="90" rx="6" fill="#ffffff" stroke="#f5c6cb"/>
   <text x="330" y="370" class="trap-title">2. Additive vs Gross-up Margin</text>
