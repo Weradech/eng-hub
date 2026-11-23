@@ -23,7 +23,7 @@ _Revised 2026-11-23: unmeasured figures were removed, rate and concurrency limit
 
 Modern architectures often split business functions into separate services: a WMS for barcode scanning, an MRP engine for material scheduling, a CRM for opportunities, and an AP tracker for three-way invoice matching.
 
-These services still exchange data with a central ERP (for example Odoo, SAP or an AS/400-based system). Many such ERPs expose synchronous RPC endpoints (XML-RPC, JSON-RPC or SOAP) served by a limited pool of workers, designed for users submitting one form at a time.
+These services still exchange data with a central ERP (for example an open-source ERP, SAP or an AS/400-based system). Many such ERPs expose synchronous RPC endpoints (XML-RPC, JSON-RPC or SOAP) served by a limited pool of workers, designed for users submitting one form at a time.
 
 When several services run scheduled synchronization at the same moment, the ERP receives a burst it was not sized for:
 

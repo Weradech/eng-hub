@@ -7,7 +7,7 @@ tags: [wms, erp, data-integrity, reconciliation, architecture, inventory]
 
 > **TL;DR** — Compare WMS and ERP stock only after defining the same item, location, ownership, status and cut-off time. Preserve both source snapshots and classify each difference before anyone considers an adjustment.
 
-This is a **read-only investigation method**. The earlier version asserted that drift was inevitable and that three mechanisms explained over 95% of discrepancies, without a linked dataset or query. Those claims are withdrawn. No write to Odoo or other accounting records is described or authorized here.
+This is a **read-only investigation method**. The earlier version asserted that drift was inevitable and that three mechanisms explained over 95% of discrepancies, without a linked dataset or query. Those claims are withdrawn. No write to the financial ERP or other accounting records is described or authorized here.
 
 ## Define what is being compared
 
@@ -29,7 +29,7 @@ These are **possible classes**, not a measured ranking of causes. A cancelled or
 
 For each affected item and location, trace opening balance plus receipts minus issues and adjustments to the closing balance in each source. Match movement IDs and document missing, duplicate or differently classified events. Retain a list of unmatched movements and the person assigned to investigate them. If an automated sync has a retry or backfill path, replay only with the approved idempotency and audit controls for that system.
 
-Do **not** make a balancing stock adjustment merely to force equality. Such a write can hide the real movement and create a later reversal. A correction, if required, belongs to the authorized owner of the affected ledger and must include its source evidence, approval and accounting effect. This article performs no Odoo write.
+Do **not** make a balancing stock adjustment merely to force equality. Such a write can hide the real movement and create a later reversal. A correction, if required, belongs to the authorized owner of the affected ledger and must include its source evidence, approval and accounting effect. This article performs no write to the financial ERP.
 
 ## Report the result without claiming closure early
 
