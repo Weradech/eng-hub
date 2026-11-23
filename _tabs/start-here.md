@@ -28,6 +28,8 @@ Follow the [gated PCB build]({% post_url 2026-11-22-gated-pcb-build-to-fab-relea
 
 Use [engineering change control]({% post_url 2026-09-09-engineering-change-control %}). Record impact, verification, material disposition and effectivity before implementation.
 
+When the change replaces a component, check the [exact MPN of the replacement]({% post_url 2026-11-22-exact-mpn-replacement-check %}) against its own datasheet (pins, package, the electrical table for that variant and how it will be bought) before it enters the BOM. The approval and effectivity decision then returns to change control.
+
 The [public ESP32-PoE revision case]({% post_url 2026-09-29-public-revision-case-poe-class %}) shows how reported field feedback and a schematic change can be traced without inventing test or release evidence.
 
 ## Plan ICT or FCT
@@ -52,7 +54,7 @@ Start with [financial versus operational ownership]({% post_url 2026-05-27-finan
 
 ## Release a controlled document revision
 
-Use [document-as-code for an ISO 56001 document set]({% post_url 2026-08-26-document-as-code-for-iso56001 %}) and the [SOP hierarchy]({% post_url 2026-06-29-sop-hierarchy %}). Before release, confirm the change request, the closed review comments, the approver, the effective date and every form that refers to the procedure. Record which revision it replaces.
+Use the [document revision release workflow]({% post_url 2026-11-22-release-a-controlled-document-revision %}) and the [SOP hierarchy]({% post_url 2026-06-29-sop-hierarchy %}). Before release, confirm the change request, the closed review comments, the approver, the effective date and every form that refers to the procedure. Record which revision it replaces. For keeping the document set itself as version-controlled files, see [document-as-code for an ISO 56001 document set]({% post_url 2026-08-26-document-as-code-for-iso56001 %}).
 
 ## Write a controlled procedure or investigate an incident
 
