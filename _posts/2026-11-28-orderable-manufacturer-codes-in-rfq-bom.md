@@ -10,13 +10,11 @@ description: "Check whether an RFQ BOM line identifies a complete manufacturer o
 
 ## Read the three fields separately
 
-The RFQ intake question is whether the BOM line identifies one specific manufacturer order code. Review each field for the information it carries.
+The RFQ intake question is whether the BOM line identifies one specific manufacturer order code.
 
-| Field | What it identifies |
-|---|---|
-| Description | The requested characteristics, such as function and package. Several parts can fit the same description. |
-| Supplier SKU | A listing in a supplier's catalogue. Use the listing as a lead to the manufacturer and its order code. |
-| Manufacturer and complete order code | The manufacturer and the full manufacturer part number (MPN) used to order the variant, including any required suffix. |
+- **Description.** The requested characteristics, such as function and package. Several parts can fit the same description.
+- **Supplier SKU.** A listing in a supplier's catalogue. Use the listing as a lead to the manufacturer and its order code.
+- **Manufacturer and complete order code.** The manufacturer and the full manufacturer part number (MPN) used to order the variant, including any required suffix.
 
 ## Flag suspect entries for review
 
@@ -32,9 +30,11 @@ Flag blanks, placeholders such as `TBD`, and entries that consist only of a valu
 
 The manufacturer, codes and ordering table in this example are fictional.
 
-| Description | Supplier SKU | Submitted manufacturer field | Ordering evidence and status |
-|---|---|---|---|
-| Surface-mount signal switch | `DEMO-SHOP-417` | Example Components, `DEMO-SW17` | The fictional ordering table lists `DEMO-SW17-TR` for tape and reel and `DEMO-SW17-TB` for tube. **Unresolved.** Ask which shipping format the RFQ requires. |
+- **Description.** Surface-mount signal switch.
+- **Supplier SKU.** `DEMO-SHOP-417`.
+- **Submitted manufacturer field.** Example Components, `DEMO-SW17`.
+- **Ordering evidence.** The table lists `DEMO-SW17-TR` for tape and reel and `DEMO-SW17-TB` for tube.
+- **Status.** Unresolved. Ask which shipping format the RFQ requires.
 
 After clarification, record the selected full code, the ordering-table row and the source of the clarification. Mark the orderable identity confirmed once those records agree.
 
